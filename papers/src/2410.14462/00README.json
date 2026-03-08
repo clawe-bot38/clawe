@@ -1,0 +1,181 @@
+{
+   "sources" : [
+      {
+         "usage" : "toplevel",
+         "filename" : "main.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife_clip.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife_dif.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife_dif_sam.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife_dino.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife_gt.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife_rgb.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/knife_sam.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep_clip.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep_dif.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep_dif_sam.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep_dino.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep_gt.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep_rgb.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/sheep_sam.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon_clip.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon_dif.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon_dif_sam.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon_dino.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon_gt.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon_rgb.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/ablation_relevancy/spoon_sam.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/editing/ludvig_flower.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/editing/n3f_fern.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/fern_dinov2.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/fern_mask.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/fern_sam.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/orchids_dinov2.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/orchids_sam.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/trex_dinov2.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/trex_mask.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/nvos/trex_sam.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/pcas/lego.png"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/removal/bonsai.JPG"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/removal/bonsai_features.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/removal/bonsai_removed.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/removal/removal.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "figures/semantic/347_015.jpg"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "ieeenat_fullname.bst"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "main.bib"
+      }
+   ],
+   "version" : 2,
+   "texlive_version" : 2023,
+   "process" : {
+      "compiler" : "pdflatex"
+   }
+}

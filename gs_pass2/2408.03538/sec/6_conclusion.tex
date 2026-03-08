@@ -1,0 +1,9 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+% \textbf{Conclusion}
+We proposed PRTGS, a real-time high-quality relighting method in low-frequency lighting environments for 3D Gaussian splatting. In terms of implementation, we precompute the expensive transport simulations required for complex transfer functions into sets of vectors or matrices for every Gaussian splat. We introduce distinct precomputing methods tailored for training and rendering stages, along with unique ray tracing and indirect lighting precomputation techniques for 3D Gaussian splats to accelerate training speed and compute accurate indirect lighting related to environmental light.
+Extensive experiments demonstrate the superior performance of our proposed method across multiple tasks, highlighting its efficacy and broad applicability in relighting, scene reconstruction, and editing.
+
+% \textbf{Future Work} Like almost all current inverse rendering and relighting methods, we assume that the scene is static. This limitation restricts the applicability of this technology to real-world scenarios. In future work, we want to expand our method to deformable objects like human characters based on other real-time rendering technology such as the precomputed radiance transfer field. 
+% By the way, the majority of our rendering time is spent in Python code, since we built our solution in PyTorch to allow our method to be easily used by others and rebuilt on onother inverse rendering methods. We will rewrite them in CUDA and port other optimization, which could enable significantly speed up (1.5x-2.0x).

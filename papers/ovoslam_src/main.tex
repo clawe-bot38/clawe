@@ -1,0 +1,42 @@
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}
+
+\overrideIEEEmargins                           
+% Import additional packages in the preamble file, before hyperref
+\input{preamble}
+\usepackage{balance}
+\usepackage{soul}
+
+\def\ours{OVO\xspace}
+\def\clipours{CLIP merging\xspace}
+\begin{document}
+%%%%%%%%% AUTHORS - PLEASE UPDATE
+\author{Tomas Berriel Martins\\
+University of Zaragoza
+\and
+Martin R. Oswald\\
+University of Amsterdam\\
+\and
+Javier Civera\\
+University of Zaragoza}
+%%%%%%%%% TITLE 
+\title{Open-Vocabulary Online Semantic Mapping for SLAM}
+
+
+% make the title area
+\maketitle
+\input{sec/0_abstract}    
+\input{sec/1_intro}
+\input{sec/2_related_work}
+\input{sec/3_method}
+\input{sec/4_experiments}
+\input{sec/5_conclusions}
+
+{
+    \small
+    \bibliographystyle{IEEEtran}
+    \balance
+    \bibliography{main.bib}
+}
+\input{sec/6_suppl} 
+
+\end{document}

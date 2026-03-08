@@ -1,0 +1,20 @@
+\setlength{\tabcolsep}{13.0pt}{
+\begin{table}[tb]
+   \caption{
+   Ablation results on the challenging test set of real market scene. The values in red parentheses indicate metric changes relative to our full method.
+   }
+  \label{table:ablation_market}
+  \centering
+  \begin{tabular}{lccc}
+    \toprule
+    & PSNR↑ & SSIM↑ & LPIPS↓ \\
+    \midrule
+    w/o $\mathcal{L}_{mask}$ & 25.68 \textcolor{red}{(↓1.50)}& 0.83 \textcolor{red}{(↓0.01)} & 0.05 \textcolor{red}{(↑0.01)}\\
+    w/o $\mathcal{L}_{depth}$ & 25.39 \textcolor{red}{(↓1.79)}& 0.82 \textcolor{red}{(↓0.02)}& 0.05 \textcolor{red}{(↑0.01)}\\
+    w/o $\mathcal{L}_{plane}$ & 26.84 \textcolor{red}{(↓0.34)}& 0.84 \textcolor{red}{\phantom{(↓0.00)}}& 0.04 \textcolor{red}{\phantom{(↑0.00)}}\\
+    \midrule
+    \textbf{Our full method} & 27.18 \textcolor{red}{\phantom{(↓0.00)}}& 0.84 \textcolor{red}{\phantom{(↓0.00)}}& 0.04 \textcolor{red}{\phantom{(↑0.00)}}\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+}

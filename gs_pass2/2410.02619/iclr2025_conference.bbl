@@ -1,0 +1,228 @@
+\begin{thebibliography}{44}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Barron \& Malik(2014)Barron and Malik]{barron2014shape}
+Jonathan~T Barron and Jitendra Malik.
+\newblock Shape, illumination, and reflectance from shading.
+\newblock \emph{IEEE transactions on pattern analysis and machine intelligence}, 37\penalty0 (8):\penalty0 1670--1687, 2014.
+
+\bibitem[Barron et~al.(2021)Barron, Mildenhall, Tancik, Hedman, Martin-Brualla, and Srinivasan]{barron2021mip}
+Jonathan~T Barron, Ben Mildenhall, Matthew Tancik, Peter Hedman, Ricardo Martin-Brualla, and Pratul~P Srinivasan.
+\newblock Mip-nerf: A multiscale representation for anti-aliasing neural radiance fields.
+\newblock In \emph{Proceedings of the IEEE/CVF international conference on computer vision}, pp.\  5855--5864, 2021.
+
+\bibitem[Barron et~al.(2022)Barron, Mildenhall, Verbin, Srinivasan, and Hedman]{barron2022mip}
+Jonathan~T Barron, Ben Mildenhall, Dor Verbin, Pratul~P Srinivasan, and Peter Hedman.
+\newblock Mip-nerf 360: Unbounded anti-aliased neural radiance fields.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}, pp.\  5470--5479, 2022.
+
+\bibitem[Barron et~al.(2023)Barron, Mildenhall, Verbin, Srinivasan, and Hedman]{barron2023zip}
+Jonathan~T Barron, Ben Mildenhall, Dor Verbin, Pratul~P Srinivasan, and Peter Hedman.
+\newblock Zip-nerf: Anti-aliased grid-based neural radiance fields.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on Computer Vision}, pp.\  19697--19705, 2023.
+
+\bibitem[Barrow et~al.(1978)Barrow, Tenenbaum, Hanson, and Riseman]{barrow1978recovering}
+Harry Barrow, J~Tenenbaum, A~Hanson, and E~Riseman.
+\newblock Recovering intrinsic scene characteristics.
+\newblock \emph{Comput. vis. syst}, 2\penalty0 (3-26):\penalty0 2, 1978.
+
+\bibitem[Bi et~al.(2020{\natexlab{a}})Bi, Xu, Srinivasan, Mildenhall, Sunkavalli, Ha{\v{s}}an, Hold-Geoffroy, Kriegman, and Ramamoorthi]{bi2020neural}
+Sai Bi, Zexiang Xu, Pratul Srinivasan, Ben Mildenhall, Kalyan Sunkavalli, Milo{\v{s}} Ha{\v{s}}an, Yannick Hold-Geoffroy, David Kriegman, and Ravi Ramamoorthi.
+\newblock Neural reflectance fields for appearance acquisition.
+\newblock \emph{arXiv preprint arXiv:2008.03824}, 2020{\natexlab{a}}.
+
+\bibitem[Bi et~al.(2020{\natexlab{b}})Bi, Xu, Srinivasan, Mildenhall, Sunkavalli, Ha{\v{s}}an, Hold-Geoffroy, Kriegman, and Ramamoorthi]{flashlight}
+Sai Bi, Zexiang Xu, Pratul Srinivasan, Ben Mildenhall, Kalyan Sunkavalli, Milo{\v{s}} Ha{\v{s}}an, Yannick Hold-Geoffroy, David Kriegman, and Ravi Ramamoorthi.
+\newblock Neural reflectance fields for appearance acquisition.
+\newblock \emph{arXiv preprint arXiv:2008.03824}, 2020{\natexlab{b}}.
+
+\bibitem[Boss et~al.(2021)Boss, Braun, Jampani, Barron, Liu, and Lensch]{boss2021nerd}
+Mark Boss, Raphael Braun, Varun Jampani, Jonathan~T Barron, Ce~Liu, and Hendrik Lensch.
+\newblock Nerd: Neural reflectance decomposition from image collections.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on Computer Vision}, pp.\  12684--12694, 2021.
+
+\bibitem[Chen et~al.(2022)Chen, Xu, Geiger, Yu, and Su]{chen2022tensorf}
+Anpei Chen, Zexiang Xu, Andreas Geiger, Jingyi Yu, and Hao Su.
+\newblock Tensorf: Tensorial radiance fields.
+\newblock In \emph{European conference on computer vision}, pp.\  333--350. Springer, 2022.
+
+\bibitem[Chen et~al.(2024)Chen, Li, Ye, Wang, Xie, Zhai, Wang, Liu, Bao, and Zhang]{chen2024pgsr}
+Danpeng Chen, Hai Li, Weicai Ye, Yifan Wang, Weijian Xie, Shangjin Zhai, Nan Wang, Haomin Liu, Hujun Bao, and Guofeng Zhang.
+\newblock Pgsr: Planar-based gaussian splatting for efficient and high-fidelity surface reconstruction.
+\newblock \emph{arXiv preprint arXiv:2406.06521}, 2024.
+
+\bibitem[Cook \& Torrance(1982)Cook and Torrance]{cook1982reflectance}
+Robert~L Cook and Kenneth~E. Torrance.
+\newblock A reflectance model for computer graphics.
+\newblock \emph{ACM Transactions on Graphics (ToG)}, 1\penalty0 (1):\penalty0 7--24, 1982.
+
+\bibitem[Dai et~al.(2024)Dai, Xu, Xie, Liu, Wang, and Xu]{gaussiansurfel}
+Pinxuan Dai, Jiamin Xu, Wenxiang Xie, Xinguo Liu, Huamin Wang, and Weiwei Xu.
+\newblock High-quality surface reconstruction using gaussian surfels.
+\newblock In \emph{ACM SIGGRAPH 2024 Conference Papers}, pp.\  1--11, 2024.
+
+\bibitem[Du et~al.(2024)Du, Liang, and Wang]{gs-id}
+Kang Du, Zhihao Liang, and Zeyu Wang.
+\newblock Gs-id: Illumination decomposition on gaussian splatting via diffusion prior and parametric light source optimization.
+\newblock \emph{arXiv preprint arXiv:2408.08524}, 2024.
+
+\bibitem[Eftekhar et~al.(2021)Eftekhar, Sax, Malik, and Zamir]{eftekhar2021omnidata}
+Ainaz Eftekhar, Alexander Sax, Jitendra Malik, and Amir Zamir.
+\newblock Omnidata: A scalable pipeline for making multi-task mid-level vision datasets from 3d scans.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on Computer Vision}, pp.\  10786--10796, 2021.
+
+\bibitem[Fridovich-Keil et~al.(2022)Fridovich-Keil, Yu, Tancik, Chen, Recht, and Kanazawa]{fridovich2022plenoxels}
+Sara Fridovich-Keil, Alex Yu, Matthew Tancik, Qinhong Chen, Benjamin Recht, and Angjoo Kanazawa.
+\newblock Plenoxels: Radiance fields without neural networks.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}, pp.\  5501--5510, 2022.
+
+\bibitem[Gao et~al.(2023)Gao, Gu, Lin, Zhu, Cao, Zhang, and Yao]{relightable}
+Jian Gao, Chun Gu, Youtian Lin, Hao Zhu, Xun Cao, Li~Zhang, and Yao Yao.
+\newblock Relightable 3d gaussian: Real-time point cloud relighting with brdf decomposition and ray tracing.
+\newblock \emph{arXiv preprint arXiv:2311.16043}, 2023.
+
+\bibitem[Gu{\'e}don \& Lepetit(2024)Gu{\'e}don and Lepetit]{guedon2024sugar}
+Antoine Gu{\'e}don and Vincent Lepetit.
+\newblock Sugar: Surface-aligned gaussian splatting for efficient 3d mesh reconstruction and high-quality mesh rendering.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  5354--5363, 2024.
+
+\bibitem[Huang et~al.(2024)Huang, Yu, Chen, Geiger, and Gao]{2dgs}
+Binbin Huang, Zehao Yu, Anpei Chen, Andreas Geiger, and Shenghua Gao.
+\newblock 2d gaussian splatting for geometrically accurate radiance fields.
+\newblock In \emph{ACM SIGGRAPH 2024 Conference Papers}, pp.\  1--11, 2024.
+
+\bibitem[Jiang et~al.(2024)Jiang, Tu, Liu, Gao, Long, Wang, and Ma]{jiang2024gaussianshader}
+Yingwenqi Jiang, Jiadong Tu, Yuan Liu, Xifeng Gao, Xiaoxiao Long, Wenping Wang, and Yuexin Ma.
+\newblock Gaussianshader: 3d gaussian splatting with shading functions for reflective surfaces.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  5322--5332, 2024.
+
+\bibitem[Jin et~al.(2023)Jin, Liu, Xu, Zhang, Han, Bi, Zhou, Xu, and Su]{jin2023tensoir}
+Haian Jin, Isabella Liu, Peijia Xu, Xiaoshuai Zhang, Songfang Han, Sai Bi, Xiaowei Zhou, Zexiang Xu, and Hao Su.
+\newblock Tensoir: Tensorial inverse rendering.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  165--174, 2023.
+
+\bibitem[Kajiya(1986)]{kajiya1986rendering}
+James~T Kajiya.
+\newblock The rendering equation.
+\newblock In \emph{Proceedings of the 13th annual conference on Computer graphics and interactive techniques}, pp.\  143--150, 1986.
+
+\bibitem[Karis \& Games(2013)Karis and Games]{split}
+Brian Karis and Epic Games.
+\newblock Real shading in unreal engine 4.
+\newblock \emph{Proc. Physically Based Shading Theory Practice}, 4\penalty0 (3):\penalty0 1, 2013.
+
+\bibitem[Kerbl et~al.(2023)Kerbl, Kopanas, Leimk{\"u}hler, and Drettakis]{3dgs}
+Bernhard Kerbl, Georgios Kopanas, Thomas Leimk{\"u}hler, and George Drettakis.
+\newblock 3d gaussian splatting for real-time radiance field rendering.
+\newblock \emph{ACM Trans. Graph.}, 42\penalty0 (4):\penalty0 139--1, 2023.
+
+\bibitem[Kuang et~al.(2024)Kuang, Zhang, Yu, Agarwala, Wu, Wu, et~al.]{orb}
+Zhengfei Kuang, Yunzhi Zhang, Hong-Xing Yu, Samir Agarwala, Elliott Wu, Jiajun Wu, et~al.
+\newblock Stanford-orb: a real-world 3d object inverse rendering benchmark.
+\newblock \emph{Advances in Neural Information Processing Systems}, 36, 2024.
+
+\bibitem[Li et~al.(2018)Li, Xu, Ramamoorthi, Sunkavalli, and Chandraker]{single}
+Zhengqin Li, Zexiang Xu, Ravi Ramamoorthi, Kalyan Sunkavalli, and Manmohan Chandraker.
+\newblock Learning to reconstruct shape and spatially-varying reflectance from a single image.
+\newblock \emph{ACM Transactions on Graphics (TOG)}, 37\penalty0 (6):\penalty0 1--11, 2018.
+
+\bibitem[Liang et~al.(2024)Liang, Zhang, Feng, Shan, and Jia]{gsir}
+Zhihao Liang, Qi~Zhang, Ying Feng, Ying Shan, and Kui Jia.
+\newblock Gs-ir: 3d gaussian splatting for inverse rendering.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  21644--21653, 2024.
+
+\bibitem[Mildenhall et~al.(2021)Mildenhall, Srinivasan, Tancik, Barron, Ramamoorthi, and Ng]{mildenhall2021nerf}
+Ben Mildenhall, Pratul~P Srinivasan, Matthew Tancik, Jonathan~T Barron, Ravi Ramamoorthi, and Ren Ng.
+\newblock Nerf: Representing scenes as neural radiance fields for view synthesis.
+\newblock \emph{Communications of the ACM}, 65\penalty0 (1):\penalty0 99--106, 2021.
+
+\bibitem[M{\"u}ller et~al.(2022)M{\"u}ller, Evans, Schied, and Keller]{ingp}
+Thomas M{\"u}ller, Alex Evans, Christoph Schied, and Alexander Keller.
+\newblock Instant neural graphics primitives with a multiresolution hash encoding.
+\newblock \emph{ACM transactions on graphics (TOG)}, 41\penalty0 (4):\penalty0 1--15, 2022.
+
+\bibitem[Munkberg et~al.(2022)Munkberg, Hasselgren, Shen, Gao, Chen, Evans, M{\"u}ller, and Fidler]{DIFFREC}
+Jacob Munkberg, Jon Hasselgren, Tianchang Shen, Jun Gao, Wenzheng Chen, Alex Evans, Thomas M{\"u}ller, and Sanja Fidler.
+\newblock Extracting triangular 3d models, materials, and lighting from images.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  8280--8290, 2022.
+
+\bibitem[Nam et~al.(2018)Nam, Lee, Gutierrez, and Kim]{practical}
+Giljoo Nam, Joo~Ho Lee, Diego Gutierrez, and Min~H Kim.
+\newblock Practical svbrdf acquisition of 3d objects with unstructured flash photography.
+\newblock \emph{ACM Transactions on Graphics (ToG)}, 37\penalty0 (6):\penalty0 1--12, 2018.
+
+\bibitem[Shi et~al.(2023)Shi, Wu, Wu, Liu, Zhao, Feng, Liu, Zhang, Zhang, Zhou, et~al.]{gir}
+Yahao Shi, Yanmin Wu, Chenming Wu, Xing Liu, Chen Zhao, Haocheng Feng, Jingtuo Liu, Liangjun Zhang, Jian Zhang, Bin Zhou, et~al.
+\newblock Gir: 3d gaussian inverse rendering for relightable scene factorization.
+\newblock \emph{arXiv preprint arXiv:2312.05133}, 2023.
+
+\bibitem[Srinivasan et~al.(2021)Srinivasan, Deng, Zhang, Tancik, Mildenhall, and Barron]{srinivasan2021nerv}
+Pratul~P Srinivasan, Boyang Deng, Xiuming Zhang, Matthew Tancik, Ben Mildenhall, and Jonathan~T Barron.
+\newblock Nerv: Neural reflectance and visibility fields for relighting and view synthesis.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  7495--7504, 2021.
+
+\bibitem[Sun et~al.(2022)Sun, Sun, and Chen]{DVGO}
+Cheng Sun, Min Sun, and Hwann-Tzong Chen.
+\newblock Direct voxel grid optimization: Super-fast convergence for radiance fields reconstruction.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}, pp.\  5459--5469, 2022.
+
+\bibitem[Wang et~al.(2021)Wang, Liu, Liu, Theobalt, Komura, and Wang]{wang2021neus}
+Peng Wang, Lingjie Liu, Yuan Liu, Christian Theobalt, Taku Komura, and Wenping Wang.
+\newblock Neus: Learning neural implicit surfaces by volume rendering for multi-view reconstruction.
+\newblock \emph{arXiv preprint arXiv:2106.10689}, 2021.
+
+\bibitem[Wu et~al.(2024)Wu, Sun, Lai, Ma, Kobbelt, and Gao]{wu2024deferredgs}
+Tong Wu, Jia-Mu Sun, Yu-Kun Lai, Yuewen Ma, Leif Kobbelt, and Lin Gao.
+\newblock Deferredgs: Decoupled and editable gaussian splatting with deferred shading.
+\newblock \emph{arXiv preprint arXiv:2404.09412}, 2024.
+
+\bibitem[Xia et~al.(2016)Xia, Dong, Peers, and Tong]{recovering}
+Rui Xia, Yue Dong, Pieter Peers, and Xin Tong.
+\newblock Recovering shape and spatially-varying surface reflectance under unknown illumination.
+\newblock \emph{ACM Transactions on Graphics (ToG)}, 35\penalty0 (6):\penalty0 1--12, 2016.
+
+\bibitem[Yao et~al.(2022)Yao, Zhang, Liu, Qu, Fang, McKinnon, Tsin, and Quan]{yao2022neilf}
+Yao Yao, Jingyang Zhang, Jingbo Liu, Yihang Qu, Tian Fang, David McKinnon, Yanghai Tsin, and Long Quan.
+\newblock Neilf: Neural incident light field for physically-based material estimation.
+\newblock In \emph{European Conference on Computer Vision}, pp.\  700--716. Springer, 2022.
+
+\bibitem[Yariv et~al.(2021)Yariv, Gu, Kasten, and Lipman]{volsdf}
+Lior Yariv, Jiatao Gu, Yoni Kasten, and Yaron Lipman.
+\newblock Volume rendering of neural implicit surfaces.
+\newblock \emph{Advances in Neural Information Processing Systems}, 34:\penalty0 4805--4815, 2021.
+
+\bibitem[Yu et~al.(2024)Yu, Sattler, and Geiger]{gof}
+Zehao Yu, Torsten Sattler, and Andreas Geiger.
+\newblock Gaussian opacity fields: Efficient and compact surface reconstruction in unbounded scenes.
+\newblock \emph{arXiv preprint arXiv:2404.10772}, 2024.
+
+\bibitem[Zhang et~al.(2020)Zhang, Riegler, Snavely, and Koltun]{zhang2020nerf++}
+Kai Zhang, Gernot Riegler, Noah Snavely, and Vladlen Koltun.
+\newblock Nerf++: Analyzing and improving neural radiance fields.
+\newblock \emph{arXiv preprint arXiv:2010.07492}, 2020.
+
+\bibitem[Zhang et~al.(2021{\natexlab{a}})Zhang, Luan, Wang, Bala, and Snavely]{zhang2021physg}
+Kai Zhang, Fujun Luan, Qianqian Wang, Kavita Bala, and Noah Snavely.
+\newblock Physg: Inverse rendering with spherical gaussians for physics-based material editing and relighting.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  5453--5462, 2021{\natexlab{a}}.
+
+\bibitem[Zhang et~al.(2021{\natexlab{b}})Zhang, Srinivasan, Deng, Debevec, Freeman, and Barron]{zhang2021nerfactor}
+Xiuming Zhang, Pratul~P Srinivasan, Boyang Deng, Paul Debevec, William~T Freeman, and Jonathan~T Barron.
+\newblock Nerfactor: Neural factorization of shape and reflectance under an unknown illumination.
+\newblock \emph{ACM Transactions on Graphics (ToG)}, 40\penalty0 (6):\penalty0 1--18, 2021{\natexlab{b}}.
+
+\bibitem[Zhang et~al.(2022)Zhang, Sun, He, Fu, Jia, and Zhou]{invrender}
+Yuanqing Zhang, Jiaming Sun, Xingyi He, Huan Fu, Rongfei Jia, and Xiaowei Zhou.
+\newblock Modeling indirect illumination for inverse rendering.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  18643--18652, 2022.
+
+\bibitem[Zwicker et~al.(2001)Zwicker, Pfister, Van~Baar, and Gross]{zwicker2001ewa}
+Matthias Zwicker, Hanspeter Pfister, Jeroen Van~Baar, and Markus Gross.
+\newblock Ewa volume splatting.
+\newblock In \emph{Proceedings Visualization, 2001. VIS'01.}, pp.\  29--538. IEEE, 2001.
+
+\end{thebibliography}

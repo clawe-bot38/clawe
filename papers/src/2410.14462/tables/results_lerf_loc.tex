@@ -1,0 +1,49 @@
+\begin{table}[t!]
+\centering
+\scalebox{0.87}{
+\footnotesize
+\begin{tabular}{lccccc}
+\toprule
+& ramen & figurines & teatime & waldo & \textbf{overall} \\ 
+\midrule
+LERF~\citep{kerr2023lerf}      & 62.0 & 75.0 & 84.8 & 72.7 & 73.6 \\ 
+LangSplat~\citep{qin2023langsplat} & 73.2 & 80.4 & 88.1 & \textbf{95.5} & 84.3 \\ 
+\textbf{LUDVIG (ours)}    &  \textbf{78.9} & \textbf{80.4} & \textbf{94.9} & 90.9 & \textbf{86.3} \\ 
+\bottomrule
+\end{tabular}
+}
+\vspace{-.1cm}
+\caption{\textbf{LERF object localization.} Comparison with the state of the art on the dataset introduced by LangSplat~\citep{qin2023langsplat}.}
+\label{tab:lerf-loc}
+
+\end{table}
+
+\begin{table}[t!]
+\centering
+\scalebox{0.85}{
+\footnotesize
+\begin{tabular}{lcccccc}
+\toprule
+%\cmidrule(lr){3-7}
+& \multirow{2}{*}{ramen} & \multirow{2}{*}{figurines} & \multirow{2}{*}{teatime} & \multirow{2}{*}{waldo} & \multirow{2}{*}{\textbf{overall}} & time \\
+& &&&&& (min) \\ \midrule
+\multicolumn{7}{l}{\emph{Initial evaluation protocol from~\cite{kerr2023lerf,qin2023langsplat}: 2D object segmentation}} \\
+\midrule
+LERF~\citep{kerr2023lerf}      & 28.2 & 38.6 & 45.0 & 37.9 & 37.4 & 45  \\ 
+LangSplat~\citep{qin2023langsplat} & 51.2 & 44.7 & 65.1 & 44.5 & 51.4 & 105 \\ 
+LUDVIG (ours)    & \textbf{58.1} & \textbf{63.3} & \textbf{77.1} & \textbf{58.5} & \textbf{64.3} & 10 \\ 
+\midrule 
+\multicolumn{7}{l}{\emph{New evaluation protocol introduced in OpenGaussian~\cite{wu2024opengaussian}: 3D object selection}} \\
+\midrule
+%OpenGaussian~\citep{wu2024opengaussian} & 31.0 & 39.3 & 60.4 & 22.7 & 38.4 & 50 \\ 
+OpenGaussian~\citep{wu2024opengaussian} & 23.9 & 59.3 & 54.4 & 34.6 & 43.1 & 50 \\ 
+Dr. Splat~\citep{jun2025drsplat} & 24.7 & 53.4 & 57.2 & 39.1 & 43.6 & - \\ 
+LUDVIG (ours)   & \textbf{42.3} & \textbf{58.0} & \textbf{58.6} & \textbf{42.8} & \textbf{50.4} & 10 \\ 
+\bottomrule
+\end{tabular}
+}
+\caption{\textbf{LERF object segmentation.} 
+We evaluate on the LERF dataset introduced by LangSplat~\citep{qin2023langsplat} with two different evaluation protocols: i) segmentation based on the 2D reprojected features, ii) 3D segmentation (or \emph{object selection} and reprojection of the \emph{binary 3D masks}, proposed by \cite{kerr2023lerf, qin2023langsplat} and \cite{wu2024opengaussian} respectively.}
+\label{tab:lerf-seg}
+
+\end{table}

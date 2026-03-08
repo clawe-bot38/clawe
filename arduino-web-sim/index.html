@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arduino LED Chaser (Web Simulation)</title>
+  <style>
+    :root {
+      --bg: #0f1220;
+      --panel: #171b2f;
+      --text: #e9ecff;
+      --muted: #aab2d8;
+      --accent: #6aa9ff;
+      --on: #ff4343;
+      --off: #3a3f5c;
+    }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .card {
+      width: min(900px, 96vw);
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    }
+    h1 { margin: 0 0 10px; font-size: 1.25rem; }
+    p { color: var(--muted); }
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(20px, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+      align-items: center;
+    }
+    .led {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      background: var(--off);
+      box-shadow: inset 0 -8px 20px rgba(0,0,0,.5), 0 0 0 2px rgba(255,255,255,.05);
+      transition: background 120ms linear, box-shadow 120ms linear, transform 120ms linear;
+    }
+    .led.on {
+      background: var(--on);
+      box-shadow: 0 0 18px 4px rgba(255,67,67,.7), inset 0 -8px 20px rgba(0,0,0,.25);
+      transform: scale(1.04);
+    }
+    .row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    label { color: var(--muted); }
+    input[type=range] { width: 260px; }
+    .control-btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #0b1022;
+      background: #7be495;
+    }
+    .control-btn.paused {
+      background: #ffd166;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--text);
+      background: #11162a;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #7be495;
+      box-shadow: 0 0 10px rgba(123,228,149,.8);
+    }
+    .status.paused .dot {
+      background: #ffd166;
+      box-shadow: 0 0 10px rgba(255,209,102,.8);
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #12162a;
+      color: #d8e0ff;
+      border-radius: 8px;
+    }
+    pre {
+      padding: 12px;
+      overflow: auto;
+      font-size: .9rem;
+      line-height: 1.35;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .small { font-size: .9rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Arduino LED Chaser — Browser Simulation</h1>
+    <p>This mirrors the logic of a classic Arduino "Knight Rider" LED chaser sketch (digitalWrite + delay timing).</p>
+
+    <div class="strip" id="strip"></div>
+
+    <div class="row">
+      <label>Delay per step: <strong><span id="delayValue">120</span> ms</strong></label>
+      <input id="delaySlider" type="range" min="20" max="400" step="10" value="120" />
+      <button id="pauseBtn" class="control-btn" aria-label="Play or pause animation">⏸ Pause</button>
+      <button id="resetBtn">Reset</button>
+      <div id="status" class="status" aria-live="polite"><span class="dot"></span><span id="statusText">Running</span></div>
+    </div>
+
+    <p class="small">Modeled pins: D2..D11 (10 LEDs)</p>
+
+    <details>
+      <summary>Equivalent Arduino sketch used as reference</summary>
+<pre><code>const int ledPins[] = {2,3,4,5,6,7,8,9,10,11};
+const int ledCount = sizeof(ledPins) / sizeof(ledPins[0]);
+int indexPos = 0;
+int direction = 1;
+int stepDelayMs = 120;
+
+void setup() {
+  for (int i = 0; i &lt; ledCount; i++) {
+    pinMode(ledPins[i], OUTPUT);
+    digitalWrite(ledPins[i], LOW);
+  }
+}
+
+void loop() {
+  for (int i = 0; i &lt; ledCount; i++) digitalWrite(ledPins[i], LOW);
+  digitalWrite(ledPins[indexPos], HIGH);
+  delay(stepDelayMs);
+
+  indexPos += direction;
+  if (indexPos == ledCount - 1 || indexPos == 0) {
+    direction = -direction;
+  }
+}</code></pre>
+    </details>
+  </div>
+
+  <script>
+    const ledCount = 10;
+    const strip = document.getElementById('strip');
+    const delaySlider = document.getElementById('delaySlider');
+    const delayValue = document.getElementById('delayValue');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const status = document.getElementById('status');
+    const statusText = document.getElementById('statusText');
+
+    const leds = [];
+    for (let i = 0; i < ledCount; i++) {
+      const el = document.createElement('div');
+      el.className = 'led';
+      el.title = `Pin D${i + 2}`;
+      strip.appendChild(el);
+      leds.push(el);
+    }
+
+    let indexPos = 0;
+    let direction = 1;
+    let running = true;
+    let stepDelayMs = Number(delaySlider.value);
+
+    function setRunningState(isRunning) {
+      running = isRunning;
+      pauseBtn.textContent = running ? '⏸ Pause' : '▶ Play';
+      pauseBtn.classList.toggle('paused', !running);
+      status.classList.toggle('paused', !running);
+      statusText.textContent = running ? 'Running' : 'Paused';
+    }
+
+    function digitalWrite(pinIndex, state) {
+      if (!leds[pinIndex]) return;
+      leds[pinIndex].classList.toggle('on', Boolean(state));
+    }
+
+    function clearAll() {
+      for (let i = 0; i < ledCount; i++) digitalWrite(i, 0);
+    }
+
+    function loopStep() {
+      if (!running) return;
+
+      clearAll();
+      digitalWrite(indexPos, 1);
+
+      if (indexPos === ledCount - 1) {
+        direction = -1;
+      } else if (indexPos === 0) {
+        direction = 1;
+      }
+      indexPos += direction;
+
+      setTimeout(loopStep, stepDelayMs);
+    }
+
+    delaySlider.addEventListener('input', () => {
+      stepDelayMs = Number(delaySlider.value);
+      delayValue.textContent = stepDelayMs;
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      setRunningState(!running);
+      if (running) loopStep();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      indexPos = 0;
+      direction = 1;
+      clearAll();
+      digitalWrite(indexPos, 1);
+    });
+
+    setRunningState(true);
+    loopStep();
+  </script>
+</body>
+</html>

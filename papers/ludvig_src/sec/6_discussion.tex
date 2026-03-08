@@ -1,0 +1,9 @@
+\section{Concluding remarks and limitations}
+
+In this work, we introduce a simple yet effective aggregation mechanism for transferring 2D visual representations into 3D, bypassing traditional optimization-based approaches. The aggregation builds upon already trained Gaussian Splatting representations and is implemented within the CUDA rendering process, making 2D-to-3D uplifting as fast as 3D-to-2D rendering. 
+Our approach can serve as an off-the-shelf module for transferring 2D features into 3D across a wide range of applications, as demonstrated in our experiments (Sec.~\ref{sec:exp-semantic}) and its recent integration into Panst3R~\cite{zust2025panst3r} for novel-view panoptic segmentation.
+
+We also propose a graph diffusion process that combines spatial structure with DINOv2 similarity to generate accurate 3D segmentation masks, starting from coarse inputs such as scribbles or CLIP relevancy maps. This leads to strong gains over SAM-based open-vocabulary segmentation baselines while remaining computationally efficient.
+
+However, the quality of the resulting 3D features depends on the underlying 3D scene reconstruction, which remains challenging in cases of high specularity~\citep{jiang2024gaussianshader,yang2024spec} or motion blur~\citep{zhao2024badgaussians,lee2024deblurring}. 
+In such scenarios, learning 3D features \emph{along with} 3D Gaussian Splatting reconstruction may serve as a regularization and improve scene geometry.

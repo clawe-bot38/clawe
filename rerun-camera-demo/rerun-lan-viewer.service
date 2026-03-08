@@ -1,0 +1,17 @@
+[Unit]
+Description=Rerun LAN Viewer + Scene Logger
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/clawe/.openclaw/workspace/rerun-camera-demo
+Environment=RERUN_BIND_HOST=0.0.0.0
+Environment=RERUN_GRPC_PORT=9876
+Environment=RERUN_WEB_PORT=9090
+ExecStart=/home/clawe/.openclaw/workspace/rerun-camera-demo/start_rerun_lan_viewer.sh
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

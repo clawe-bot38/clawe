@@ -1,0 +1,1 @@
+/nix/store/lyqg15rha7h74a2nsba74lfyv4n9dfnh-home-manager-files/.openclaw/workspace/skills/goplaces/SKILL.md

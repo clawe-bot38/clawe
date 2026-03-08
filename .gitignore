@@ -1,0 +1,24 @@
+# OpenClaw local/runtime artifacts
+node_modules/
+.env
+.env.*
+*.log
+*.tmp
+*.swp
+
+# Secrets / keys
+*.pem
+*.key
+*.p12
+*.crt
+*.secret
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Obsidian workspace-local cache/state
+.obsidian/workspace.json
+.obsidian/workspaces.json

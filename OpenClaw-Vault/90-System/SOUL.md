@@ -1,0 +1,1 @@
+/home/clawe/.openclaw/workspace/SOUL.md

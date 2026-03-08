@@ -1,0 +1,25 @@
+\begin{table*}[t!] 
+\centering \footnotesize 
+\begin{tabular}{lcccccc} 
+\toprule
+& Geometry only & \multicolumn{2}{c}{Single view} & \multicolumn{2}{c}{Uplifting} & \multicolumn{1}{c}{Graph diffusion} \\
+\cmidrule(lr){3-4} \cmidrule(lr){5-7}
+Model: & Reference mask & DINOv2 & SAM2 & DINOv2 & SAM2 & DINOv2 \\ 
+\midrule 
+Orchids & 71.3 & 91.5 & 78.4 & 91.5 & 91.0 & 92.6 \\ 
+Leaves &  72.4 & 89.3 & 96.6 & 94.1 & 96.3 & 96.2 \\ 
+Fern &  93.9 & 95.1 & 96.7 & 96.7 & 97.0 & 96.3 \\ 
+Room &  77.4 & 95.4 & 95.6 & 97.3 & 96.1 & 95.7 \\ 
+Horns &  80.7 & 90.9 & 93.0 & 94.2 & 94.8 & 95.1 \\ 
+Fortress &  94.3 & 96.8 & 97.7 & 98.6 & 98.3 & 97.5 \\ 
+\midrule 
+Fork &  67.5 & 85.6 & 80.5 & 88.8 &  86.7 & 85.0 \\ 
+Pinecone &  56.5 & 92.8 & 67.8 & 89.6 & 90.7 & 93.2 \\ 
+Truck &  60.1 & 83.6 & 90.9 & 95.2 & 93.9 & 95.6 \\ 
+Lego &  57.3 & 64.4 & 89.0 & 69.9 & 92.9 & 91.1 \\
+\midrule 
+Average & 73.1 & 88.5 & 88.6 & 91.6 & 93.8 & 93.8 \\
+\bottomrule 
+\end{tabular} 
+\caption{\textbf{Segmentation (IoU) on SPIn-NeRF~\citep{mirzaei2023spin}}. We compare purely geometrical reference mask uplifting and reprojection, single-view prediction, feature/mask uplifting, and graph diffusion leveraging DINOv2 or SAM2.} \label{tab:ablation-spin-dino-sam}
+\end{table*}

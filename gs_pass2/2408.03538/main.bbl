@@ -1,0 +1,323 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{38}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Azinovic et~al\mbox{.}(2019)]%
+        {azinovic2019inversepathtracing}
+\bibfield{author}{\bibinfo{person}{Dejan Azinovic}, \bibinfo{person}{Tzu-Mao Li}, \bibinfo{person}{Anton Kaplanyan}, {and} \bibinfo{person}{Matthias Nie{\ss}ner}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Inverse path tracing for joint material and lighting estimation}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{2447--2456}.
+\newblock
+
+
+\bibitem[Barron et~al\mbox{.}(2021)]%
+        {barron2021mipnerf}
+\bibfield{author}{\bibinfo{person}{Jonathan~T Barron}, \bibinfo{person}{Ben Mildenhall}, \bibinfo{person}{Matthew Tancik}, \bibinfo{person}{Peter Hedman}, \bibinfo{person}{Ricardo Martin-Brualla}, {and} \bibinfo{person}{Pratul~P Srinivasan}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Mip-nerf: A multiscale representation for anti-aliasing neural radiance fields}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF International Conference on Computer Vision}}. \bibinfo{pages}{5855--5864}.
+\newblock
+
+
+\bibitem[Barron et~al\mbox{.}(2022)]%
+        {barron2022mipnerf360}
+\bibfield{author}{\bibinfo{person}{Jonathan~T. Barron}, \bibinfo{person}{Ben Mildenhall}, \bibinfo{person}{Dor Verbin}, \bibinfo{person}{Pratul~P. Srinivasan}, {and} \bibinfo{person}{Peter Hedman}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Mip-nerf 360: Unbounded anti-aliased neural radiance fields}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{5470--5479}.
+\newblock
+
+
+\bibitem[Burley and Studios(2012)]%
+        {burley2012physically}
+\bibfield{author}{\bibinfo{person}{Brent Burley} {and} \bibinfo{person}{Walt Disney~Animation Studios}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Physically-based shading at disney}. In \bibinfo{booktitle}{\emph{Acm Siggraph}}, Vol.~\bibinfo{volume}{2012}. vol. 2012, \bibinfo{pages}{1--7}.
+\newblock
+
+
+\bibitem[Chen et~al\mbox{.}(2023)]%
+        {chen2023gaussianeditor}
+\bibfield{author}{\bibinfo{person}{Yiwen Chen}, \bibinfo{person}{Zilong Chen}, \bibinfo{person}{Chi Zhang}, \bibinfo{person}{Feng Wang}, \bibinfo{person}{Xiaofeng Yang}, \bibinfo{person}{Yikai Wang}, \bibinfo{person}{Zhongang Cai}, \bibinfo{person}{Lei Yang}, \bibinfo{person}{Huaping Liu}, {and} \bibinfo{person}{Guosheng Lin}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Gaussianeditor: Swift and controllable 3d editing with gaussian splatting}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2311.14521}} (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Fridovich-Keil et~al\mbox{.}(2022)]%
+        {fridovich2022plenoxels}
+\bibfield{author}{\bibinfo{person}{Sara Fridovich-Keil}, \bibinfo{person}{Alex Yu}, \bibinfo{person}{Matthew Tancik}, \bibinfo{person}{Qinhong Chen}, \bibinfo{person}{Benjamin Recht}, {and} \bibinfo{person}{Angjoo Kanazawa}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Plenoxels: Radiance fields without neural networks}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{5501--5510}.
+\newblock
+
+
+\bibitem[Gao et~al\mbox{.}(2023)]%
+        {gao2023relightable}
+\bibfield{author}{\bibinfo{person}{Jian Gao}, \bibinfo{person}{Chun Gu}, \bibinfo{person}{Youtian Lin}, \bibinfo{person}{Hao Zhu}, \bibinfo{person}{Xun Cao}, \bibinfo{person}{Li Zhang}, {and} \bibinfo{person}{Yao Yao}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Relightable 3d gaussian: Real-time point cloud relighting with brdf decomposition and ray tracing}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2311.16043}} (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Jensen et~al\mbox{.}(2014)]%
+        {jensen2014large}
+\bibfield{author}{\bibinfo{person}{Rasmus Jensen}, \bibinfo{person}{Anders Dahl}, \bibinfo{person}{George Vogiatzis}, \bibinfo{person}{Engin Tola}, {and} \bibinfo{person}{Henrik Aan{\ae}s}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Large scale multi-view stereopsis evaluation}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE conference on computer vision and pattern recognition}}. \bibinfo{pages}{406--413}.
+\newblock
+
+
+\bibitem[Jin et~al\mbox{.}(2023)]%
+        {jin2023tensoir}
+\bibfield{author}{\bibinfo{person}{Haian Jin}, \bibinfo{person}{Isabella Liu}, \bibinfo{person}{Peijia Xu}, \bibinfo{person}{Xiaoshuai Zhang}, \bibinfo{person}{Songfang Han}, \bibinfo{person}{Sai Bi}, \bibinfo{person}{Xiaowei Zhou}, \bibinfo{person}{Zexiang Xu}, {and} \bibinfo{person}{Hao Su}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Tensoir: Tensorial inverse rendering}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{165--174}.
+\newblock
+
+
+\bibitem[Kajiya(1986)]%
+        {kajiya1986rendering}
+\bibfield{author}{\bibinfo{person}{James~T Kajiya}.} \bibinfo{year}{1986}\natexlab{}.
+\newblock \showarticletitle{The rendering equation}. In \bibinfo{booktitle}{\emph{Proceedings of the 13th annual conference on Computer graphics and interactive techniques}}. \bibinfo{pages}{143--150}.
+\newblock
+
+
+\bibitem[Kerbl et~al\mbox{.}(2023)]%
+        {3dgs}
+\bibfield{author}{\bibinfo{person}{Bernhard Kerbl}, \bibinfo{person}{Georgios Kopanas}, \bibinfo{person}{Thomas Leimk{\"u}hler}, {and} \bibinfo{person}{George Drettakis}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{3d gaussian splatting for real-time radiance field rendering}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Graphics}} \bibinfo{volume}{42}, \bibinfo{number}{4} (\bibinfo{year}{2023}), \bibinfo{pages}{1--14}.
+\newblock
+
+
+\bibitem[Kristensen et~al\mbox{.}(2005)]%
+        {kristensen2005precomputed}
+\bibfield{author}{\bibinfo{person}{Anders~Wang Kristensen}, \bibinfo{person}{Tomas Akenine-M{\"o}ller}, {and} \bibinfo{person}{Henrik~Wann Jensen}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Precomputed local radiance transfer for real-time lighting design}.
+\newblock In \bibinfo{booktitle}{\emph{ACM SIGGRAPH 2005 Papers}}. \bibinfo{pages}{1208--1215}.
+\newblock
+
+
+\bibitem[Lagunas et~al\mbox{.}(2021)]%
+        {lagunas2021single}
+\bibfield{author}{\bibinfo{person}{Manuel Lagunas}, \bibinfo{person}{Xin Sun}, \bibinfo{person}{Jimei Yang}, \bibinfo{person}{Ruben Villegas}, \bibinfo{person}{Jianming Zhang}, \bibinfo{person}{Zhixin Shu}, \bibinfo{person}{Belen Masia}, {and} \bibinfo{person}{Diego Gutierrez}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Single-image full-body human relighting}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2107.07259}} (\bibinfo{year}{2021}).
+\newblock
+
+
+\bibitem[Li et~al\mbox{.}(2019)]%
+        {li2019deep}
+\bibfield{author}{\bibinfo{person}{Yue Li}, \bibinfo{person}{Pablo Wiedemann}, {and} \bibinfo{person}{Kenny Mitchell}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Deep precomputed radiance transfer for deformable objects}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the ACM on Computer Graphics and Interactive Techniques}} \bibinfo{volume}{2}, \bibinfo{number}{1} (\bibinfo{year}{2019}), \bibinfo{pages}{1--16}.
+\newblock
+
+
+\bibitem[Li et~al\mbox{.}(2021)]%
+        {li2021SceneFlownerf}
+\bibfield{author}{\bibinfo{person}{Zhengqi Li}, \bibinfo{person}{Simon Niklaus}, \bibinfo{person}{Noah Snavely}, {and} \bibinfo{person}{Oliver Wang}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Neural scene flow fields for space-time view synthesis of dynamic scenes}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{6498--6508}.
+\newblock
+
+
+\bibitem[Liang et~al\mbox{.}(2023)]%
+        {liang2023gsir}
+\bibfield{author}{\bibinfo{person}{Zhihao Liang}, \bibinfo{person}{Qi Zhang}, \bibinfo{person}{Ying Feng}, \bibinfo{person}{Ying Shan}, {and} \bibinfo{person}{Kui Jia}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Gs-ir: 3d gaussian splatting for inverse rendering}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2311.16473}} (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Liu et~al\mbox{.}(2004)]%
+        {liu2004all}
+\bibfield{author}{\bibinfo{person}{Xinguo Liu}, \bibinfo{person}{Peter-Pike~J Sloan}, \bibinfo{person}{Heung-Yeung Shum}, {and} \bibinfo{person}{John Snyder}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{All-Frequency Precomputed Radiance Transfer for Glossy Objects.}
+\newblock \bibinfo{journal}{\emph{Rendering Techniques}}  \bibinfo{volume}{2004} (\bibinfo{year}{2004}).
+\newblock
+
+
+\bibitem[Mildenhall et~al\mbox{.}(2021)]%
+        {nerf}
+\bibfield{author}{\bibinfo{person}{Ben Mildenhall}, \bibinfo{person}{Pratul~P Srinivasan}, \bibinfo{person}{Matthew Tancik}, \bibinfo{person}{Jonathan~T Barron}, \bibinfo{person}{Ravi Ramamoorthi}, {and} \bibinfo{person}{Ren Ng}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Nerf: Representing scenes as neural radiance fields for view synthesis}.
+\newblock \bibinfo{journal}{\emph{Commun. ACM}} \bibinfo{volume}{65}, \bibinfo{number}{1} (\bibinfo{year}{2021}), \bibinfo{pages}{99--106}.
+\newblock
+
+
+\bibitem[M{\"u}ller et~al\mbox{.}(2022)]%
+        {muller2022instant}
+\bibfield{author}{\bibinfo{person}{Thomas M{\"u}ller}, \bibinfo{person}{Alex Evans}, \bibinfo{person}{Christoph Schied}, {and} \bibinfo{person}{Alexander Keller}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Instant neural graphics primitives with a multiresolution hash encoding}.
+\newblock \bibinfo{journal}{\emph{ACM transactions on graphics (TOG)}} \bibinfo{volume}{41}, \bibinfo{number}{4} (\bibinfo{year}{2022}), \bibinfo{pages}{1--15}.
+\newblock
+
+
+\bibitem[Munkberg et~al\mbox{.}(2022)]%
+        {munkberg2022NVDiffrec}
+\bibfield{author}{\bibinfo{person}{Jacob Munkberg}, \bibinfo{person}{Jon Hasselgren}, \bibinfo{person}{Tianchang Shen}, \bibinfo{person}{Jun Gao}, \bibinfo{person}{Wenzheng Chen}, \bibinfo{person}{Alex Evans}, \bibinfo{person}{Thomas M{\"u}ller}, {and} \bibinfo{person}{Sanja Fidler}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Extracting triangular 3d models, materials, and lighting from images}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{8280--8290}.
+\newblock
+
+
+\bibitem[Pan et~al\mbox{.}(2007)]%
+        {pan2007precomputed}
+\bibfield{author}{\bibinfo{person}{Minghao Pan}, \bibinfo{person}{Rui Wang Xinguo~Liu}, \bibinfo{person}{Qunsheng Peng}, {and} \bibinfo{person}{Hujun Bao}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Precomputed radiance transfer field for rendering interreflections in dynamic scenes}. In \bibinfo{booktitle}{\emph{Computer Graphics Forum}}, Vol.~\bibinfo{volume}{26}. Wiley Online Library, \bibinfo{pages}{485--493}.
+\newblock
+
+
+\bibitem[Park et~al\mbox{.}(2021)]%
+        {park2021nerfies}
+\bibfield{author}{\bibinfo{person}{Keunhong Park}, \bibinfo{person}{Utkarsh Sinha}, \bibinfo{person}{Jonathan~T Barron}, \bibinfo{person}{Sofien Bouaziz}, \bibinfo{person}{Dan~B Goldman}, \bibinfo{person}{Steven~M Seitz}, {and} \bibinfo{person}{Ricardo Martin-Brualla}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Nerfies: Deformable neural radiance fields}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF International Conference on Computer Vision}}. \bibinfo{pages}{5865--5874}.
+\newblock
+
+
+\bibitem[Pumarola et~al\mbox{.}(2021)]%
+        {pumarola2021dnerf}
+\bibfield{author}{\bibinfo{person}{Albert Pumarola}, \bibinfo{person}{Enric Corona}, \bibinfo{person}{Gerard Pons-Moll}, {and} \bibinfo{person}{Francesc Moreno-Noguer}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{D-nerf: Neural radiance fields for dynamic scenes}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{10318--10327}.
+\newblock
+
+
+\bibitem[Rainer et~al\mbox{.}(2022)]%
+        {rainer2022neural}
+\bibfield{author}{\bibinfo{person}{Gilles Rainer}, \bibinfo{person}{Adrien Bousseau}, \bibinfo{person}{Tobias Ritschel}, {and} \bibinfo{person}{George Drettakis}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Neural precomputed radiance transfer}. In \bibinfo{booktitle}{\emph{Computer graphics forum}}, Vol.~\bibinfo{volume}{41}. Wiley Online Library, \bibinfo{pages}{365--378}.
+\newblock
+
+
+\bibitem[Sato et~al\mbox{.}(2003)]%
+        {sato2003illumination}
+\bibfield{author}{\bibinfo{person}{Imari Sato}, \bibinfo{person}{Yoichi Sato}, {and} \bibinfo{person}{Katsushi Ikeuchi}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{Illumination from shadows}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Pattern Analysis and Machine Intelligence}} \bibinfo{volume}{25}, \bibinfo{number}{3} (\bibinfo{year}{2003}), \bibinfo{pages}{290--300}.
+\newblock
+
+
+\bibitem[Sato et~al\mbox{.}(1997)]%
+        {sato1997object}
+\bibfield{author}{\bibinfo{person}{Yoichi Sato}, \bibinfo{person}{Mark~D Wheeler}, {and} \bibinfo{person}{Katsushi Ikeuchi}.} \bibinfo{year}{1997}\natexlab{}.
+\newblock \showarticletitle{Object shape and reflectance modeling from observation}. In \bibinfo{booktitle}{\emph{Proceedings of the 24th annual conference on Computer graphics and interactive techniques}}. \bibinfo{pages}{379--387}.
+\newblock
+
+
+\bibitem[Shi et~al\mbox{.}(2023)]%
+        {shi2023gir}
+\bibfield{author}{\bibinfo{person}{Yahao Shi}, \bibinfo{person}{Yanmin Wu}, \bibinfo{person}{Chenming Wu}, \bibinfo{person}{Xing Liu}, \bibinfo{person}{Chen Zhao}, \bibinfo{person}{Haocheng Feng}, \bibinfo{person}{Jingtuo Liu}, \bibinfo{person}{Liangjun Zhang}, \bibinfo{person}{Jian Zhang}, \bibinfo{person}{Bin Zhou}, {et~al\mbox{.}}} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Gir: 3d gaussian inverse rendering for relightable scene factorization}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2312.05133}} (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Sloan et~al\mbox{.}(2002)]%
+        {sloan2002precomputed}
+\bibfield{author}{\bibinfo{person}{Peter-Pike Sloan}, \bibinfo{person}{Jan Kautz}, {and} \bibinfo{person}{John Snyder}.} \bibinfo{year}{2002}\natexlab{}.
+\newblock \showarticletitle{Precomputed Radiance Transfer for Real-Time Rendering in Dynamic, Low-Frequency Lighting Environments}.
+\newblock  (\bibinfo{year}{2002}).
+\newblock
+
+
+\bibitem[Srinivasan et~al\mbox{.}(2021)]%
+        {srinivasan2021nerv}
+\bibfield{author}{\bibinfo{person}{Pratul~P Srinivasan}, \bibinfo{person}{Boyang Deng}, \bibinfo{person}{Xiuming Zhang}, \bibinfo{person}{Matthew Tancik}, \bibinfo{person}{Ben Mildenhall}, {and} \bibinfo{person}{Jonathan~T Barron}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Nerv: Neural reflectance and visibility fields for relighting and view synthesis}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{7495--7504}.
+\newblock
+
+
+\bibitem[Wu et~al\mbox{.}(2023)]%
+        {wu20234d}
+\bibfield{author}{\bibinfo{person}{Guanjun Wu}, \bibinfo{person}{Taoran Yi}, \bibinfo{person}{Jiemin Fang}, \bibinfo{person}{Lingxi Xie}, \bibinfo{person}{Xiaopeng Zhang}, \bibinfo{person}{Wei Wei}, \bibinfo{person}{Wenyu Liu}, \bibinfo{person}{Qi Tian}, {and} \bibinfo{person}{Xinggang Wang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{4d gaussian splatting for real-time dynamic scene rendering}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2310.08528}} (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Yan et~al\mbox{.}(2023)]%
+        {yan2023nerfds}
+\bibfield{author}{\bibinfo{person}{Zhiwen Yan}, \bibinfo{person}{Chen Li}, {and} \bibinfo{person}{Gim~Hee Lee}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Nerf-ds: Neural radiance fields for dynamic specular objects}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{8285--8295}.
+\newblock
+
+
+\bibitem[Yang et~al\mbox{.}(2023)]%
+        {yang2023real}
+\bibfield{author}{\bibinfo{person}{Zeyu Yang}, \bibinfo{person}{Hongye Yang}, \bibinfo{person}{Zijie Pan}, \bibinfo{person}{Xiatian Zhu}, {and} \bibinfo{person}{Li Zhang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Real-time photorealistic dynamic scene representation and rendering with 4d gaussian splatting}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2310.10642}} (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Yao et~al\mbox{.}(2022)]%
+        {yao2022neilf}
+\bibfield{author}{\bibinfo{person}{Yao Yao}, \bibinfo{person}{Jingyang Zhang}, \bibinfo{person}{Jingbo Liu}, \bibinfo{person}{Yihang Qu}, \bibinfo{person}{Tian Fang}, \bibinfo{person}{David McKinnon}, \bibinfo{person}{Yanghai Tsin}, {and} \bibinfo{person}{Long Quan}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Neilf: Neural incident light field for physically-based material estimation}. In \bibinfo{booktitle}{\emph{European Conference on Computer Vision}}. Springer, \bibinfo{pages}{700--716}.
+\newblock
+
+
+\bibitem[Yi et~al\mbox{.}(2023)]%
+        {yi2023gaussiandreamer}
+\bibfield{author}{\bibinfo{person}{Taoran Yi}, \bibinfo{person}{Jiemin Fang}, \bibinfo{person}{Guanjun Wu}, \bibinfo{person}{Lingxi Xie}, \bibinfo{person}{Xiaopeng Zhang}, \bibinfo{person}{Wenyu Liu}, \bibinfo{person}{Qi Tian}, {and} \bibinfo{person}{Xinggang Wang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Gaussiandreamer: Fast generation from text to 3d gaussian splatting with point cloud priors}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2310.08529}} (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Yu and Smith(2019)]%
+        {yu2019inverserendernet}
+\bibfield{author}{\bibinfo{person}{Ye Yu} {and} \bibinfo{person}{William~AP Smith}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Inverserendernet: Learning single image inverse rendering}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{3155--3164}.
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2023)]%
+        {zhang2023neilf++}
+\bibfield{author}{\bibinfo{person}{Jingyang Zhang}, \bibinfo{person}{Yao Yao}, \bibinfo{person}{Shiwei Li}, \bibinfo{person}{Jingbo Liu}, \bibinfo{person}{Tian Fang}, \bibinfo{person}{David McKinnon}, \bibinfo{person}{Yanghai Tsin}, {and} \bibinfo{person}{Long Quan}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Neilf++: Inter-reflectable light fields for geometry and material estimation}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF International Conference on Computer Vision}}. \bibinfo{pages}{3601--3610}.
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2021)]%
+        {zhang2021nerfactor}
+\bibfield{author}{\bibinfo{person}{Xiuming Zhang}, \bibinfo{person}{Pratul~P Srinivasan}, \bibinfo{person}{Boyang Deng}, \bibinfo{person}{Paul Debevec}, \bibinfo{person}{William~T Freeman}, {and} \bibinfo{person}{Jonathan~T Barron}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Nerfactor: Neural factorization of shape and reflectance under an unknown illumination}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Graphics (ToG)}} \bibinfo{volume}{40}, \bibinfo{number}{6} (\bibinfo{year}{2021}), \bibinfo{pages}{1--18}.
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2022)]%
+        {invrender}
+\bibfield{author}{\bibinfo{person}{Yuanqing Zhang}, \bibinfo{person}{Jiaming Sun}, \bibinfo{person}{Xingyi He}, \bibinfo{person}{Huan Fu}, \bibinfo{person}{Rongfei Jia}, {and} \bibinfo{person}{Xiaowei Zhou}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Modeling indirect illumination for inverse rendering}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}}. \bibinfo{pages}{18643--18652}.
+\newblock
+
+
+\end{thebibliography}

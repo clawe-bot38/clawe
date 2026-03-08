@@ -1,0 +1,53 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{iccv}
+\input{preamble}
+\input{math_commands}
+
+\definecolor{iccvblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=iccvblue]{hyperref}
+
+%%%%%%%%% TITLE - PLEASE UPDATE
+\title{LUDVIG: Learning-Free Uplifting of 2D \\ Visual Features to Gaussian Splatting Scenes}
+
+%%%%%%%%% AUTHORS - PLEASE UPDATE
+
+\author{
+    Juliette~Marrie$^{1,2}$ 
+    \hspace{0.1cm} Romain~Menegaux$^1$
+    \hspace{0.1cm} Michael~Arbel$^1$
+    \hspace{0.1cm} Diane~Larlus$^2$
+    \hspace{0.1cm} Julien~Mairal$^1$\\
+    $^1$~{Univ.\ Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK} \hspace{1cm} $^2$~{NAVER LABS Europe}
+}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+We address the problem of extending the capabilities of vision foundation models such as DINO, SAM, and CLIP, to 3D tasks. Specifically, we introduce a novel method to uplift 2D image features into Gaussian Splatting representations of 3D scenes. 
+Unlike traditional approaches that rely on minimizing a reconstruction loss, our method employs a simpler and more efficient feature aggregation technique, augmented by a graph diffusion mechanism. 
+Graph diffusion refines 3D features, such as coarse segmentation masks, by leveraging 3D geometry and pairwise similarities induced by DINOv2.
+Our approach achieves performance comparable to the state of the art on multiple downstream tasks while delivering significant speed-ups.
+Notably, we obtain competitive segmentation results using only generic DINOv2 features, despite DINOv2 not being trained on millions of annotated segmentation masks like SAM.  When applied to CLIP features, our method demonstrates strong performance in open-vocabulary object segmentation tasks, highlighting the versatility of our approach.\footnote{\scriptsize{Project page: \url{https://juliettemarrie.github.io/ludvig}}}
+\vspace{-.2cm}
+\end{abstract}
+
+\input{sec/1_introduction}
+\input{sec/2_related_work}
+\input{sec/3_method}
+\input{sec/4_method}
+\input{sec/5_experiments}
+\input{sec/6_discussion}
+
+\subsubsection*{Acknowledgments}
+This project was supported by ANR 3IA MIAI@Grenoble Alpes (ANR-19-P3IA-0003) and by ERC grant number 101087696 (APHELEIA project). This work was granted access to the HPC resources of IDRIS under the allocation [AD011013343R2] made by GENCI.
+
+{
+    \small
+    \bibliographystyle{ieeenat_fullname}
+    \bibliography{main}
+}
+
+\input{supplementary}
+
+\end{document}

@@ -1,0 +1,21 @@
+\begin{table*}[t!]
+\centering
+\footnotesize
+\scalebox{1.}{
+\begin{tabular}{lccccccccccccc}
+\toprule
+& \multicolumn{2}{c}{\textbf{Images (\#)}} &  \multicolumn{2}{c}{\textbf{Text queries (\#)}} & \multicolumn{2}{c}{\textbf{DINOv2 (s)}} & \textbf{CLIP (s)} & \multicolumn{2}{c}{\textbf{Graph diffusion (s)}} & \multicolumn{2}{c}{\textbf{2D segmentation (s)}} & Total \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){8-8} \cmidrule(lr){9-10} \cmidrule(lr){11-12}
+Scene & Train & Test & Unique & Total & Gen. & Up. & Gen.+Up. &  Scene & Prompt & w/ SAM & w/o SAM & (mins) \\
+\midrule
+Teatime   & 177 & 6 & 14 & 59  & 45 & 14 & 363 & 42 & 15 & 9 & 0.9 & 8 \\
+Waldo     & 187 & 5 & 18 & 22  & 44 & 18 & 371 & 39 & 19 & 4 & 0.5 & 8 \\
+Ramen     & 131 & 7 & 14 & 71 & 40 & 9 & 227 & 37 & 14 & 11 & 1 & 6  \\
+Figurines & 299 & 4 & 21 & 56  & 58 & 38 & 811 & 45 & 22  & 8 & 0.8 & 16  \\
+\bottomrule
+\end{tabular}
+}
+\caption{\textbf{Runtimes for evaluation on LERF Segmentation~\citep{kerr2023lerf, qin2023langsplat}.} 
+The last column (Total) reports total time, which breaks down between i) feature map generation (Gen.) and uplifting (Up.) for all training images; ii) graph diffusion, divided between scene-specific (querying neighbors, defining $S_f$) and prompt-specific (defining $P$, running diffusion) operations for all text queries; iii) 2D segmentation with/without SAM for all text queries across test images. We also report the number of training and test images and the number of text queries across test images.}
+\label{tab:runtimes}
+\end{table*}
