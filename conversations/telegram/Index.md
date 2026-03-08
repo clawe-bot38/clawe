@@ -11,8 +11,14 @@ Tags: #archive #telegram
 - `YYYY-MM-DD-*` session bundles (if needed)
 
 ## Logs
+- [[conversations/telegram/2026/03/2026-03-01-log|2026-03-01 Log]]
+- [[conversations/telegram/2026/03/2026-03-02-log|2026-03-02 Log]]
+- [[conversations/telegram/2026/03/2026-03-03-log|2026-03-03 Log]]
+- [[conversations/telegram/2026/03/2026-03-04-log|2026-03-04 Log]]
+- [[conversations/telegram/2026/03/2026-03-05-log|2026-03-05 Log]]
+- [[conversations/telegram/2026/03/2026-03-06-log|2026-03-06 Log]]
+- [[conversations/telegram/2026/03/2026-03-07-log|2026-03-07 Log]]
 - [[conversations/telegram/2026/03/2026-03-08-log|2026-03-08 Log]]
-- [[conversations/telegram/2026/03/08-github-obsidian-setup/00-Index|2026-03-08 Setup Bundle]]
 
 ## Full-History Backfill
 - [[conversations/telegram/history/000-Origin-Reconstructed|Origin → Pre-Archive (Reconstructed)]]

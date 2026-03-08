@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANYmal URDF Orbit Viewer (No CDN)</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0b0f14; color: #d2e6ff; font: 12px Inter, Arial, sans-serif; }
+    #c { width: 100vw; height: 100vh; display: block; touch-action: none; cursor: grab; }
+    #c.dragging { cursor: grabbing; }
+    #info {
+      position: fixed; top: 10px; left: 12px; z-index: 10; white-space: pre-line;
+      background: rgba(8, 12, 18, 0.35); border: 1px solid rgba(180, 210, 255, 0.15);
+      border-radius: 6px; padding: 8px 10px; max-width: min(90vw, 680px); line-height: 1.35;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="info">ANYmal collision-model viewer (pure canvas, no CDN)
+Drag: orbit · Wheel/Pinch: zoom · Shift+Drag: pan</div>
+
+  <script>
+    'use strict';
+
+    const info = document.getElementById('info');
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+
+    const BG = '#0b0f14';
+    const GRID_MAJOR = '#2f4f68';
+    const GRID_MINOR = '#1b2835';
+    const BODY = '#9aa4b0';
+    const LEG = '#7a8796';
+    const FOOT = '#c9d4de';
+
+    const state = {
+      target: { x: 0, y: 0, z: 0 },
+      radius: 2.4, minRadius: 0.2, maxRadius: 40,
+      yaw: Math.PI * 0.75, pitch: -0.35,
+      fovDeg: 60, near: 0.01, far: 200,
+      width: 1, height: 1, dpr: 1,
+      dragging: false, dragMode: 'orbit', lastX: 0, lastY: 0,
+      cameraPos: { x: 0, y: 0, z: 0 },
+      right: { x: 1, y: 0, z: 0 }, up: { x: 0, y: 1, z: 0 }, forward: { x: 0, y: 0, z: -1 },
+      model: null,
+      primitives: [],
+      meshCount: 0,
+      lastError: null,
+      animationStartMs: performance.now()
+    };
+
+    const EPS = 1e-9;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+    const V3 = {
+      add: (a, b) => ({ x: a.x + b.x, y: a.y + b.y, z: a.z + b.z }),
+      sub: (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z }),
+      scale: (a, s) => ({ x: a.x * s, y: a.y * s, z: a.z * s }),
+      dot: (a, b) => a.x * b.x + a.y * b.y + a.z * b.z,
+      cross: (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x }),
+      len: (a) => Math.hypot(a.x, a.y, a.z),
+      norm: (a) => { const l = Math.hypot(a.x, a.y, a.z) || 1; return { x: a.x / l, y: a.y / l, z: a.z / l }; }
+    };
+
+    function matIdentity() { return [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]; }
+    function matMul(a, b) {
+      const o = matIdentity();
+      for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
+        let s = 0; for (let k = 0; k < 4; k++) s += a[r][k] * b[k][c]; o[r][c] = s;
+      }
+      return o;
+    }
+    function matTranslate(x, y, z) { const m = matIdentity(); m[0][3] = x; m[1][3] = y; m[2][3] = z; return m; }
+    function matRotX(a) { const c = Math.cos(a), s = Math.sin(a); return [[1,0,0,0],[0,c,-s,0],[0,s,c,0],[0,0,0,1]]; }
+    function matRotY(a) { const c = Math.cos(a), s = Math.sin(a); return [[c,0,s,0],[0,1,0,0],[-s,0,c,0],[0,0,0,1]]; }
+    function matRotZ(a) { const c = Math.cos(a), s = Math.sin(a); return [[c,-s,0,0],[s,c,0,0],[0,0,1,0],[0,0,0,1]]; }
+    function matAxisAngle(axis, a) {
+      const n = V3.norm(axis); const x = n.x, y = n.y, z = n.z;
+      const c = Math.cos(a), s = Math.sin(a), t = 1 - c;
+      return [
+        [t*x*x + c,   t*x*y - s*z, t*x*z + s*y, 0],
+        [t*x*y + s*z, t*y*y + c,   t*y*z - s*x, 0],
+        [t*x*z - s*y, t*y*z + s*x, t*z*z + c,   0],
+        [0, 0, 0, 1]
+      ];
+    }
+
+    function matFromOrigin(xyz, rpy) {
+      const t = matTranslate(xyz.x, xyz.y, xyz.z);
+      return matMul(t, matMul(matRotZ(rpy.y), matMul(matRotY(rpy.p), matRotX(rpy.r))));
+    }
+
+    function transformPoint(m, p) {
+      return {
+        x: m[0][0]*p.x + m[0][1]*p.y + m[0][2]*p.z + m[0][3],
+        y: m[1][0]*p.x + m[1][1]*p.y + m[1][2]*p.z + m[1][3],
+        z: m[2][0]*p.x + m[2][1]*p.y + m[2][2]*p.z + m[2][3]
+      };
+    }
+
+    function parseVec3Attr(el, name, fallback = [0,0,0]) {
+      const raw = (el && el.getAttribute) ? el.getAttribute(name) : null; if (!raw) return { x: fallback[0], y: fallback[1], z: fallback[2] };
+      const p = raw.trim().split(/\s+/).map(Number);
+      return { x: Number.isFinite(p[0]) ? p[0] : fallback[0], y: Number.isFinite(p[1]) ? p[1] : fallback[1], z: Number.isFinite(p[2]) ? p[2] : fallback[2] };
+    }
+    const parseRPY = (el) => { const v = parseVec3Attr(el, 'rpy', [0,0,0]); return { r: v.x, p: v.y, y: v.z }; };
+    const directChildren = (el, tag) => Array.from((el && el.children) ? el.children : []).filter(c => c.tagName === tag);
+    const firstChild = (el, tag) => directChildren(el, tag)[0] || null;
+
+    function makeBoxEdges(sx, sy, sz) {
+      const x = sx / 2, y = sy / 2, z = sz / 2;
+      const v = [{x:-x,y:-y,z:-z}, {x:x,y:-y,z:-z}, {x:x,y:y,z:-z}, {x:-x,y:y,z:-z}, {x:-x,y:-y,z:z}, {x:x,y:-y,z:z}, {x:x,y:y,z:z}, {x:-x,y:y,z:z}];
+      const e = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+      return { v, e };
+    }
+    function makeCylinderEdges(radius, length, segments = 16) {
+      const z0 = -length / 2, z1 = +length / 2, v = [];
+      for (let i = 0; i < segments; i++) { const a = (i / segments) * Math.PI * 2; v.push({ x: Math.cos(a) * radius, y: Math.sin(a) * radius, z: z0 }); }
+      for (let i = 0; i < segments; i++) { const a = (i / segments) * Math.PI * 2; v.push({ x: Math.cos(a) * radius, y: Math.sin(a) * radius, z: z1 }); }
+      const e = [];
+      for (let i = 0; i < segments; i++) { const n = (i + 1) % segments; e.push([i,n], [i + segments, n + segments], [i, i + segments]); }
+      return { v, e };
+    }
+    function makeSphereEdges(radius, rings = 10, slices = 16) {
+      const v = [], e = [];
+      for (let r = 1; r < rings; r++) {
+        const phi = -Math.PI / 2 + (r / rings) * Math.PI, cr = Math.cos(phi) * radius, z = Math.sin(phi) * radius, base = v.length;
+        for (let i = 0; i < slices; i++) { const a = (i / slices) * Math.PI * 2; v.push({ x: Math.cos(a) * cr, y: Math.sin(a) * cr, z }); }
+        for (let i = 0; i < slices; i++) e.push([base + i, base + ((i + 1) % slices)]);
+      }
+      const longSteps = 10;
+      for (let l = 0; l < slices / 2; l++) {
+        const a = (l / (slices / 2)) * Math.PI * 2; let prev = null;
+        for (let i = 0; i <= longSteps; i++) {
+          const phi = -Math.PI / 2 + (i / longSteps) * Math.PI, cr = Math.cos(phi) * radius;
+          const idx = v.length; v.push({ x: Math.cos(a) * cr, y: Math.sin(a) * cr, z: Math.sin(phi) * radius });
+          if (prev !== null) e.push([prev, idx]); prev = idx;
+        }
+      }
+      return { v, e };
+    }
+    const inferColor = (linkName) => linkName === 'base' ? BODY : (/FOOT/i.test(linkName) ? FOOT : LEG);
+
+    async function loadURDF() {
+      const text = await fetch('./anymal.urdf', { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status} while loading anymal.urdf`); return r.text(); });
+      const xml = new DOMParser().parseFromString(text, 'application/xml');
+      if (xml.querySelector('parsererror')) throw new Error('URDF XML parse error');
+
+      const links = new Map();
+      for (const linkEl of xml.querySelectorAll('robot > link')) {
+        const name = linkEl.getAttribute('name');
+        const geoms = [];
+        for (const col of directChildren(linkEl, 'collision')) {
+          const originEl = firstChild(col, 'origin');
+          const localMat = matFromOrigin(parseVec3Attr(originEl, 'xyz', [0,0,0]), parseRPY(originEl));
+          const geoEl = firstChild(col, 'geometry'); if (!geoEl) continue;
+
+          const box = firstChild(geoEl, 'box');
+          if (box) {
+            const s = parseVec3Attr(box, 'size', [0.05, 0.05, 0.05]);
+            geoms.push({ localMat, color: inferColor(name), geometry: makeBoxEdges(s.x, s.y, s.z) });
+            continue;
+          }
+          const cyl = firstChild(geoEl, 'cylinder');
+          if (cyl) {
+            geoms.push({
+              localMat,
+              color: inferColor(name),
+              geometry: makeCylinderEdges(Number(cyl.getAttribute('radius') || 0.02), Number(cyl.getAttribute('length') || 0.05), 18)
+            });
+            continue;
+          }
+          const sphere = firstChild(geoEl, 'sphere');
+          if (sphere) {
+            geoms.push({ localMat, color: inferColor(name), geometry: makeSphereEdges(Number(sphere.getAttribute('radius') || 0.02), 9, 16) });
+          }
+        }
+        links.set(name, { name, geoms });
+      }
+
+      const children = new Map();
+      for (const jointEl of xml.querySelectorAll('robot > joint')) {
+        const pEl = firstChild(jointEl, 'parent');
+        const cEl = firstChild(jointEl, 'child');
+        const p = pEl ? pEl.getAttribute('link') : null;
+        const c = cEl ? cEl.getAttribute('link') : null;
+        if (!p || !c) continue;
+        const o = firstChild(jointEl, 'origin');
+        const joint = {
+          name: jointEl.getAttribute('name') || `${p}_to_${c}`,
+          type: jointEl.getAttribute('type') || 'fixed',
+          parent: p,
+          child: c,
+          originMat: matFromOrigin(parseVec3Attr(o, 'xyz', [0,0,0]), parseRPY(o)),
+          axis: parseVec3Attr(firstChild(jointEl, 'axis'), 'xyz', [0,0,1])
+        };
+        if (!children.has(p)) children.set(p, []);
+        children.get(p).push(joint);
+      }
+
+      state.model = {
+        root: 'base',
+        rootMat: matRotX(Math.PI / 2),
+        links,
+        children
+      };
+
+      const staticPrims = buildPrimitivesAtTime(0);
+      state.meshCount = staticPrims.length;
+      state.primitives = staticPrims;
+      if (!state.meshCount) throw new Error('Parsed URDF but found zero collision meshes to render.');
+      fitCameraToPrimitives(staticPrims);
+      updateInfo();
+    }
+
+    function jointAngle(jointName, t) {
+      const hz = 1.6;
+      const w = Math.PI * 2 * hz;
+      const phase = (jointName.startsWith('LF_') || jointName.startsWith('RH_')) ? 0 : Math.PI;
+      const s = Math.sin(w * t + phase);
+
+      if (jointName.endsWith('_HFE')) return -0.55 + 0.45 * s;
+      if (jointName.endsWith('_KFE')) return 1.10 + 0.55 * Math.max(0, -s);
+      if (jointName.endsWith('_HAA')) return 0.10 * Math.sin(w * t + phase + Math.PI * 0.5);
+      return 0;
+    }
+
+    function buildPrimitivesAtTime(t) {
+      if (!state.model) return [];
+      const out = [];
+
+      function walk(linkName, parentMat) {
+        const link = state.model.links.get(linkName);
+        if (link) {
+          for (const g of link.geoms) {
+            const worldMat = matMul(parentMat, g.localMat);
+            out.push({ color: g.color, edges: g.geometry.e, verts: g.geometry.v.map(p => transformPoint(worldMat, p)) });
+          }
+        }
+
+        for (const j of (state.model.children.get(linkName) || [])) {
+          let motion = matIdentity();
+          if (j.type === 'revolute' || j.type === 'continuous') motion = matAxisAngle(j.axis, jointAngle(j.name, t));
+          const childMat = matMul(parentMat, matMul(j.originMat, motion));
+          walk(j.child, childMat);
+        }
+      }
+
+      const baseBounce = 0.04 * Math.sin(Math.PI * 2 * 3.2 * t);
+      walk(state.model.root, matMul(matTranslate(0, 0, baseBounce), state.model.rootMat));
+      return out;
+    }
+
+    function fitCameraToPrimitives(prims) {
+      let minX = Infinity, minY = Infinity, minZ = Infinity, maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+      for (const p of prims) for (const v of p.verts) {
+        if (v.x < minX) minX = v.x; if (v.y < minY) minY = v.y; if (v.z < minZ) minZ = v.z;
+        if (v.x > maxX) maxX = v.x; if (v.y > maxY) maxY = v.y; if (v.z > maxZ) maxZ = v.z;
+      }
+      if (!isFinite(minX)) return;
+      state.target = { x: (minX + maxX) * 0.5, y: (minY + maxY) * 0.5, z: (minZ + maxZ) * 0.5 };
+      const maxDim = Math.max(maxX - minX, maxY - minY, maxZ - minZ, 0.15);
+      const fov = state.fovDeg * Math.PI / 180;
+      state.radius = Math.max(0.35, (maxDim * 0.5) / Math.tan(fov * 0.5) * 1.35);
+      state.maxRadius = state.radius * 15;
+      state.near = Math.max(0.01, state.radius / 200);
+      state.far = Math.max(30, state.radius * 120);
+    }
+
+    function updateCameraBasis() {
+      const cp = Math.cos(state.pitch), sp = Math.sin(state.pitch), cy = Math.cos(state.yaw), sy = Math.sin(state.yaw);
+      const cam = V3.add(state.target, { x: state.radius * cp * cy, y: state.radius * cp * sy, z: state.radius * sp });
+      state.cameraPos = cam;
+      const forward = V3.norm(V3.sub(state.target, cam));
+      let worldUp = { x: 0, y: 0, z: 1 }, right = V3.cross(forward, worldUp);
+      if (V3.len(right) < 1e-4) { worldUp = { x: 0, y: 1, z: 0 }; right = V3.cross(forward, worldUp); }
+      state.right = V3.norm(right);
+      state.up = V3.norm(V3.cross(state.right, forward));
+      state.forward = forward;
+    }
+
+    function project(worldPoint) {
+      const rel = V3.sub(worldPoint, state.cameraPos), x = V3.dot(rel, state.right), y = V3.dot(rel, state.up), z = V3.dot(rel, state.forward);
+      if (z < state.near || z > state.far) return null;
+      const f = 1 / Math.tan((state.fovDeg * Math.PI / 180) * 0.5), aspect = state.width / state.height;
+      return { sx: ((x / z) * f / aspect * 0.5 + 0.5) * state.width, sy: (1 - ((y / z) * f * 0.5 + 0.5)) * state.height, depth: z };
+    }
+
+    function drawLine3D(a, b, color, width = 1, alpha = 1) {
+      const pa = project(a), pb = project(b); if (!pa || !pb) return;
+      ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width;
+      ctx.beginPath(); ctx.moveTo(pa.sx, pa.sy); ctx.lineTo(pb.sx, pb.sy); ctx.stroke(); ctx.globalAlpha = 1;
+    }
+
+    function drawGrid() {
+      const extent = 3.5, step = 0.2;
+      for (let i = -Math.floor(extent / step); i <= Math.floor(extent / step); i++) {
+        const v = i * step, major = Math.abs(v % 1) < 1e-6, color = major ? GRID_MAJOR : GRID_MINOR;
+        drawLine3D({x:-extent, y:v, z:0}, {x:extent, y:v, z:0}, color, major ? 1.2 : 0.8, 0.65);
+        drawLine3D({x:v, y:-extent, z:0}, {x:v, y:extent, z:0}, color, major ? 1.2 : 0.8, 0.65);
+      }
+    }
+
+    function render(tsMs) {
+      if (state.model) {
+        const t = (tsMs - state.animationStartMs) * 0.001;
+        state.primitives = buildPrimitivesAtTime(t);
+      }
+
+      updateCameraBasis();
+      ctx.fillStyle = BG; ctx.fillRect(0, 0, state.width, state.height);
+      drawGrid();
+
+      const drawList = state.primitives.map(pr => {
+        let d = 0; for (const v of pr.verts) d += V3.dot(V3.sub(v, state.cameraPos), state.forward);
+        return { pr, depth: d / (pr.verts.length || 1) };
+      }).sort((a, b) => b.depth - a.depth);
+
+      for (const { pr } of drawList) {
+        ctx.strokeStyle = pr.color; ctx.lineWidth = 1.2;
+        for (const [ia, ib] of pr.edges) {
+          const pa = project(pr.verts[ia]), pb = project(pr.verts[ib]);
+          if (!pa || !pb) continue;
+          ctx.beginPath(); ctx.moveTo(pa.sx, pa.sy); ctx.lineTo(pb.sx, pb.sy); ctx.stroke();
+        }
+      }
+      requestAnimationFrame(render);
+    }
+
+    function onPointerDown(e) { state.dragging = true; state.dragMode = e.shiftKey ? 'pan' : 'orbit'; state.lastX = e.clientX; state.lastY = e.clientY; if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); }
+    function onPointerUp(e) { state.dragging = false; if (canvas.releasePointerCapture) canvas.releasePointerCapture(e.pointerId); canvas.classList.remove('dragging'); }
+    function onPointerMove(e) {
+      if (!state.dragging) return;
+      const dx = e.clientX - state.lastX, dy = e.clientY - state.lastY;
+      state.lastX = e.clientX; state.lastY = e.clientY;
+      if (state.dragMode === 'pan') {
+        updateCameraBasis();
+        const move = V3.add(V3.scale(state.right, -dx * state.radius * 0.0018), V3.scale(state.up, dy * state.radius * 0.0018));
+        state.target = V3.add(state.target, move);
+      } else {
+        state.yaw -= dx * 0.006;
+        state.pitch = clamp(state.pitch + dy * 0.006, -Math.PI * 0.49, Math.PI * 0.49);
+      }
+      updateInfo();
+    }
+    function zoomBy(factor) { state.radius = clamp(state.radius * factor, state.minRadius, state.maxRadius); updateInfo(); }
+    function onWheel(e) { e.preventDefault(); zoomBy(Math.exp(e.deltaY * 0.0012)); }
+    let pinchDist = null;
+    const touchDist = (t0, t1) => Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+
+    canvas.addEventListener('pointerdown', onPointerDown);
+    canvas.addEventListener('pointerup', onPointerUp);
+    canvas.addEventListener('pointercancel', onPointerUp);
+    canvas.addEventListener('pointermove', onPointerMove);
+    canvas.addEventListener('wheel', onWheel, { passive: false });
+    canvas.addEventListener('touchstart', (e) => { if (e.touches.length === 2) pinchDist = touchDist(e.touches[0], e.touches[1]); }, { passive: true });
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2 && pinchDist != null) {
+        const d = touchDist(e.touches[0], e.touches[1]);
+        if (d > EPS) { zoomBy(clamp(pinchDist / d, 0.8, 1.25)); pinchDist = d; }
+      }
+    }, { passive: true });
+    canvas.addEventListener('touchend', () => { pinchDist = null; }, { passive: true });
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      state.dpr = dpr; state.width = Math.max(1, Math.floor(window.innerWidth)); state.height = Math.max(1, Math.floor(window.innerHeight));
+      canvas.width = Math.floor(state.width * dpr); canvas.height = Math.floor(state.height * dpr);
+      canvas.style.width = `${state.width}px`; canvas.style.height = `${state.height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      updateInfo();
+    }
+
+    function updateInfo() {
+      const rows = [
+        'ANYmal collision-model viewer (pure canvas, no CDN)',
+        'Animated gait cycle on HAA/HFE/KFE joints',
+        'Drag: orbit · Wheel/Pinch: zoom · Shift+Drag: pan',
+        `Collision meshes: ${state.meshCount}`,
+        `Camera radius: ${state.radius.toFixed(2)}`
+      ];
+      if (state.lastError) rows.push(`Error: ${state.lastError}`);
+      info.textContent = rows.join('\n');
+    }
+
+    async function main() {
+      try {
+        resize();
+        await loadURDF();
+      } catch (err) {
+        console.error(err);
+        state.lastError = (err && err.message) ? err.message : String(err);
+        updateInfo();
+      }
+      requestAnimationFrame(render);
+    }
+
+    addEventListener('resize', resize);
+    main();
+  </script>
+</body>
+</html>

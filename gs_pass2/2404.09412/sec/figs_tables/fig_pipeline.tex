@@ -1,0 +1,11 @@
+\begin{figure*}[t!]
+	\includegraphics[width=0.99\linewidth]{./img/pipeline_toaster.pdf}
+	\caption{
+		Overview of \name. 
+        Given multi-view images, \name builds a decoupled \yl{Gaussian} splatting representation where auxiliary texture attributes are defined on each \yl{Gaussian}. 
+        To enable successful geometry and appearance separation, we attach an extra normal direction to each \yl{Gaussian} and optimize it by distilling the normal field from a jointly trained signed distance function. 
+        For texture and lighting decomposition, \name rasterizes geometry and texture attributes into buffer maps and computes shading at \yl{the} pixel level under the illumination of a learnable environment map with \textit{deferred shading}. 
+	}
+	\label{fig:pipeline}
+\end{figure*}
+

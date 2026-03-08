@@ -1,0 +1,7 @@
+\section{Conclusions}
+In this paper, we present \ours, an open-vocabulary, online 3D mapping method.
+Our pipeline extracts 3D segments from 2D masks and tracks them across keyframes.
+To assign CLIP descriptors to 3D segments, we introduce a novel strategy: each 2D segment receives a single descriptor computed as a weighted sum of embeddings from the full image, the masked region, and its surrounding bounding box. The weights are predicted by a neural network, which outperforms handcrafted heuristics while retaining strong generalization.
+We also develop a mechanism to fuse instances that are affected by odometric drift after the geometric corrections of a loop closure.
+\ours outperforms existing baselines in both computational efficiency and segmentation quality across multiple datasets.
+By bridging SLAM with open-vocabulary representations, we believe that our work broadens the scope of applications in these two domains.

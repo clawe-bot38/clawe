@@ -1,0 +1,261 @@
+%\usepackage[dvipsnames,table]{xcolor} <- moved to cvpr.sty to avoid conflict with pdfLatext 2023 (used by arxiv)
+\usepackage{times}    % Integrate Times for here
+\usepackage{xspace}
+\usepackage[dvipsnames, table]{xcolor}
+%\usepackage{subcaption}
+
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{diagbox}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{arydshln} % dashed lines in tables
+\usepackage{tabularx}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{pifont}
+\usepackage{colortbl}
+\usepackage{makecell}
+\usepackage{comment}
+\usepackage{pgfplots,tikz}
+\pgfplotsset{compat=1.18}
+
+\makeatletter
+\let\NAT@parse\undefined
+\makeatother
+
+\usepackage[numbers,sort&compress]{natbib}
+
+% It is strongly recommended to use hyperref, especially for the review version.
+% hyperref with option pagebackref eases the reviewers' job.
+% Please disable hyperref *only* if you encounter grave issues, 
+% e.g. with the file validation for the camera-ready version.
+%
+% If you comment hyperref and then uncomment it, you should delete *.aux before re-running LaTeX.
+% (Or just hit 'q' on the first LaTeX run, let it finish, and you should be clear).
+\definecolor{iccvblue}{rgb}{0.21,0.49,0.74}
+\usepackage[breaklinks,colorlinks,allcolors=iccvblue]{hyperref}
+%\usepackage[pagebackref,breaklinks,colorlinks,allcolors=iccvblue]{hyperref}\renewcommand\backreftwosep{, }
+%\renewcommand\backrefsep{, }
+%\renewcommand*{\backrefalt}[4]{%
+%\ifcase #1%
+% \or (see page:~#2)%
+% \else (see pages:~#2)%
+%\fi%
+%}
+
+\usepackage[capitalize]{cleveref}
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+
+%
+% --- inline annotations
+%
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\todo}[1]{{\color{red}#1}}
+\newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
+
+% table colored-highlighting: green-lightgreen-yellow-white
+\colorlet{colorFst}{Green!25}       % first
+\colorlet{colorSnd}{SpringGreen!45} % second
+\colorlet{colorTrd}{Yellow!30}      % third
+\colorlet{colorLow}{darkgray!30}    % low-light color
+\newcommand{\fs}{\cellcolor{colorFst}\bf}   % first
+\newcommand{\nd}{\cellcolor{colorSnd}}      % second
+\newcommand{\rd}{\cellcolor{colorTrd}}      % third
+
+\newcommand{\cmark}{{\color{PineGreen}\checkmark}}
+\newcommand{\xmark}{{\color{red}\ding{55}}\ }
+
+\DeclareTextFontCommand{\bemph}{\bfseries\em}
+\newcommand{\boldparagraph}[1]{\vspace{1pt}\noindent{\bf #1}}
+
+\newcommand{\ColorMapCircle}[1]{\textcolor{#1}{\ding{108}}}
+\newcommand{\circlenum}[1]{{\textcircled{\scriptsize{#1}}}}
+
+% moderately tighter setting for spacing between figures, tables and their captions
+\setlength{\abovecaptionskip}{5pt plus 3pt minus 3pt} 
+% \setlength{\belowcaptionskip}{-3pt plus 3pt} 
+% \setlength{\abovedisplayskip}{0pt}
+% \setlength{\belowdisplayskip}{0pt}
+% \setlength\abovedisplayshortskip{0pt}
+% \setlength\belowdisplayshortskip{0pt}
+
+% --- define colors
+\definecolor{r_wall}{RGB}{196, 51, 182}
+\definecolor{r_ceiling}{RGB}{174, 199, 232}
+\definecolor{r_floor}{RGB}{188, 189, 34}
+\definecolor{r_chair}{RGB}{152, 223, 138}
+\definecolor{r_blinds}{RGB}{255, 152, 150}
+\definecolor{r_sofa}{RGB}{214, 39, 40}
+\definecolor{r_table}{RGB}{91, 135, 229}
+\definecolor{r_rug}{RGB}{31, 119, 180}
+\definecolor{r_window}{RGB}{229, 91, 104}
+\definecolor{r_lamp}{RGB}{247, 182, 210}
+\definecolor{r_door}{RGB}{91, 229, 110}
+\definecolor{r_pillow}{RGB}{255, 187, 120}
+\definecolor{r_bench}{RGB}{141, 91, 229}
+\definecolor{r_tv-screen}{RGB}{112, 128, 144}
+\definecolor{r_cabinet}{RGB}{196, 156, 148}
+\definecolor{r_pillar}{RGB}{197, 176, 213}
+\definecolor{r_blanket}{RGB}{44, 160, 44}
+\definecolor{r_tv-stand}{RGB}{148, 103, 189}
+\definecolor{r_cushion}{RGB}{229, 91, 223}
+\definecolor{r_bin}{RGB}{219, 219, 141}
+\definecolor{r_vent}{RGB}{192, 229, 91}
+\definecolor{r_bed}{RGB}{88, 218, 137}
+\definecolor{r_stool}{RGB}{58, 98, 137}
+\definecolor{r_picture}{RGB}{177, 82, 239}
+\definecolor{r_indoor-plant}{RGB}{255, 127, 14}
+\definecolor{r_desk}{RGB}{237, 204, 37}
+\definecolor{r_comforter}{RGB}{41, 206, 32}
+\definecolor{r_nightstand}{RGB}{62, 143, 148}
+\definecolor{r_shelf}{RGB}{34, 14, 130}
+\definecolor{r_vase}{RGB}{143, 45, 115}
+\definecolor{r_plant-stand}{RGB}{137, 63, 14}
+\definecolor{r_basket}{RGB}{23, 190, 207}
+\definecolor{r_plate}{RGB}{16, 212, 139}
+\definecolor{r_monitor}{RGB}{90, 119, 201}
+\definecolor{r_pipe}{RGB}{125, 30, 141}
+\definecolor{r_panel}{RGB}{150, 53, 56}
+\definecolor{r_desk-organizer}{RGB}{186, 197, 62}
+\definecolor{r_wall-plug}{RGB}{227, 119, 194}
+\definecolor{r_book}{RGB}{38, 100, 128}
+\definecolor{r_box}{RGB}{120, 31, 243}
+\definecolor{r_clock}{RGB}{154, 59, 103}
+\definecolor{r_sculpture}{RGB}{169, 137, 78}
+\definecolor{r_tissue-paper}{RGB}{143, 245, 111}
+\definecolor{r_camera}{RGB}{37, 230, 205}
+\definecolor{r_tablet}{RGB}{14, 16, 155}
+\definecolor{r_pot}{RGB}{208, 49, 84}
+\definecolor{r_bottle}{RGB}{237, 80, 38}
+\definecolor{r_candle}{RGB}{138, 175, 62}
+\definecolor{r_bowl}{RGB}{158, 218, 229}
+\definecolor{r_cloth}{RGB}{38, 96, 167}
+\definecolor{r_switch}{RGB}{190, 77, 246}
+
+\definecolor{s_wall}{RGB}{196, 51, 182}
+\definecolor{s_floor}{RGB}{174, 199, 232}
+\definecolor{s_cabinet}{RGB}{188, 189, 34}
+\definecolor{s_bed}{RGB}{152, 223, 138}
+\definecolor{s_chair}{RGB}{255, 152, 150}
+\definecolor{s_sofa}{RGB}{214, 39, 40}
+\definecolor{s_table}{RGB}{91, 135, 229}
+\definecolor{s_door}{RGB}{31, 119, 180}
+\definecolor{s_window}{RGB}{229, 91, 104}
+\definecolor{s_bookshelf}{RGB}{247, 182, 210}
+\definecolor{s_picture}{RGB}{91, 229, 110}
+\definecolor{s_counter}{RGB}{255, 187, 120}
+\definecolor{s_desk}{RGB}{141, 91, 229}
+\definecolor{s_curtain}{RGB}{112, 128, 144}
+\definecolor{s_refrigerator}{RGB}{196, 156, 148}
+\definecolor{s_shower curtain}{RGB}{197, 176, 213}
+\definecolor{s_toilet}{RGB}{44, 160, 44}
+\definecolor{s_sink}{RGB}{148, 103, 189}
+\definecolor{s_bathtub}{RGB}{229, 91, 223}
+\definecolor{s_furniture}{RGB}{219, 219, 141}
+\definecolor{s_background}{RGB}{192, 229, 91}
+
+\definecolor{spp_wall}{RGB}{196, 51, 182}
+\definecolor{spp_ceiling}{RGB}{174, 199, 232}
+\definecolor{spp_floor}{RGB}{188, 189, 34}
+\definecolor{spp_table}{RGB}{152, 223, 138}
+\definecolor{spp_door}{RGB}{255, 152, 150}
+\definecolor{spp_ceiling lamp}{RGB}{214, 39, 40}
+\definecolor{spp_cabinet}{RGB}{91, 135, 229}
+\definecolor{spp_blinds}{RGB}{31, 119, 180}
+\definecolor{spp_curtain}{RGB}{229, 91, 104}
+\definecolor{spp_chair}{RGB}{247, 182, 210}
+\definecolor{spp_storage cabinet}{RGB}{91, 229, 110}
+\definecolor{spp_office chair}{RGB}{255, 187, 120}
+\definecolor{spp_bookshelf}{RGB}{141, 91, 229}
+\definecolor{spp_whiteboard}{RGB}{112, 128, 144}
+\definecolor{spp_window}{RGB}{196, 156, 148}
+\definecolor{spp_box}{RGB}{197, 176, 213}
+\definecolor{spp_window frame}{RGB}{44, 160, 44}
+\definecolor{spp_monitor}{RGB}{148, 103, 189}
+\definecolor{spp_shelf}{RGB}{229, 91, 223}
+\definecolor{spp_doorframe}{RGB}{219, 219, 141}
+\definecolor{spp_pipe}{RGB}{192, 229, 91}
+\definecolor{spp_heater}{RGB}{88, 218, 137}
+\definecolor{spp_kitchen cabinet}{RGB}{58, 98, 137}
+\definecolor{spp_sofa}{RGB}{177, 82, 239}
+\definecolor{spp_windowsill}{RGB}{255, 127, 14}
+\definecolor{spp_bed}{RGB}{237, 204, 37}
+\definecolor{spp_shower wall}{RGB}{41, 206, 32}
+\definecolor{spp_trash can}{RGB}{62, 143, 148}
+\definecolor{spp_book}{RGB}{34, 14, 130}
+\definecolor{spp_plant}{RGB}{143, 45, 115}
+\definecolor{spp_blanket}{RGB}{137, 63, 14}
+\definecolor{spp_tv}{RGB}{23, 190, 207}
+\definecolor{spp_computer tower}{RGB}{16, 212, 139}
+\definecolor{spp_kitchen counter}{RGB}{90, 119, 201}
+\definecolor{spp_refrigerator}{RGB}{125, 30, 141}
+\definecolor{spp_jacket}{RGB}{150, 53, 56}
+\definecolor{spp_electrical duct}{RGB}{186, 197, 62}
+\definecolor{spp_sink}{RGB}{227, 119, 194}
+\definecolor{spp_bag}{RGB}{38, 100, 128}
+\definecolor{spp_picture}{RGB}{120, 31, 243}
+\definecolor{spp_pillow}{RGB}{154, 59, 103}
+\definecolor{spp_towel}{RGB}{169, 137, 78}
+\definecolor{spp_suitcase}{RGB}{143, 245, 111}
+\definecolor{spp_backpack}{RGB}{37, 230, 205}
+\definecolor{spp_crate}{RGB}{14, 16, 155}
+\definecolor{spp_keyboard}{RGB}{208, 49, 84}
+\definecolor{spp_rack}{RGB}{237, 80, 38}
+\definecolor{spp_toilet}{RGB}{138, 175, 62}
+\definecolor{spp_paper}{RGB}{158, 218, 229}
+\definecolor{spp_printer}{RGB}{38, 96, 167}
+\definecolor{spp_poster}{RGB}{190, 77, 246}
+\definecolor{spp_painting}{RGB}{0, 0, 0}
+\definecolor{spp_microwave}{RGB}{208, 193, 72}
+\definecolor{spp_board}{RGB}{55, 220, 57}
+\definecolor{spp_shoes}{RGB}{10, 125, 140}
+\definecolor{spp_socket}{RGB}{76, 38, 202}
+\definecolor{spp_bottle}{RGB}{191, 28, 135}
+\definecolor{spp_bucket}{RGB}{211, 120, 42}
+\definecolor{spp_cushion}{RGB}{118, 174, 76}
+\definecolor{spp_basket}{RGB}{17, 242, 171}
+\definecolor{spp_shoe rack}{RGB}{20, 65, 247}
+\definecolor{spp_telephone}{RGB}{208, 61, 222}
+\definecolor{spp_file folder}{RGB}{162, 62, 60}
+\definecolor{spp_cloth}{RGB}{210, 235, 62}
+\definecolor{spp_blind rail}{RGB}{45, 152, 72}
+\definecolor{spp_laptop}{RGB}{35, 107, 149}
+\definecolor{spp_plant pot}{RGB}{160, 89, 237}
+\definecolor{spp_exhaust fan}{RGB}{227, 56, 125}
+\definecolor{spp_cup}{RGB}{169, 143, 81}
+\definecolor{spp_coat hanger}{RGB}{42, 143, 20}
+\definecolor{spp_light switch}{RGB}{25, 160, 151}
+\definecolor{spp_speaker}{RGB}{82, 75, 227}
+\definecolor{spp_table lamp}{RGB}{253, 59, 222}
+\definecolor{spp_air vent}{RGB}{240, 130, 89}
+\definecolor{spp_clothes hanger}{RGB}{123, 172, 47}
+\definecolor{spp_kettle}{RGB}{71, 194, 133}
+\definecolor{spp_smoke detector}{RGB}{24, 94, 205}
+\definecolor{spp_container}{RGB}{134, 16, 179}
+\definecolor{spp_power strip}{RGB}{159, 32, 52}
+\definecolor{spp_slippers}{RGB}{213, 208, 88}
+\definecolor{spp_paper bag}{RGB}{64, 158, 70}
+\definecolor{spp_mouse}{RGB}{18, 163, 194}
+\definecolor{spp_cutting board}{RGB}{65, 29, 153}
+\definecolor{spp_toilet paper}{RGB}{177, 10, 109}
+\definecolor{spp_paper towel}{RGB}{152, 83, 7}
+\definecolor{spp_pot}{RGB}{83, 175, 30}
+\definecolor{spp_clock}{RGB}{18, 199, 153}
+\definecolor{spp_pan}{RGB}{61, 81, 208}
+\definecolor{spp_tap}{RGB}{213, 85, 216}
+\definecolor{spp_jar}{RGB}{170, 53, 42}
+\definecolor{spp_soap dispenser}{RGB}{161, 192, 38}
+\definecolor{spp_binder}{RGB}{23, 241, 91}
+\definecolor{spp_bowl}{RGB}{12, 103, 170}
+\definecolor{spp_tissue box}{RGB}{151, 41, 245}
+\definecolor{spp_whiteboard eraser}{RGB}{133, 51, 80}
+\definecolor{spp_toilet brush}{RGB}{184, 162, 91}
+\definecolor{spp_spray bottle}{RGB}{50, 138, 38}
+\definecolor{spp_headphones}{RGB}{31, 237, 236}
+\definecolor{spp_stapler}{RGB}{39, 19, 208}
+\definecolor{spp_marker}{RGB}{223, 27, 180}

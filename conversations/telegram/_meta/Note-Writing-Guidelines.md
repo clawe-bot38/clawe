@@ -64,7 +64,7 @@ Example:
 ```md
 ## Links
 - [[conversations/telegram/Index|Archive Index]]
-- [[conversations/telegram/2026/03/08-github-obsidian-setup/00-Index|Setup Bundle]]
+- [[conversations/telegram/2026/03/2026-03-08-log|Daily Log Example]]
 ```
 
 ## 7) Naming standards

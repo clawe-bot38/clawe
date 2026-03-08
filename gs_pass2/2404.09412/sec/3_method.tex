@@ -1,0 +1,160 @@
+\section{Method}
+We propose \name, a decoupled \yl{Gaussian} splatting representation that decomposes geometry, texture, and lighting from multi-view images, which enables downstream applications like scene relighting and texture editing. 
+The overview of our method is shown in Fig.~\ref{fig:pipeline}. 
+First, we briefly introduce the rendering formulation in \yl{Gaussian} splatting and define the texture parameters we use in rendering (Sec.~\ref{subsec:GSR}).  
+Since directly optimizing everything from scratch can lead to suboptimal results, especially on the geometry side, we introduce a normal field distillation module (Sec.~\ref{subsec:NFD}) that utilizes an SDF network to guide \yl{Gaussians} to a better surface representation. 
+With geometry set up properly, we bind texture parameters onto the \yl{Gaussian} splatting representation and perform \textit{deferred shading} to obtain plausible decomposition (Sec.~\ref{subsec:DS_GS}). 
+Finally, we demonstrate how this decomposition enables scene editing applications like relighting and texture editing (Sec.~\ref{subsec:Edit}). 
+
+\input{./sec/figs_tables/fig_pipeline.tex}
+
+\subsection{Gaussian Splatting and Texture Definition}
+\label{subsec:GSR}
+Gaussian splatting models a 3D scene by a set of \yl{Gaussians} with which attributes like position $P$, 
+covariance $\Sigma$, 
+scale $S$, opacity $\alpha$ and Spherical Harmonic coefficients (SH) representing view-dependent appearance are associated. 
+It uses a point-based $\alpha$-blending rendering formulation similar to NeRF~\cite{NeRF}. 
+\begin{equation}
+\label{eqn:GSR}
+C_* = \sum_{i=1}^N *_i \alpha_i T_i 
+\end{equation}
+where $N$ is the number of sample points on a ray. 
+$T_i = \prod_{j=1}^{i-1} (1-\alpha_j)$ is accumulated transmittance and $*$ can be any attribute of the sample point to be blended such \yl{as} depth, color and normal direction. 
+Gaussian splatting avoids densely sampling on the ray and efficiently projects 3D \yl{Gaussians} onto a 2D image plane and approximates 3D scenes by blending view-dependent color represented by SH. 
+Instead of modeling the appearance as \yl{a} whole with SH, \yl{our} \name replaces SH with optimizable texture parameters including diffuse albedo $k_d$, roughness $r$, and specular albedo $k_s$ as shown in Fig.~\ref{fig:pipeline} to enable texture and lighting decoupling. 
+
+\subsection{Normal Field Distillation}
+\label{subsec:NFD}
+
+Normal estimation is important for extracting correct texture and lighting information. 
+However, it is challenging to obtain plausible surface \yl{normals} in \yl{Gaussian} splatting as mentioned in Sec.~\ref{sec:intro} since it is a discrete representation and only promotes rendering quality without constraining the geometry. 
+To resolve this issue, we propose a normal field distillation module that integrates current multi-view geometry reconstruction techniques with \yl{Gaussian} splatting. 
+Specifically, we jointly train a NeRF-like network equipped with multi-level hash encoding~\cite{InstantNGP} namely \neusbranch 
+and a \yl{Gaussian} splatting representation. 
+For the \neusbranch, we utilize the signed distance field (SDF) as the geometry representation which can be parameterized as a neural network $f_s(x)$ where $x$ is a sample point in 3D space. 
+For the color branch, instead of modeling all the appearances with a single view-dependent network like NeRF~\cite{NeRF}, we separate the appearance into a view-independent branch and a view-dependent branch to avoid geometric artifacts like concave surfaces on reflective scenes~\cite{Ref-NeuS, Factored-NeuS}. 
+The view-independent branch predicts the diffuse color $c_d$ and the specular tint $p$ for a sample point $x$. 
+The view-dependent branch takes the view direction as input and outputs the specular lighting $c_l$. 
+The final color can be composed by $c' = c_d + p c_l$. 
+For better understanding, all terms with superscript $'$ refer to the NeRF network while terms without refer to the Gaussian splatting representation. 
+To render a pixel $C_c'(v)$, we integrate colors of sample points on a ray $v$ with Eqn.~(\ref{eqn:GSR}).
+Adopting the occlusion-aware and unbiased volume rendering technique from NeuS~\cite{NeuS}, the SDF value can be transformed to volume density by $\sigma(t) = \max\left(-\frac{\frac{d\Phi_s}{dt}(f(x(t))}{\Phi_s(f(x(t))}, 0\right)$, where $\mathit{\Phi_s(x)=(1+e^{-sx})^{-1}}$ and $\mathit{s}$ is a trainable deviation parameter.
+The opaque value for point $x_i$ is derived from the density function $\sigma(t)$ by $\alpha_i = 1 - exp\left(-\int_{t_i}^{t_{i+1}} \sigma(t) dt\right)$. 
+The loss function for \neusbranch is as follows:
+\begin{equation}
+    \label{eqn:loss_refneus}
+    L_{nerf} = \sum_{v {\in V}} \left\|C_c'(v) - C^{t}(v) \right\| + \lambda \sum_{v {\in V}} \sum_{i{=1}}^{M} \left\| \|\nabla_{x_{v, i}} \| - 1 \right\|_2^2,
+\end{equation}
+where $V$ is the number of rays in a batch. 
+$M$ is the number of sample points on a single ray and $C^{t}(v)$ is the corresponding ground truth color. 
+The second term is the Eikonal loss, where $\|\nabla f_s({x_{v, i})} \|$ is the spatial norm of the SDF network $f_s(x)$'s gradient at \yl{the} $i$th sample point $x_{v, i}$ on the ray $v$.
+In order to distill the normal information from \neusbranch to \yl{Gaussian} splatting, we define an extra normal direction $n$ on each \yl{Gaussian} as shown in Fig.~\ref{fig:pipeline} and render the normal $C_n$ of Gaussian splatting for a pixel using Eqn.~(\ref{eqn:GSR}). 
+Then we distill the normal field \yl{Gaussian} splatting by minimizing the difference between $C_n$ and the corresponding rendered normal in \neusbranch:
+\begin{equation}
+\label{eqn:L_nd}
+\begin{aligned}
+     L_{nd} = \sum_{v \in V} \left\|1 - C_n(v) \cdot C_n'(v)\right\| = \sum_{v \in V} \left\|1 - C_n(v) \cdot C_{\nabla x_{v,i}} \right\|
+\end{aligned}
+\end{equation}
+where $\cdot$ is the dot product operator. 
+
+\subsection{Deferred Shading in Gaussian Splatting}
+\label{subsec:DS_GS}
+For shading calculation, \yl{we} follow the rendering equation~\cite{RenderingEquation}:
+\begin{equation}
+\label{eqn:rendering_eqn}
+    L_o(\omega_{o}) = \int_{\Omega} L_i(\omega_{i}) f(\omega_{i}, \omega_{o}) (\omega_{i} \cdot n) d \omega_i
+\end{equation}
+where $L_o(\omega_{o})$ and $L_i(\omega_{i})$ represent outgoing lighting in direction $\omega_{o}$ and incident lighting from direction $\omega_{i}$ respectively. 
+$f(\omega_{i}, \omega_{o})$ is the BRDF 
+at a point which can be parameterized by the Disney shading model~\cite{DisneyBRDF}:
+\begin{equation}
+    f(\omega_{i}, \omega_{o}) = \frac{k_d}{\pi} + \frac{DFG}{4(\omega_{i} \cdot n)(\omega_{o} \cdot n)}
+\end{equation}
+where $D, F, G$ correspond to normal distribution function, \yl{Fresnel} term, and geometry term. 
+Their detailed calculations can be found in~\cite{microfacet}. 
+
+We model the scene's environment lighting with a $6 \times 512\times 512$ High Dynamic Range (HDR) cube map and utilize the SplitSum~\cite{SplitSum} approximation which separates the integrals of lighting and BRDF to enable efficient shading calculation. 
+T   he diffuse color $c_{diff}$:
+\begin{equation}
+    c_{diff} = \frac{k_d}{\pi} \int_{\Omega} L_i(\omega_{i}) (\omega_{i} \cdot n) d \omega_i
+\end{equation}
+which is only dependent on the normal direction $n$ and can be pre-computed and stored in a 2D texture. 
+
+For the specular color $c_{spec}$:
+\begin{equation}
+\begin{aligned}
+    &c_{spec} \approx Int_{light} \cdot Int_{BRDF} \\
+            &= \int_{\Omega}  L_i(\omega_{i}) D(\omega_i, \omega_o) (\omega_{i} \cdot n) d \omega_i \cdot
+    \int_{\Omega} f(\omega_{i}, \omega_{o}) (\omega_{i} \cdot n) d \omega_i
+\end{aligned}
+\end{equation}
+where $Int_{light}$ represents the integral of incident light with the normal distribution function $D$. 
+Given a fixed environment map, $Int_{light}$ is only related to the roughness value $r$ and therefore can be pre-computed and stored in a mipmap where each mip level corresponds to a fixed roughness value. 
+$Int_{BRDF}$ is the integral of specular BRDF under a uniform white environment lighting. 
+It is determined by the roughness value in the BRDF and the dot product between incident light direction and normal direction $\omega_{i} \cdot n$. 
+Again it can be pre-computed and stored in a 2D texture and efficiently looked up in rendering. 
+The final shaded color is $c_g = c_{diff} + c_{spec}$. 
+
+A straightforward way to obtain a decoupled \yl{Gaussian} splatting representation is performing \textit{forward shading} for each \yl{Gaussian} to get its color $c_i$ and rasterizing \yl{Gaussians} with Eqn.~(\ref{eqn:GSR}) similar to previous works~\cite{invrender, NeRFactor, GIR, GaussianShader}. 
+Though obtaining plausible decoupled results, we observe notable artifacts when \yl{rendering} the decoupled \yl{Gaussians} under a novel lighting condition (see ``F.S." columns in Fig.~\ref{fig:ablate_DS} and ``RGS" and ``GShader" columns in Fig.~\ref{fig:relight}). 
+This is because even \yl{though} Eqn.~(\ref{eqn:L_nd}) constrains the \yl{rasterized} normal to be close to that of \neusbranch at pixel level, the \yl{rasterized} normal is still blended from multiple \yl{Gaussians}' normals. 
+The geometry attributes like position, covariance and opacity may overfit the given lighting condition to produce proper blended normal and shaded color and it does not guarantee that each \yl{Gaussian}'s individual normal or shaded color is correct. 
+Thus when changing the lighting condition, the trained geometry attributes may not work for the shaded colors under a new lighting condition and blend them in \yl{a} wrong way.  
+
+To resolve this issue, we introduce the \textit{deferred shading} technique into the rendering of \yl{Gaussians}. 
+That is to say, we first rasterize components like position $P$, normal $n$, diffuse albedo $k_d$, roughness $r$, specular albedo $k_s$, and opacity $\alpha$ into 2D pixels $C_{P}, C_{n}, C_{k_d}, C_{r}, C_{k_s}$, and $C_{\alpha}$ with Eqn.~(\ref{eqn:GSR}). 
+By aggregating all pixels, we get corresponding 2D maps $I_{P}, I_{n}, I_{k_d}$, $I_{r}, I_{k_s}$, and $I_{\alpha}$. 
+Then we calculate the shaded color $C$ for a pixel with Eqn.~(\ref{eqn:rendering_eqn}). 
+Note that since computing shading for every single pixel in the image is time-consuming, we only perform shading on pixels with $C_{\alpha}$ bigger than 0.5. 
+Overall, we optimize \yl{the} following loss:
+\begin{equation}
+\label{eqn:total_loss}
+\begin{aligned}
+    L = &L_{nerf} + \lambda_{nd} L_{nd} + \lambda_{L1}L_{L1} + \lambda_{ssim}L_{ssim} +\\
+    & \lambda_{mask}L_{mask} + \lambda_{TV} L_{TV}
+\end{aligned}
+\end{equation}
+where $L_{L1}$ and $L_{ssim}$ are the L1 loss and D-SSIM loss between the rasterized image and the ground truth image same as those in~\cite{GS}. 
+$L_{mask} = \|I_{\alpha} - I_m\|_1$ is the mask loss that encourages \yl{Gaussians} to lie in the foreground and $I_m$ is the ground truth mask image. 
+$L_{TV}$ is the total variation loss applied on images $I_{k_d}, I_{k_s}, I_{k_s}$ to encourage smooth texture estimation. 
+
+
+
+\subsection{Editing \yl{Decoupled} Gaussians}
+\label{subsec:Edit}
+After optimizing the attributes on \yl{Gaussians}, we obtain a decoupled \yl{Gaussian} splatting representation and can render the original scene with edited texture or geometry under a novel illumination. 
+\subsection{Relighting}
+As we extract the environment map of the original scene, we can replace it by a novel environment map \yl{with} little effort and render the scene with novel illumination using \textit{deferred shading}. 
+
+\subsection{Geometry Editing}
+For geometry editing, instead of directly operating on \yl{Gaussians}, we first extract a mesh with \neusbranch and use it as a geometry proxy to guide the deformation of \yl{Gaussians}. 
+Specifically, we first deform the mesh using the \yl{As-Rigid-As-Possible (ARAP)} deformation algorithm~\cite{ARAP} which solves \yl{for} rotations and translations of mesh vertices.  
+Then we find the closest neighbor 
+for each \yl{Gaussian} on the original mesh \yl{surface}, whose rotation and translation can be obtained via barycentric mapping \yl{(based on the mesh triangle that contains the neighboring point)}. 
+Finally, we deform each \yl{Gaussian} by applying the rotation and the translation of its corresponding closest neighbor to \yl{Gaussian}'s position, covariance matrix, and normal direction.
+By rasterizing deformed \yl{Gaussians}, we can render the deformed scene. 
+
+\subsection{Texture Editing}
+\label{sec:texture_edit}
+For texture editing, we follow the editing paradigm in traditional 3D modeling software~\cite{blender} to paint the scene from a given viewpoint. 
+Our texture editing supports changes on all texture components. 
+We first determine which Gaussians need to be adjusted by considering both whether they lie in the editing mask and the difference between the \yl{Gaussian} depth and the corresponding depth in \yl{the} depth map rendered with Eqn.~(\ref{eqn:GSR}). 
+Then we can optimize these \yl{Gaussians'} texture attributes $*$ by:
+\begin{equation}
+\label{eqn:edit_naive}
+    {\arg}\min_{*} \|I_{*}^i - I_e^i\|,\space\space\space * \in \{k_d, r, k_s\}
+\end{equation}
+where $I_{*}^i$ denotes a rendered texture map, \yl{e.g.} diffuse albedo map, from the input editing viewpoint $i$. 
+$I_e^i$ is the edited texture map from viewpoint $i$ by putting edited \yl{content} onto $I_{*}^i$. 
+
+However, this naive solution only considers the input editing viewpoint and may produce blending artifacts when we view the optimized \yl{Gaussians} from other viewpoints. 
+Therefore, we propose to augment the optimization with random view inputs. 
+That is to say, we generate edited rendered results from multiple random viewpoints by first \yl{unprojecting the} edited \yl{content} onto the mesh extracted by \neusbranch to form a textured mesh and \yl{rendering} the textured mesh from random viewpoints. 
+So the final editing loss is: 
+\begin{equation}
+\label{eqn:edit_improved}
+    {\arg}\min_{*} \sum_{j \in L}\|I_{*}^j - I_e^j\|,\space\space\space * \in \{k_d, r, k_s\}
+\end{equation}
+where set $L$ includes both the input viewpoint and randomly sampled viewpoints.
+

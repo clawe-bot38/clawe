@@ -1,0 +1,49 @@
+\section{Related Work}
+
+\subsection{Neural Rendering}
+With the development of recent implicit \yl{representations}~\cite{OccNet, IMNet, DeepSDF} and volume rendering~\cite{DVR}, neural rendering has become popular in 3D scene reconstruction. 
+The \yl{pioneering} work \yl{Neural Radiance Field (NeRF)}~\cite{NeRF} models a sample point's density and view-dependent color with two neural networks and renders the scene by integrating sample points' colors \yl{along the rays}. 
+NeRF can synthesize realistic novel \yl{view} results but dense sampling and network query make both training and rendering slow. 
+To improve the efficiency, a few \textit{hybrid} rendering methods bake view-independent features onto regular or irregular geometry proxies.  
+NSVF~\cite{NSVF} models 3D scenes with \yl{an} octree structure and prunes voxels with low-density values so that sample points outside the octree can be ignored in the rendering process. 
+DVGO~\cite{DVGO} stores density values and appearance features on two voxel grids and directly optimizes these two voxel grids to reconstruct 3D scenes. 
+TensoRF~\cite{TensoRF} models a scene with a set of matrices and vector pairs that depict the scene's geometry and appearance on corresponding planes, which not only accelerates the training speed but also reduces the storage size. 
+Instant-NGP~\cite{InstantNGP} instead utilizes multi-resolution hash encoding as its scene representation and enables training convergence in \yl{as little as} 5 seconds.  
+MobileNeRF~\cite{MobileNeRF} and BakedSDF~\cite{BakedSDF} share a similar idea to first reconstruct the mesh of a scene and attach learnable appearance information onto mesh vertices, which enables real-time rendering on consumer devices. 
+Moving a step forward, \yl{Gaussian} splatting~\cite{GS} abandons the neural network and models a 3D scene as a set of 3D \yl{Gaussians} on which attributes like position, rotation, scaling, opacity, and spherical harmonic coefficients can be tuned. 
+Gaussian splatting uses a rasterization-based renderer which can produce rendered results from a viewpoint in real time.
+\wttp{
+To better reconstruct reflective scenes, GaussianShader~\cite{GaussianShader} proposes to model view-dependent effects separately similar to RefNeRF~\cite{RefNeRF} and Ye~\textit{et al.}~\cite{ZJUDeferred} further introduce deferred rendering for reflection modeling.
+}
+Despite the high-quality novel view results, these methods still lack the capability of editing, making appearance change or relighting impossible.
+
+\subsection{Neural Surface Reconstruction}
+\yl{Although} NeRF and \yl{Gaussian} splatting can synthesize realistic novel view results, they do not have an explicit surface representation, limiting their application in the traditional graphics pipeline. 
+Therefore, a few methods propose to build the connection between the distance field and the density field in volume rendering. 
+UniSurf~\cite{UNISURF} models the geometry as an occupancy function and replaces alpha values in volume rendering with occupancy values. 
+NeuS~\cite{NeuS} instead treats the geometry as a signed distance field (SDF) and proposes an unbiased and occlusion-aware transformation from SDF to density field. 
+VOLSDF~\cite{VolSDF} also uses SDF as its geometry representation but is based on a Laplace distribution's Cumulative Distribution Function. 
+To reconstruct open surfaces, several concurrent works~\cite{NeUDF, NeuralUDF, NeAT} introduce the unsigned distance field (UDF) into the training of NeRF. 
+However, for shiny scenes, these methods may produce unsatisfactory results like concave surfaces. 
+\yl{To address this, the works~}\cite{Factored-NeuS, DE-NeRF, Ref-NeuS} decompose the appearance of a scene into view-independent appearance and view-dependent appearance based on RefNeRF~\cite{RefNeRF} and better reconstruct shiny scenes. 
+In the field of \yl{Gaussian} splatting, NeuSG~\cite{NeuSG} introduces a NeuS~\cite{NeuS} branch to align \yl{Gaussians'} normals with corresponding normal directions in NeuS but requires a long training time (16 hours) compared to the original \yl{Gaussian} splatting. 
+SuGaR~\cite{SuGaR} instead introduces a depth self-regularization loss term to \yl{constrain Gaussians to} lie on the surface. 
+
+\subsection{Inverse Rendering}
+The goal of inverse rendering is to recover geometry, material and lighting information from a set of images of a single scene under the same or different illuminations. 
+NeRV~\cite{NeRV} is the pioneering work that decomposes geometry and BRDF (Bidirectional Reflectance Distribution) material under a given lighting condition. 
+To reduce dependence on light input, later methods work under unknown light conditions. 
+NeRD~\cite{NeRD} and PhySG~\cite{PhySG} use Spherical Gaussian (SG) as the light representation and utilize \yl{a} density field and \yl{a} signed distance field as their geometry representations. 
+Based on PhySG, InvRender~\cite{invrender} further takes visibility into consideration to better recover material information in occluded regions. 
+NeROIC~\cite{NeROIC} approximates the illumination with Spherical Harmonic \yl{functions} and enables training on Internet images under different lighting conditions. 
+NeRFactor~\cite{NeRFactor} represents the lighting with a low-resolution image. 
+To better estimate material from images, it also trains a BRDF autoencoder. 
+NDR~\cite{NvDiffRec} and NDRMC~\cite{nvdiffrecmc} use a hybrid geometry representation DMTet~\cite{shen2021deep} to enable efficient inverse rendering. 
+\wttp{NMF~\cite{NMF} and TensoIR~\cite{TensoIR} introduce the importance sampling strategy for effective shading calculation.}
+To model reflective objects, NeRO~\cite{NeRO} and DE-NeRF~\cite{DE-NeRF} express high-frequency lighting as MLP networks. 
+Apart from works concentrating on object-level scenes, there are methods~\cite{NeRF-OSR, FEGR, SOL-NeRF} targeting large-scale outdoor scenes.  
+There are also concurrent inverse rendering works based on the \yl{Gaussian} splatting representation like \cite{RelightableGaussian, GS-IR, GIR, GaussianShader}. 
+Different from them, our method introduces \wt{a normal distillation module to \yl{enable} more accurate normal estimation and \yl{alleviate} \wt{blending} artifacts with the \textit{deferred shading} technique when relighting \yl{Gaussians}.}
+
+
+

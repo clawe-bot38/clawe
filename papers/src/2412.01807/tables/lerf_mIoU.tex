@@ -1,0 +1,22 @@
+\begin{table}[t]
+    \centering
+    \footnotesize
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Method}& 
+        \hspace{-2pt}\textbf{Ramen}\hspace{-2pt} & \hspace{-2pt}\textbf{Figurines}\hspace{-2pt} & \hspace{-2pt}\textbf{Teatime}\hspace{-2pt} & \hspace{-2pt}\makecell{\textbf{Waldo}\\\textbf{Kitchen}}\hspace{-2pt} & \hspace{-2pt}\textbf{Overall}\hspace{-2pt} \\
+        \midrule
+        LSeg & 7.0 & 7.6 & 21.7 & 29.9 & 16.6 \\
+        LERF & 28.2 & 38.6 & 45.0 & 37.9 & 37.4 \\
+        GS-Grouping & 45.5 & \underline{60.9} & 40.0 & 38.7 & 46.3 \\
+        Feature-3DGS & 43.7 & 58.8 & 40.5 & 39.6 & 45.7 \\
+        LEGaussians & 46.0 & 60.3 & 40.8 & 39.4 & 46.9 \\
+        GOI & $\mathbf{52.6}$ & $\mathbf{63.7}$ & 44.5 & 41.4 & 50.6 \\
+        LangSplat & $\underline{51.2}$ & 44.7 & $\underline{65.1}$ & $\underline{44.5}$ & $\underline{51.4}$ \\
+        %3DVLGS & $\mathbf{61.4}$ & $\mathbf{73.5}$ & 58.1 & $\underline{54.8}$ & $\mathbf{62.0}$ \\
+        Ours & 51.0 & 58.6 & $\mathbf{70.2}$ & $\mathbf{65.3}$ & $\mathbf{61.3}$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparison of average IoU on LERF Dataset.}
+    \label{tab:lerf-mIoU}
+\end{table}

@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Second Viewer - WebGL + 2D Fallback</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1117; }
+    #stage {
+      position: fixed; inset: 0;
+      width: 100vw; height: 100vh;
+      display: block;
+      touch-action: none;
+      cursor: grab;
+    }
+    #stage.dragging { cursor: grabbing; }
+    #hint {
+      position: fixed; top: 10px; left: 10px; color: #eaeaea;
+      font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: rgba(0,0,0,.45); padding: 8px 10px; border-radius: 8px;
+      z-index: 12;
+      max-width: min(96vw, 540px);
+    }
+    #detectStatus {
+      position: fixed; top: 10px; right: 10px; color: #d8f6ff;
+      font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: rgba(0,0,0,.45); padding: 8px 10px; border-radius: 8px;
+      z-index: 12;
+      white-space: pre;
+      text-align: right;
+      max-width: min(95vw, 520px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #detBox {
+      position: fixed;
+      border: 2px solid #00ff9d;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.5) inset;
+      pointer-events: none;
+      z-index: 11;
+      display: none;
+    }
+    #detLabel {
+      position: absolute;
+      top: -22px;
+      left: -2px;
+      font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #031b12;
+      background: #00ff9d;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stage"></canvas>
+  <div id="hint">Drag to orbit • Shift+drag to pan • Scroll/pinch to zoom<br/>Scene: cube + sphere + torus + cone + cylinder<br/>Auto fallback: WebGL → pure 2D canvas</div>
+  <div id="detectStatus">Renderer: starting…</div>
+  <div id="detBox"><div id="detLabel">cube</div></div>
+
+  <script>
+    const stage = document.getElementById('stage');
+    const detStatus = document.getElementById('detectStatus');
+    const detBox = document.getElementById('detBox');
+    const detLabel = document.getElementById('detLabel');
+
+    const detectorBase = (new URLSearchParams(window.location.search).get('detector') || `${window.location.protocol}//${window.location.hostname}:3202`).replace(/\/$/, '');
+    const detectUrl = `${detectorBase}/detect`;
+
+    const probeCanvas = document.createElement('canvas');
+    const probeCtx = probeCanvas.getContext('2d', { willReadFrequently: true });
+
+    function hasWebGL() {
+      try {
+        const c = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function makeOrbitState() {
+      return {
+        yaw: 0.72,
+        pitch: 0.36,
+        distance: 6.6,
+        target: { x: 0, y: 0.8, z: 0 },
+        dragging: false,
+        dragMode: 'orbit',
+        lastX: 0,
+        lastY: 0
+      };
+    }
+
+    function installPointerControls(canvas, orbitState) {
+      let pinchDist = null;
+      function touchDist(a, b) {
+        const dx = a.clientX - b.clientX;
+        const dy = a.clientY - b.clientY;
+        return Math.hypot(dx, dy);
+      }
+      function onDown(e) {
+        orbitState.dragging = true;
+        orbitState.dragMode = e.shiftKey ? 'pan' : 'orbit';
+        orbitState.lastX = e.clientX;
+        orbitState.lastY = e.clientY;
+        if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
+        canvas.classList.add('dragging');
+      }
+      function onUp(e) {
+        orbitState.dragging = false;
+        if (canvas.releasePointerCapture) canvas.releasePointerCapture(e.pointerId);
+        canvas.classList.remove('dragging');
+      }
+      function onMove(e) {
+        if (!orbitState.dragging) return;
+        const dx = e.clientX - orbitState.lastX;
+        const dy = e.clientY - orbitState.lastY;
+        orbitState.lastX = e.clientX;
+        orbitState.lastY = e.clientY;
+        if (orbitState.dragMode === 'orbit') {
+          orbitState.yaw -= dx * 0.006;
+          orbitState.pitch -= dy * 0.006;
+          orbitState.pitch = Math.max(-1.4, Math.min(1.4, orbitState.pitch));
+        } else {
+          const scale = orbitState.distance * 0.0018;
+          orbitState.target.x -= dx * scale;
+          orbitState.target.y += dy * scale;
+        }
+      }
+      function onWheel(e) {
+        e.preventDefault();
+        orbitState.distance *= Math.exp(e.deltaY * 0.0012);
+        orbitState.distance = Math.max(2.0, Math.min(20.0, orbitState.distance));
+      }
+      canvas.addEventListener('pointerdown', onDown);
+      canvas.addEventListener('pointerup', onUp);
+      canvas.addEventListener('pointercancel', onUp);
+      canvas.addEventListener('pointermove', onMove);
+      canvas.addEventListener('wheel', onWheel, { passive: false });
+      canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) pinchDist = touchDist(e.touches[0], e.touches[1]);
+      }, { passive: true });
+      canvas.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 2 || pinchDist == null) return;
+        const d = touchDist(e.touches[0], e.touches[1]);
+        const factor = pinchDist / Math.max(1, d);
+        orbitState.distance = Math.max(2.0, Math.min(20.0, orbitState.distance * factor));
+        pinchDist = d;
+      }, { passive: true });
+      canvas.addEventListener('touchend', () => { pinchDist = null; }, { passive: true });
+    }
+
+    function buildFallbackRenderer(canvas) {
+      const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+      const orbit = makeOrbitState();
+      installPointerControls(canvas, orbit);
+
+      const shapes = [
+        { kind: 'cube', color: '#00e5ff', pos: { x: 0, y: 0.6, z: 0 }, baseY: 0.6, spinY: 0.014, bobAmp: 0.08, bobFreq: 1.9, phase: 0.3, size: 1.15, rot: { x: 0.2, y: 0, z: 0 } },
+        { kind: 'sphere', color: '#ff6f91', pos: { x: 2.2, y: 0.7, z: 0.5 }, baseY: 0.7, spinY: 0.01, bobAmp: 0.14, bobFreq: 1.4, phase: 1.1, size: 0.65, rot: { x: 0, y: 0, z: 0 } },
+        { kind: 'torus', color: '#86ff8d', pos: { x: -2.15, y: 0.7, z: 0.7 }, baseY: 0.7, spinY: -0.014, bobAmp: 0.1, bobFreq: 1.6, phase: 2.0, size: 0.75, rot: { x: 0.8, y: 0, z: 0 } },
+        { kind: 'cone', color: '#ffb347', pos: { x: -0.7, y: 0.67, z: -2.1 }, baseY: 0.67, spinY: 0.009, bobAmp: 0.09, bobFreq: 2.1, phase: 0.7, size: 0.82, rot: { x: 0, y: 0, z: 0 } },
+        { kind: 'cylinder', color: '#cf8dff', pos: { x: 1.15, y: 0.7, z: -2.2 }, baseY: 0.7, spinY: -0.011, bobAmp: 0.07, bobFreq: 1.75, phase: 1.9, size: 0.72, rot: { x: 0, y: 0, z: 0 } }
+      ];
+
+      const cubeEdges = [[0,1],[1,3],[3,2],[2,0],[4,5],[5,7],[7,6],[6,4],[0,4],[1,5],[2,6],[3,7]];
+      const cubePts = [
+        [-1,-1,-1],[1,-1,-1],[-1,1,-1],[1,1,-1],
+        [-1,-1,1],[1,-1,1],[-1,1,1],[1,1,1]
+      ];
+
+      function rotXYZ(v, r) {
+        let [x, y, z] = v;
+        const cx = Math.cos(r.x), sx = Math.sin(r.x);
+        const cy = Math.cos(r.y), sy = Math.sin(r.y);
+        const cz = Math.cos(r.z), sz = Math.sin(r.z);
+        let y1 = y * cx - z * sx;
+        let z1 = y * sx + z * cx;
+        let x2 = x * cy + z1 * sy;
+        let z2 = -x * sy + z1 * cy;
+        let x3 = x2 * cz - y1 * sz;
+        let y3 = x2 * sz + y1 * cz;
+        return { x: x3, y: y3, z: z2 };
+      }
+
+      function camBasis() {
+        const cp = Math.cos(orbit.pitch), sp = Math.sin(orbit.pitch);
+        const cy = Math.cos(orbit.yaw), sy = Math.sin(orbit.yaw);
+        const eye = {
+          x: orbit.target.x + orbit.distance * cp * sy,
+          y: orbit.target.y + orbit.distance * sp,
+          z: orbit.target.z + orbit.distance * cp * cy
+        };
+        const f = normalize({ x: orbit.target.x - eye.x, y: orbit.target.y - eye.y, z: orbit.target.z - eye.z });
+        const worldUp = { x: 0, y: 1, z: 0 };
+        const r = normalize(cross(f, worldUp));
+        const u = cross(r, f);
+        return { eye, f, r, u };
+      }
+
+      function cross(a, b) {
+        return { x: a.y*b.z - a.z*b.y, y: a.z*b.x - a.x*b.z, z: a.x*b.y - a.y*b.x };
+      }
+      function normalize(v) {
+        const n = Math.hypot(v.x, v.y, v.z) || 1;
+        return { x: v.x / n, y: v.y / n, z: v.z / n };
+      }
+
+      function projectPoint(p, basis) {
+        const dx = p.x - basis.eye.x;
+        const dy = p.y - basis.eye.y;
+        const dz = p.z - basis.eye.z;
+        const x = dx * basis.r.x + dy * basis.r.y + dz * basis.r.z;
+        const y = dx * basis.u.x + dy * basis.u.y + dz * basis.u.z;
+        const z = dx * basis.f.x + dy * basis.f.y + dz * basis.f.z;
+        if (z <= 0.05) return null;
+        const f = 0.96 * Math.min(canvas.width, canvas.height);
+        return {
+          x: canvas.width * 0.5 + (x / z) * f,
+          y: canvas.height * 0.52 - (y / z) * f,
+          z
+        };
+      }
+
+      function drawGround() {
+        const y = -0.02;
+        ctx.fillStyle = '#192432';
+        ctx.strokeStyle = 'rgba(120,150,190,0.25)';
+        for (let i = 8; i >= 1; i--) {
+          const r = i * 1.4;
+          const poly = [];
+          const basis = camBasis();
+          for (let a = 0; a <= 40; a++) {
+            const t = (a / 40) * Math.PI * 2;
+            const p = projectPoint({ x: Math.cos(t)*r, y, z: Math.sin(t)*r }, basis);
+            if (p) poly.push(p);
+          }
+          if (poly.length < 3) continue;
+          ctx.beginPath();
+          ctx.moveTo(poly[0].x, poly[0].y);
+          for (const p of poly) ctx.lineTo(p.x, p.y);
+          ctx.closePath();
+          if (i === 8) ctx.fill();
+          ctx.stroke();
+        }
+      }
+
+      function drawShape(shape, t, basis) {
+        shape.rot.y += shape.spinY;
+        shape.pos.y = shape.baseY + Math.sin(t * shape.bobFreq + shape.phase) * shape.bobAmp;
+        if (shape.kind === 'sphere') shape.pos.x = 2.2 + Math.cos(t * 0.8) * 0.35;
+        if (shape.kind === 'torus') shape.pos.z = 0.7 + Math.sin(t * 0.7) * 0.45;
+        if (shape.kind === 'cone') shape.rot.z = Math.sin(t * 0.9) * 0.15;
+        if (shape.kind === 'cylinder') shape.rot.x = Math.sin(t * 1.2) * 0.22;
+
+        if (shape.kind === 'cube') {
+          const pts = [];
+          for (const p of cubePts) {
+            const v = rotXYZ([p[0]*shape.size*0.5, p[1]*shape.size*0.5, p[2]*shape.size*0.5], shape.rot);
+            const w = { x: v.x + shape.pos.x, y: v.y + shape.pos.y, z: v.z + shape.pos.z };
+            const s = projectPoint(w, basis);
+            if (s) pts.push(s);
+          }
+          if (pts.length >= 8) {
+            ctx.lineWidth = 2.3;
+            ctx.strokeStyle = shape.color;
+            ctx.beginPath();
+            for (const [a, b] of cubeEdges) {
+              ctx.moveTo(pts[a].x, pts[a].y);
+              ctx.lineTo(pts[b].x, pts[b].y);
+            }
+            ctx.stroke();
+            return { projected: pts, kind: 'cube' };
+          }
+        }
+
+        const c = projectPoint(shape.pos, basis);
+        if (!c) return null;
+        const radius = (shape.size / Math.max(0.25, c.z)) * Math.min(canvas.width, canvas.height) * 0.4;
+        const g = ctx.createRadialGradient(c.x - radius * 0.25, c.y - radius * 0.35, radius * 0.15, c.x, c.y, radius);
+        g.addColorStop(0, '#ffffff');
+        g.addColorStop(0.2, shape.color);
+        g.addColorStop(1, 'rgba(0,0,0,0.15)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        if (shape.kind === 'torus') {
+          ctx.ellipse(c.x, c.y, radius * 1.1, radius * 0.72, shape.rot.x, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalCompositeOperation = 'destination-out';
+          ctx.beginPath();
+          ctx.ellipse(c.x, c.y, radius * 0.58, radius * 0.35, shape.rot.x, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalCompositeOperation = 'source-over';
+        } else if (shape.kind === 'cone') {
+          ctx.moveTo(c.x, c.y - radius * 1.05);
+          ctx.lineTo(c.x - radius * 0.9, c.y + radius * 0.95);
+          ctx.lineTo(c.x + radius * 0.9, c.y + radius * 0.95);
+          ctx.closePath();
+          ctx.fill();
+        } else if (shape.kind === 'cylinder') {
+          const rx = c.x - radius * 0.75;
+          const ry = c.y - radius;
+          const rw = radius * 1.5;
+          const rh = radius * 2.0;
+          ctx.rect(rx, ry, rw, rh);
+          ctx.fill();
+        } else {
+          ctx.arc(c.x, c.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        return { center: c, radius, kind: shape.kind };
+      }
+
+      function computeCubeBbox(cubeRender) {
+        if (!cubeRender || !cubeRender.projected || cubeRender.projected.length < 8) return null;
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        for (const p of cubeRender.projected) {
+          minX = Math.min(minX, p.x); minY = Math.min(minY, p.y);
+          maxX = Math.max(maxX, p.x); maxY = Math.max(maxY, p.y);
+        }
+        const w = canvas.clientWidth || 1;
+        const h = canvas.clientHeight || 1;
+        return {
+          x: Math.max(0, minX / w),
+          y: Math.max(0, minY / h),
+          width: Math.min(1, maxX / w) - Math.max(0, minX / w),
+          height: Math.min(1, maxY / h) - Math.max(0, minY / h),
+          confidence: 0.58,
+          label: 'cube(fallback)'
+        };
+      }
+
+      let lastCubeBbox = null;
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = Math.max(1, Math.floor(window.innerWidth));
+        const h = Math.max(1, Math.floor(window.innerHeight));
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        canvas.style.width = `${w}px`;
+        canvas.style.height = `${h}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function frame(ms) {
+        const t = ms * 0.001;
+        ctx.fillStyle = '#10151d';
+        ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+        drawGround();
+        const basis = camBasis();
+        const draws = [];
+        for (const s of shapes) {
+          const d = drawShape(s, t, basis);
+          if (!d) continue;
+          const z = d.projected ? d.projected.reduce((acc, p) => acc + p.z, 0) / d.projected.length : d.center.z;
+          draws.push({ z, data: d });
+        }
+        draws.sort((a, b) => b.z - a.z);
+        const cubeDraw = draws.find((d) => d.data.kind === 'cube');
+        lastCubeBbox = computeCubeBbox(cubeDraw ? cubeDraw.data : null);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      return {
+        mode: 'canvas2d-fallback',
+        canvas,
+        render: frame,
+        getFallbackBbox: () => lastCubeBbox
+      };
+    }
+
+    function updateBoxFromDet(det, rendererCanvas) {
+      if (!det || !det.bbox) {
+        detBox.style.display = 'none';
+        return;
+      }
+      const rect = rendererCanvas.getBoundingClientRect();
+      const x = rect.left + det.bbox.x * rect.width;
+      const y = rect.top + det.bbox.y * rect.height;
+      const bw = det.bbox.width * rect.width;
+      const bh = det.bbox.height * rect.height;
+      if (bw < 2 || bh < 2) {
+        detBox.style.display = 'none';
+        return;
+      }
+      detBox.style.display = 'block';
+      detBox.style.left = `${x}px`;
+      detBox.style.top = `${y}px`;
+      detBox.style.width = `${bw}px`;
+      detBox.style.height = `${bh}px`;
+      detLabel.textContent = `${det.label || 'cube'} ${((det.confidence || 0) * 100).toFixed(1)}%`;
+    }
+
+    async function detectOnCanvas(rendererObj) {
+      const c = rendererObj.canvas;
+      const rect = c.getBoundingClientRect();
+      const viewW = Math.max(1, Math.round(rect.width));
+      const viewH = Math.max(1, Math.round(rect.height));
+      const sampleW = 320;
+      const sampleH = Math.max(180, Math.round(sampleW * viewH / viewW));
+      probeCanvas.width = sampleW;
+      probeCanvas.height = sampleH;
+      probeCtx.drawImage(c, 0, 0, sampleW, sampleH);
+      const rgba = probeCtx.getImageData(0, 0, sampleW, sampleH).data;
+      let binary = '';
+      const chunk = 0x8000;
+      for (let i = 0; i < rgba.length; i += chunk) binary += String.fromCharCode(...rgba.subarray(i, i + chunk));
+      const rgbaB64 = btoa(binary);
+
+      try {
+        const res = await fetch(detectUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ width: sampleW, height: sampleH, rgba: rgbaB64 })
+        });
+        const json = await res.json();
+        if (!json.ok) throw new Error(json.error || 'detector failed');
+        const det = json.detections?.[0] || null;
+        if (det) {
+          updateBoxFromDet(det, c);
+          detStatus.textContent = [
+            `Renderer: ${rendererObj.mode}`,
+            `Detector: ${json.model}`,
+            `Endpoint: ${detectorBase}`,
+            `Cube conf: ${det.confidence.toFixed(4)}`,
+            `BBox: [${det.bbox.x.toFixed(3)}, ${det.bbox.y.toFixed(3)}, ${det.bbox.width.toFixed(3)}, ${det.bbox.height.toFixed(3)}]`
+          ].join('\n');
+          return;
+        }
+        throw new Error('no detections');
+      } catch (err) {
+        const fb = rendererObj.getFallbackBbox ? rendererObj.getFallbackBbox() : null;
+        if (fb) {
+          updateBoxFromDet({ label: fb.label, confidence: fb.confidence, bbox: fb }, c);
+          detStatus.textContent = [
+            `Renderer: ${rendererObj.mode}`,
+            `Detector: offline (fallback bbox)` ,
+            `Endpoint: ${detectorBase}`,
+            `Reason: ${String(err).slice(0, 70)}`,
+            `BBox: [${fb.x.toFixed(3)}, ${fb.y.toFixed(3)}, ${fb.width.toFixed(3)}, ${fb.height.toFixed(3)}]`
+          ].join('\n');
+        } else {
+          detBox.style.display = 'none';
+          detStatus.textContent = [
+            `Renderer: ${rendererObj.mode}`,
+            `Detector: offline`,
+            `Endpoint: ${detectorBase}`,
+            `Reason: ${String(err).slice(0, 70)}`
+          ].join('\n');
+        }
+      }
+    }
+
+    async function tryWebGLRenderer(sharedCanvas) {
+      if (!hasWebGL()) return null;
+      try {
+        const [{ default: THREE }, { OrbitControls }] = await Promise.all([
+          import('./vendor/three.module.js').then((m) => ({ default: m })),
+          import('./vendor/OrbitControls.js')
+        ]);
+
+        const renderer = new THREE.WebGLRenderer({ canvas: sharedCanvas, antialias: true, preserveDrawingBuffer: true, powerPreference: 'low-power' });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x10151d);
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(4.2, 2.8, 5.1);
+        const controls = new OrbitControls(camera, sharedCanvas);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.06;
+        controls.target.set(0, 0.6, 0);
+        controls.minDistance = 2;
+        controls.maxDistance = 14;
+
+        scene.add(new THREE.HemisphereLight(0x99bbff, 0x283240, 0.45));
+        const key = new THREE.DirectionalLight(0xffffff, 1.1);
+        key.position.set(5, 8, 4);
+        key.castShadow = true;
+        key.shadow.mapSize.set(1024, 1024);
+        scene.add(key);
+        const fill = new THREE.DirectionalLight(0x7ca2ff, 0.55);
+        fill.position.set(-4, 3, -5);
+        scene.add(fill);
+        const rim = new THREE.PointLight(0xffc389, 0.35, 30);
+        rim.position.set(0, 4, -4);
+        scene.add(rim);
+
+        const cube = new THREE.Mesh(new THREE.BoxGeometry(1.15, 1.15, 1.15), new THREE.MeshBasicMaterial({ color: 0x00e5ff }));
+        cube.position.set(0, 0.6, 0);
+        cube.castShadow = true;
+        cube.userData = { spinY: 0.012, bobAmp: 0.08, bobFreq: 1.9, phase: 0.3 };
+        scene.add(cube);
+        const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.62, 48, 32), new THREE.MeshStandardMaterial({ color: 0xff6f91, roughness: 0.25, metalness: 0.28 }));
+        sphere.position.set(2.2, 0.7, 0.5);
+        sphere.castShadow = true;
+        sphere.userData = { spinY: 0.01, bobAmp: 0.14, bobFreq: 1.4, phase: 1.1 };
+        scene.add(sphere);
+        const torus = new THREE.Mesh(new THREE.TorusGeometry(0.65, 0.23, 24, 80), new THREE.MeshStandardMaterial({ color: 0x86ff8d, roughness: 0.45, metalness: 0.1 }));
+        torus.position.set(-2.15, 0.7, 0.7);
+        torus.rotation.x = 0.8;
+        torus.castShadow = true;
+        torus.userData = { spinY: -0.014, bobAmp: 0.1, bobFreq: 1.6, phase: 2.0 };
+        scene.add(torus);
+        const cone = new THREE.Mesh(new THREE.ConeGeometry(0.65, 1.35, 36), new THREE.MeshStandardMaterial({ color: 0xffb347, roughness: 0.4, metalness: 0.08 }));
+        cone.position.set(-0.7, 0.67, -2.1);
+        cone.castShadow = true;
+        cone.userData = { spinY: 0.009, bobAmp: 0.09, bobFreq: 2.1, phase: 0.7 };
+        scene.add(cone);
+        const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 1.4, 36), new THREE.MeshStandardMaterial({ color: 0xcf8dff, roughness: 0.27, metalness: 0.2 }));
+        cylinder.position.set(1.15, 0.7, -2.2);
+        cylinder.castShadow = true;
+        cylinder.userData = { spinY: -0.011, bobAmp: 0.07, bobFreq: 1.75, phase: 1.9 };
+        scene.add(cylinder);
+        const ground = new THREE.Mesh(new THREE.CircleGeometry(12, 96), new THREE.MeshStandardMaterial({ color: 0x192432, roughness: 0.9, metalness: 0.02 }));
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -0.02;
+        ground.receiveShadow = true;
+        scene.add(ground);
+        const shadowCatcher = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.ShadowMaterial({ opacity: 0.22 }));
+        shadowCatcher.rotation.x = -Math.PI / 2;
+        shadowCatcher.position.y = -0.01;
+        shadowCatcher.receiveShadow = true;
+        scene.add(shadowCatcher);
+
+        function onResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener('resize', onResize);
+
+        return {
+          mode: 'webgl',
+          canvas: sharedCanvas,
+          render: (ms) => {
+            const t = ms * 0.001;
+            for (const mesh of [cube, sphere, torus, cone, cylinder]) {
+              const u = mesh.userData;
+              mesh.rotation.y += u.spinY;
+              mesh.position.y = (mesh === cube ? 0.6 : 0.7) + Math.sin(t * u.bobFreq + u.phase) * u.bobAmp;
+            }
+            sphere.position.x = 2.2 + Math.cos(t * 0.8) * 0.35;
+            torus.position.z = 0.7 + Math.sin(t * 0.7) * 0.45;
+            cone.rotation.z = Math.sin(t * 0.9) * 0.15;
+            cylinder.rotation.x = Math.sin(t * 1.2) * 0.22;
+            controls.update();
+            renderer.render(scene, camera);
+          },
+          getFallbackBbox: null
+        };
+      } catch (err) {
+        console.warn('WebGL renderer init failed; using 2D fallback:', err);
+        return null;
+      }
+    }
+
+    (async function main() {
+      detStatus.textContent = `Renderer: starting\nDetector: connecting\n${detectorBase}`;
+      let rendererObj = await tryWebGLRenderer(stage);
+      if (!rendererObj) rendererObj = buildFallbackRenderer(stage);
+
+      let lastDetectTs = 0;
+      const detectEveryMs = 950;
+
+      function loop(ms) {
+        rendererObj.render(ms);
+        if (ms - lastDetectTs > detectEveryMs) {
+          lastDetectTs = ms;
+          detectOnCanvas(rendererObj);
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    })();
+  </script>
+</body>
+</html>

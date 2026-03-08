@@ -1,0 +1,21 @@
+\begin{table*}[t!]
+  \centering
+  \footnotesize
+\scalebox{0.9}{
+\begin{tabular}{lccccccccc}
+\toprule
+& NVOS~\citep{ren2022nvos} & MVSeg~\citep{mirzaei2023spin} & SA3D-TRF~\citep{cen2023segmentNeRF} & SA3D-GS~\citep{cen2023segmentGS} & SAGA~\citep{cen2023saga} & OmniSeg3D~\citep{ying2023omniseg3d} & \multicolumn{3}{c}{\textbf{LUDVIG (Ours)}} \\
+\cmidrule(lr){8-10}
+3D representation &  &  & TensoRF & 3D-GS & 3D-GS & NeRF &  \multicolumn{3}{c}{3D-GS} \\
+Uplifting & & & SAM & SAM & SAM & SAM &  DINOv2 & SAM & SAM2 \\
+\midrule
+NVOS & 70.1 & - & 90.3 & 92.2 & \textbf{92.6} & 91.7 & 92.4 & 91.3 & 91.3 \\
+SPIn-NeRF & - & 90.9 & 93.7 & 93.2 & 93.4 & \textbf{94.3} & 93.8 & 93.8 & 93.8 \\
+\bottomrule
+\end{tabular}
+}
+  \caption{\textbf{Multi-view segmentation (IoU) on NVOS~\citep{ren2022nvos} and SPIn-NeRF~\citep{mirzaei2023spin}.} 
+  %We obtain results on par with prior approaches, most of which leverage SAM for segmentation.
+  }
+  \label{tab:nvos-spin}
+\end{table*}

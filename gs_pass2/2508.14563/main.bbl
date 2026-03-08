@@ -1,0 +1,213 @@
+\begin{thebibliography}{10}
+
+\bibitem{mildenhall2021nerf}
+Ben Mildenhall, Pratul~P Srinivasan, Matthew Tancik, Jonathan~T Barron, Ravi Ramamoorthi, and Ren Ng.
+\newblock Nerf: Representing scenes as neural radiance fields for view synthesis.
+\newblock {\em Communications of the ACM}, 65(1):99--106, 2021.
+
+\bibitem{wang2021neus}
+Peng Wang, Lingjie Liu, Yuan Liu, Christian Theobalt, Taku Komura, and Wenping Wang.
+\newblock Neus: Learning neural implicit surfaces by volume rendering for multi-view reconstruction.
+\newblock {\em arXiv preprint arXiv:2106.10689}, 2021.
+
+\bibitem{barron2021mipnerf}
+Jonathan~T Barron, Ben Mildenhall, Matthew Tancik, Peter Hedman, Ricardo Martin-Brualla, and Pratul~P Srinivasan.
+\newblock Mip-nerf: A multiscale representation for anti-aliasing neural radiance fields.
+\newblock In {\em Proceedings of the IEEE/CVF international conference on computer vision}, pages 5855--5864, 2021.
+
+\bibitem{barron2022mipnerf360}
+Jonathan~T Barron, Ben Mildenhall, Dor Verbin, Pratul~P Srinivasan, and Peter Hedman.
+\newblock Mip-nerf 360: Unbounded anti-aliased neural radiance fields.
+\newblock In {\em Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}, pages 5470--5479, 2022.
+
+\bibitem{muller2022instantngp}
+Thomas M{\"u}ller, Alex Evans, Christoph Schied, and Alexander Keller.
+\newblock Instant neural graphics primitives with a multiresolution hash encoding.
+\newblock {\em ACM transactions on graphics (TOG)}, 41(4):1--15, 2022.
+
+\bibitem{chen2022tensorf}
+Anpei Chen, Zexiang Xu, Andreas Geiger, Jingyi Yu, and Hao Su.
+\newblock Tensorf: Tensorial radiance fields.
+\newblock In {\em European conference on computer vision}, pages 333--350. Springer, 2022.
+
+\bibitem{verbin2022refnerf}
+Dor Verbin, Peter Hedman, Ben Mildenhall, Todd Zickler, Jonathan~T Barron, and Pratul~P Srinivasan.
+\newblock Ref-nerf: Structured view-dependent appearance for neural radiance fields.
+\newblock In {\em 2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 5481--5490. IEEE, 2022.
+
+\bibitem{liu2023nero}
+Yuan Liu, Peng Wang, Cheng Lin, Xiaoxiao Long, Jiepeng Wang, Lingjie Liu, Taku Komura, and Wenping Wang.
+\newblock Nero: Neural geometry and brdf reconstruction of reflective objects from multiview images.
+\newblock {\em ACM Transactions on Graphics (ToG)}, 42(4):1--22, 2023.
+
+\bibitem{liang2023envidr}
+Ruofan Liang, Huiting Chen, Chunlin Li, Fan Chen, Selvakumar Panneer, and Nandita Vijaykumar.
+\newblock Envidr: Implicit differentiable renderer with neural environment lighting.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on Computer Vision}, pages 79--89, 2023.
+
+\bibitem{jin2023tensoir}
+Haian Jin, Isabella Liu, Peijia Xu, Xiaoshuai Zhang, Songfang Han, Sai Bi, Xiaowei Zhou, Zexiang Xu, and Hao Su.
+\newblock Tensoir: Tensorial inverse rendering.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 165--174, 2023.
+
+\bibitem{kerbl20233dgs}
+Bernhard Kerbl, Georgios Kopanas, Thomas Leimk{\"u}hler, and George Drettakis.
+\newblock 3d gaussian splatting for real-time radiance field rendering.
+\newblock {\em ACM Trans. Graph.}, 42(4):139--1, 2023.
+
+\bibitem{guedon2024sugar}
+Antoine Gu{\'e}don and Vincent Lepetit.
+\newblock Sugar: Surface-aligned gaussian splatting for efficient 3d mesh reconstruction and high-quality mesh rendering.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 5354--5363, 2024.
+
+\bibitem{yu2024mipsplatting}
+Zehao Yu, Anpei Chen, Binbin Huang, Torsten Sattler, and Andreas Geiger.
+\newblock Mip-splatting: Alias-free 3d gaussian splatting.
+\newblock In {\em Proceedings of the IEEE/CVF conference on computer vision and pattern recognition}, pages 19447--19456, 2024.
+
+\bibitem{yu2024gof}
+Zehao Yu, Torsten Sattler, and Andreas Geiger.
+\newblock Gaussian opacity fields: Efficient adaptive surface reconstruction in unbounded scenes.
+\newblock {\em ACM Transactions on Graphics (ToG)}, 43(6):1--13, 2024.
+
+\bibitem{chen2024pgsr}
+Danpeng Chen, Hai Li, Weicai Ye, Yifan Wang, Weijian Xie, Shangjin Zhai, Nan Wang, Haomin Liu, Hujun Bao, and Guofeng Zhang.
+\newblock Pgsr: Planar-based gaussian splatting for efficient and high-fidelity surface reconstruction.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics}, 2024.
+
+\bibitem{lu2024scaffold}
+Tao Lu, Mulin Yu, Linning Xu, Yuanbo Xiangli, Limin Wang, Dahua Lin, and Bo~Dai.
+\newblock Scaffold-gs: Structured 3d gaussians for view-adaptive rendering.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 20654--20664, 2024.
+
+\bibitem{huang20242dgs}
+Binbin Huang, Zehao Yu, Anpei Chen, Andreas Geiger, and Shenghua Gao.
+\newblock 2d gaussian splatting for geometrically accurate radiance fields.
+\newblock In {\em ACM SIGGRAPH 2024 conference papers}, pages 1--11, 2024.
+
+\bibitem{tang20243igs}
+Zhe~Jun Tang and Tat-Jen Cham.
+\newblock 3igs: Factorised tensorial illumination for 3d gaussian splatting.
+\newblock In {\em European Conference on Computer Vision}, pages 143--159. Springer, 2024.
+
+\bibitem{yang2024specgs}
+Ziyi Yang, Xinyu Gao, Yang-Tian Sun, Yihua Huang, Xiaoyang Lyu, Wen Zhou, Shaohui Jiao, Xiaojuan Qi, and Xiaogang Jin.
+\newblock Spec-gaussian: Anisotropic view-dependent appearance for 3d gaussian splatting.
+\newblock {\em Advances in Neural Information Processing Systems}, 37:61192--61216, 2024.
+
+\bibitem{bi2024gs3}
+Zoubin Bi, Yixin Zeng, Chong Zeng, Fan Pei, Xiang Feng, Kun Zhou, and Hongzhi Wu.
+\newblock Gs3: Efficient relighting with triple gaussian splatting.
+\newblock In {\em SIGGRAPH Asia 2024 Conference Papers}, pages 1--12, 2024.
+
+\bibitem{zhang2025refgs}
+Youjia Zhang, Anpei Chen, Yumin Wan, Zikai Song, Junqing Yu, Yawei Luo, and Wei Yang.
+\newblock Ref-gs: Directional factorization for 2d gaussian splatting.
+\newblock In {\em Proceedings of the Computer Vision and Pattern Recognition Conference}, pages 26483--26492, 2025.
+
+\bibitem{jiang2024gaussianshader}
+Yingwenqi Jiang, Jiadong Tu, Yuan Liu, Xifeng Gao, Xiaoxiao Long, Wenping Wang, and Yuexin Ma.
+\newblock Gaussianshader: 3d gaussian splatting with shading functions for reflective surfaces.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 5322--5332, 2024.
+
+\bibitem{liang2024gsir}
+Zhihao Liang, Qi~Zhang, Ying Feng, Ying Shan, and Kui Jia.
+\newblock Gs-ir: 3d gaussian splatting for inverse rendering.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 21644--21653, 2024.
+
+\bibitem{gao2024r3dg}
+Jian Gao, Chun Gu, Youtian Lin, Zhihao Li, Hao Zhu, Xun Cao, Li~Zhang, and Yao Yao.
+\newblock Relightable 3d gaussians: Realistic point cloud relighting with brdf decomposition and ray tracing.
+\newblock In {\em European Conference on Computer Vision}, pages 73--89. Springer, 2024.
+
+\bibitem{ye20243dgsdr}
+Keyang Ye, Qiming Hou, and Kun Zhou.
+\newblock 3d gaussian splatting with deferred reflection.
+\newblock In {\em ACM SIGGRAPH 2024 Conference Papers}, pages 1--10, 2024.
+
+\bibitem{yao2024refgaussian}
+Yuxuan Yao, Zixuan Zeng, Chun Gu, Xiatian Zhu, and Li~Zhang.
+\newblock Reflective gaussian splatting.
+\newblock {\em arXiv preprint arXiv:2412.19282}, 2024.
+
+\bibitem{gu2025irgs}
+Chun Gu, Xiaofei Wei, Zixuan Zeng, Yuxuan Yao, and Li~Zhang.
+\newblock Irgs: Inter-reflective gaussian splatting with 2d gaussian ray tracing.
+\newblock In {\em Proceedings of the Computer Vision and Pattern Recognition Conference}, pages 10943--10952, 2025.
+
+\bibitem{lai2025glossygs}
+Shuichang Lai, Letian Huang, Jie Guo, Kai Cheng, Bowen Pan, Xiaoxiao Long, Jiangjing Lyu, Chengfei Lv, and Yanwen Guo.
+\newblock Glossygs: Inverse rendering of glossy objects with 3d gaussian splatting.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics}, 2025.
+
+\bibitem{tong2025gs2dgs}
+Jinguang Tong, Xuesong Li, Fahira~Afzal Maken, Sundaram Muthu, Lars Petersson, Chuong Nguyen, and Hongdong Li.
+\newblock Gs-2dgs: Geometrically supervised 2dgs for reflective object reconstruction.
+\newblock In {\em Proceedings of the Computer Vision and Pattern Recognition Conference}, pages 21547--21557, 2025.
+
+\bibitem{du2024gsid}
+Kang Du, Zhihao Liang, and Zeyu Wang.
+\newblock Gs-id: Illumination decomposition on gaussian splatting via diffusion prior and parametric light source optimization.
+\newblock {\em arXiv preprint arXiv:2408.08524}, 2024.
+
+\bibitem{Moenne-3DGSRT}
+Nicolas Moenne-Loccoz, Ashkan Mirzaei, Or~Perel, Riccardode Lutio, JanickMartinez Esturo, Gavriel State, Sanja Fidler, Nicholas Sharp, and Zan Gojcic.
+\newblock 3d gaussian ray tracing: Fast tracing of particle scenes.
+\newblock Oct 2024.
+
+\bibitem{kouros2025rgsdr}
+Georgios Kouros, Minye Wu, and Tinne Tuytelaars.
+\newblock Rgs-dr: Reflective gaussian surfels with deferred rendering for shiny objects.
+\newblock {\em arXiv preprint arXiv:2504.18468}, 2025.
+
+\bibitem{burley2012physically}
+Brent Burley and Walt Disney~Animation Studios.
+\newblock Physically-based shading at disney.
+\newblock In {\em Acm siggraph}, volume 2012, pages 1--7. vol. 2012, 2012.
+
+\bibitem{Kajiya_1998}
+James~T. Kajiya.
+\newblock {\em The rendering equation}, page 157–164.
+\newblock Jul 1998.
+
+\bibitem{munkberg2022extracting}
+Jacob Munkberg, Jon Hasselgren, Tianchang Shen, Jun Gao, Wenzheng Chen, Alex Evans, Thomas M{\"u}ller, and Sanja Fidler.
+\newblock Extracting triangular 3d models, materials, and lighting from images.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 8280--8290, 2022.
+
+\bibitem{Ke_Obukhov_Huang_Metzger_Daudt_Schindler_2023}
+Bingxin Ke, Anton Obukhov, Shengyu Huang, Nando Metzger, RodrigoCaye Daudt, and Konrad Schindler.
+\newblock Repurposing diffusion-based image generators for monocular depth estimation.
+\newblock Dec 2023.
+
+\bibitem{garcia2025fine}
+Gonzalo~Martin Garcia, Karim Abou~Zeid, Christian Schmidt, Daan De~Geus, Alexander Hermans, and Bastian Leibe.
+\newblock Fine-tuning image-conditional diffusion models is easier than you think.
+\newblock In {\em 2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}, pages 753--762. IEEE, 2025.
+
+\bibitem{ranftl2020towards}
+Ren{\'e} Ranftl, Katrin Lasinger, David Hafner, Konrad Schindler, and Vladlen Koltun.
+\newblock Towards robust monocular depth estimation: Mixing datasets for zero-shot cross-dataset transfer.
+\newblock {\em IEEE transactions on pattern analysis and machine intelligence}, 44(3):1623--1637, 2020.
+
+\bibitem{cook1982reflectance}
+Robert~L Cook and Kenneth~E. Torrance.
+\newblock A reflectance model for computer graphics.
+\newblock {\em ACM Transactions on Graphics (ToG)}, 1(1):7--24, 1982.
+
+\bibitem{veach1998robust}
+Eric Veach.
+\newblock {\em Robust Monte Carlo methods for light transport simulation}.
+\newblock Stanford University, 1998.
+
+\bibitem{ssim}
+Z.~Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli.
+\newblock Image quality assessment: From error visibility to structural similarity.
+\newblock {\em IEEE Transactions on Image Processing}, page 600–612, Apr 2004.
+
+\bibitem{lpips}
+Richard Zhang, Phillip Isola, Alexei~A. Efros, Eli Shechtman, and Oliver Wang.
+\newblock The unreasonable effectiveness of deep features as a perceptual metric.
+\newblock In {\em 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition}, Jun 2018.
+
+\end{thebibliography}

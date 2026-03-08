@@ -1,0 +1,97 @@
+\input{./sec/figs_tables/fig_nvs.tex}
+\input{./sec/figs_tables/tab_nvs.tex}
+
+\section{Results and Evaluations}
+\subsection{Datasets and Metrics}
+\wttp{We conduct qualitative and quantitative experiments on two synthetic datasets, NeRF Synthetic~\cite{NeRF} and Shiny Blender~\cite{RefNeRF} and one real dataset, the Stanford ORB dataset ~\cite{Stanford-ORB}.
+For all datasets, we evaluate \name and baseline methods on novel view synthesis,  decomposition and relighting tasks. 
+For quantitative comparisons, we use PSNR (Peak Signal-to-Noise Ratio), SSIM (Structural Similarity)~\cite{SSIM} and LPIPS (Learned Perceptual Image Patch Similarity)~\cite{LPIPS} metrics to compare the similarity between images. 
+To evaluate the quality of the estimated normals, we compare the estimated normal images with the ground truth with Mean Squared Error (MSE). 
+}
+
+\subsection{Implementation Details}
+\wttp{
+We train the decoupled Gaussian splatting representation on a single 3090 GPU with 24GB memory. 
+The training process takes 3-4 hours depending on the scenes' complexity and the input images' resolution. 
+\name allows $\sim$30FPS novel view synthesis at $800 \times 800$ resolution on a single 3090 GPU. 
+For hyperparameter settings, in Eqn.~(\ref{eqn:loss_refneus}), $\lambda_{1}$ is set to $0.1$.  
+In Eqn.~(\ref{eqn:total_loss}), $\lambda_{nd}, \lambda_{L1}, \lambda_{ssim}, \lambda_{mask} ,\lambda_{TV}$ are set to $0.5, 0.8, 0.2, 0.5, 0.001$ in all our examples. 
+}
+
+\subsection{Novel View Synthesis}
+We present novel view synthesis results on different cases' test splits in Fig.~\ref{fig:nvs} and compare \yl{our method} with NeRFactor~\cite{NeRFactor}, \wttp{TensoIR}~\cite{TensoIR}, NDR~\cite{NvDiffRec}, NeRO~\cite{NeRO}, Gaussian Splatting~\cite{GS}, RelightableGaussian~\cite{RelightableGaussian} and GuassianShader~\cite{GaussianShader}. 
+NeRFactor models the geometry with a density function and utilizes a low-resolution environment map as its lighting representation, which leads to less convincing geometry (first row in Fig.~\ref{fig:nvs}) and blurry reconstruction results. 
+\wttp{TensoIR is unable to synthesize appearance details with its smooth lighting representation approximated by Spherical Gaussian functions. }
+NDR uses deformable \yl{tetrahedra} to approximate the geometry which may cause irregular geometry and noisy novel view synthesis results. 
+\wt{NeRO produces blurry appearance (second and fourth rows) and may reconstruct wrong geometry (first row).}
+\yl{Gaussian} Splatting models the texture and lighting with a single spherical harmonic function which may fail to generalize to novel views and produce wrong reflections (last row in Fig.~\ref{fig:nvs}). 
+RelightableGaussian and GaussianShader separately model texture and lighting but learn geometry from scratch, which causes blurry reconstruction. 
+As for quantitative comparisons, we compare novel view reconstruction results by different methods with the ground truth image using PSNR, SSIM and LPIPS metrics in Table~\ref{tab:nvs}. 
+\wt{Our method achieves comparable results with baseline methods on the NeRF synthetic dataset and outperforms other baselines on the shiny blender dataset.}
+
+\input{./sec/figs_tables/fig_decom.tex}
+\input{./sec/figs_tables/tab_decom.tex}
+
+
+\input{./sec/figs_tables/fig_relight.tex}
+\input{./sec/figs_tables/tab_relight.tex}
+
+\subsection{Decomposition}
+To evaluate the decoupling ability of our method, we render optimized diffuse albedo and normal images and compare them with the corresponding ground truth images. 
+Baseline methods include NeRFactor~\cite{NeRFactor}, \wttp{TensoIR}~\cite{TensoIR}, NDR~\cite{NvDiffRec}, NeRO~\cite{NeRO}, RelightableGaussian~\cite{RelightableGaussian}, and GuassianShader~\cite{GaussianShader} that model texture and lighting separately. 
+As shown in Fig.~\ref{fig:decom}, the smooth or low-resolution lighting representation in NeRFactor and \wttp{TensoIR} may cause incorrect geometry or texture estimation. 
+NDR still suffers from its tetrahedral representation and produces an irregular normal estimation and wrong texture estimation. 
+\wt{NeRO produces faithful geometry but less correct texture estimation (first to fourth \yl{rows}).}
+For RelightableGaussian and GaussianShader, the \yl{normals are} directly learned from the \yl{Gaussian} splatting representation and can be rough on shiny scenes, leading to wrong textures. 
+Note that GaussianShader decomposes diffuse color instead of diffuse albedo. 
+Overall our method produces smooth normal estimation without losing geometric details and the extracted textures have less lighting baked \yl{in}. 
+We also report the PSNR, SSIM \yl{and} LPIPS metrics for the extracted diffuse albedo components and the MSE value for the normal image in Table~\ref{tab:decom} and our method comes on top. 
+\wttp{Note that before evaluating the albedo component, we compute the scales between estimated normals and the ground truth normals following NeRFactor~\cite{NeRFactor} except for glossy scenes (`materials' and `mic' in the NeRF Synthetic dataset and `ball' and `toaster' in the Shiny Blender dataset) since the scales would be all 0 and result in infinite PSNRs for all methods.}
+
+
+\subsection{Editing}
+We show relighting results and compare with NeRFactor~\cite{NeRFactor}, \wttp{TensoIR}~\cite{TensoIR}, NDR~\cite{NvDiffRec}, NeRO~\cite{NeRO}, RelightableGaussian~\cite{RelightableGaussian}, and GuassianShader ~\cite{GaussianShader} in Fig.~\ref{fig:relight}. 
+Limited by the lighting representations, NeRFactor and \wttp{TensoIR} are unable to render high-frequency reflections. 
+The irregular geometry of NDR makes the scene shaded in a wrong way. 
+\wt{
+NeRO can produce realistic reflection but its material estimation is less accurate, leading to less faithful relighting (third to fourth \yl{rows}). 
+In addition, it directly uses the mesh extracted by an SDF network for relighting, which may produce level-set stripe-like artifacts (better viewed in video) or miss geometry details like the metal frame on the side window in the car example.
+}
+GaussianShader and RelightableGaussian produce less faithful normal and texture estimation in the decomposition process and the \textit{forward rendering} technique they apply causes blending artifacts even if the normal estimation is plausible (\wt{zoom-in views of the car example in Fig.~\ref{fig:relight}}). 
+In contrast, the relighting results produced by our method are more realistic. 
+This is because the geometry of \name distilled from a signed distance function, which works as a good basis for the geometry, texture and lighting decomposition. 
+In addition, \name uses the \textit{deferred shading}, which avoids blending artifacts when rendering \yl{Gaussians} in a new illumination. 
+Quantitative results on \yl{the} relighting task are reported in Table~\ref{tab:relight} and our method achieves comparable results with NeRO~\cite{NeRO}. 
+We show geometry and texture editing results in Fig.~\ref{fig:geo_texture_edit}. 
+\yl{For texture} editing results in \yl{the} last two rows, the editing is performed on the diffuse component. 
+
+\input{./sec/figs_tables/fig_geo_texture_edit.tex}
+
+\subsection{Ablation}
+In this subsection, we conduct several ablation studies to prove the effectiveness of our design choices. 
+
+\subsection{Normal Field Distillation}
+To produce a plausible geometry for the decomposition problem, we distill the normal direction from a signed distance function by encouraging the rendered normal of \yl{Gaussians} to be consistent with the normal of a signed distance function. 
+Here, we generate the decomposed results without normal field distillation (w/o NFD) and compare them with the full pipeline qualitatively in Fig.~\ref{fig:ablate_NFD}. 
+We also report numerical results of decomposed results in Table~\ref{tab:decom} and the decomposition quality sees a drop without normal field distillation. 
+\input{./sec/figs_tables/fig_ablate_NFD.tex}
+
+\subsection{Deferred Shading}
+In the decomposition and relighting process, we utilize the \textit{deferred shading} technique instead \yl{of} \textit{forward shading} commonly used in previous methods. 
+Here we ablate its influence on the relighting results in Fig.~\ref{fig:ablate_DS}. 
+\wttp{Even \yl{though} the geometry is enhanced by the normal field distillation, we can \yl{still} observe notable Gaussian shape---like blending artifacts when we apply the \textit{forward shading} technique.} 
+By contrast, the \textit{deferred shading} technique we use can successfully resolve this issue and produce smooth and realistic relighting results. 
+We also evaluate it quantitatively in Table~\ref{tab:relight} and the relighting quality drops when it is not applied. 
+
+\input{./sec/figs_tables/fig_ablate_DS.tex}
+\input{./sec_supp/figs_tables/fig_ablate_texture_edit.tex}
+
+\wttp{
+\subsection{Random View Inputs in Texture Editing}
+As mentioned in Sec.~\ref{sec:texture_edit}, we perform texture editing on the Gaussian splatting representation by optimizing Gaussians' attributes to fit the rendered results to both the input edited image and randomly rendered images from different viewpoints. 
+Here we ablate how randomly generated edited results influence the final rendered results of edited Gaussians in Fig.~\ref{fig:ablate_texture_edit}. 
+It shows that optimizing Gaussians' attributes only from the input edited viewpoint can result in overfitting and exhibit inconsistent novel views. 
+}
+
+\input{./sec/figs_tables/fig_limit.tex}
+

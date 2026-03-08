@@ -1,0 +1,46 @@
+\newcommand{\plotclip}[2]{%
+  \begin{tikzpicture}
+
+    \begin{scope}[on background layer]
+      \fill[blue!40, rounded corners, opacity=.5] (-1.5*#2, -1.4*#2) rectangle (1.5*#2, -.5*#2);
+      \node[anchor=north east, blue!80] at (1.1*#2, -0.7*#2) {\scriptsize Graph diffusion};
+
+      \fill[green!40, rounded corners, opacity=.5] (0.5*#2, -1.4*#2) rectangle (1.5*#2, .4*#2);
+      \node[anchor=north west, green!80] at (0.8*#2, 0.2*#2) {\scriptsize SAM};
+    \end{scope}
+    
+    % Place images with labels
+    \node[anchor=center] at (-2.03*#2, 0) {\includegraphics[width=3cm]{#1_rgb.jpg}};
+    \node[below=12mm] at (-2.03*#2, 0) {\scriptsize RGB image};
+
+    \node[anchor=center] at (-2.03*#2, -.9*#2) {\includegraphics[width=3cm]{#1_gt.jpg}};
+    \node[below=12mm] at (-2.03*#2, -.9*#2) {\scriptsize Ground truth};
+
+    \node[anchor=center] at (0, 0) {\includegraphics[width=3cm]{#1_clip.jpg}};
+    \node[below=12mm] at (0, 0) {\scriptsize CLIP features};
+
+    \node[anchor=center] at (0, -.9*#2) {\includegraphics[width=3cm]{#1_dino.jpg}};
+    \node[below=12mm] at (0, -.9*#2) {\scriptsize DINOv2 features};
+
+    \node[anchor=center] at (-#2, 0) {\includegraphics[width=3cm]{#1.jpg}};
+    \node[below=12mm] at (-#2, 0) {\scriptsize No diffusion, no SAM};
+
+    \node[anchor=center] at (-#2, -.9*#2) {\includegraphics[width=3cm]{#1_dif.jpg}};
+    \node[below=12mm] at (-#2, -.9*#2) {\scriptsize Diffusion, no SAM};
+
+    \node[anchor=center] at (#2, 0) {\includegraphics[width=3cm]{#1_sam.jpg}};
+    \node[below=12mm] at (#2, 0) {\scriptsize No diffusion, SAM};
+
+    \node[anchor=center] at (#2, -.9*#2) {\includegraphics[width=3cm]{#1_dif_sam.jpg}};
+    \node[below=12mm] at (#2, -.9*#2) {\scriptsize Diffusion, SAM};
+
+    % Draw arrows
+    \draw[->,line width=.7mm] (-.45*#2, 0) -- (-.55*#2, 0);
+    \draw[->,line width=.7mm] (-.45*#2, -.35*#2) -- (-.55*#2, -.55*#2);
+    \draw[->,line width=.7mm] (.45*#2, 0) -- (.55*#2, 0);
+    \draw[->,line width=.7mm] (.45*#2, -.35*#2) -- (.55*#2, -.55*#2);
+    \draw[->,line width=.7mm] (-.45*#2, -.9*#2) -- (-.55*#2, -.9*#2);
+    \draw[->,line width=.7mm] (.45*#2, -.9*#2) -- (.55*#2, -.9*#2);
+
+  \end{tikzpicture}%
+}

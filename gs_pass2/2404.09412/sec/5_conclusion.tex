@@ -1,0 +1,9 @@
+\section{Conclusion}
+In this paper, we present \name, a \yl{Gaussian} splatting representation with editable geometry, texture and lighting. 
+To make this happen, we define optimizable texture attributes on \yl{Gaussians} and an environment map for the physically based rendering process. 
+To ensure proper geometry reconstruction, \name distills the normal field from previous multi-view reconstruction methods onto \yl{Gaussians'} learnable normal attributes. 
+Notably, we propose to use the \textit{deferred rendering} technique to enable realistic relighting. 
+However, as shown in Fig.~\ref{fig:limit} our method may produce wrong decoupled results on scenes with shadow. 
+For future directions, it is promising to resolve the ambiguity by capturing scenes under multiple lighting conditions and introducing visibility into the rendering process like~\cite{FEGR, SOL-NeRF}. 
+On the editing side, the optimized \yl{Gaussians} after texture editing may contain \yl{noise} since \yl{Gaussian} splatting is a global representation where a pixel is influenced by multiple \yl{Gaussians}. 
+Adaptive cloning and splitting in the edited region might produce better editing results. 

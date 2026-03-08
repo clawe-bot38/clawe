@@ -1,0 +1,173 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{#1}
+\csname url@rmstyle\endcsname
+\providecommand{\newblock}{\relax}
+\providecommand{\bibinfo}[2]{#2}
+\providecommand\BIBentrySTDinterwordspacing{\spaceskip=0pt\relax}
+\providecommand\BIBentryALTinterwordstretchfactor{4}
+\providecommand\BIBentryALTinterwordspacing{\spaceskip=\fontdimen2\font plus
+\BIBentryALTinterwordstretchfactor\fontdimen3\font minus \fontdimen4\font\relax}
+\providecommand\BIBforeignlanguage[2]{{%
+\expandafter\ifx\csname l@#1\endcsname\relax
+\typeout{** WARNING: IEEEtran.bst: No hyphenation pattern has been}%
+\typeout{** loaded for the language `#1'. Using the pattern for}%
+\typeout{** the default language instead.}%
+\else
+\language=\csname l@#1\endcsname
+\fi
+#2}}
+
+\bibitem{bao2011semantic}
+S.~Y. Bao \emph{et~al.}, ``Semantic structure from motion,'' \emph{CVPR}, 2011.
+
+\bibitem{kundu2022panoptic}
+A.~Kundu \emph{et~al.}, ``Panoptic neural fields: A semantic object-aware neural scene representation,'' \emph{CVPR}, 2022.
+
+\bibitem{mccormac2017semanticfusion}
+J.~McCormac \emph{et~al.}, ``Semanticfusion: Dense 3d semantic mapping with convolutional neural networks,'' \emph{ICRA}, 2017.
+
+\bibitem{rosinol2020kimera}
+A.~Rosinol \emph{et~al.}, ``Kimera: an open-source library for real-time metric-semantic localization and mapping,'' \emph{ICRA}, 2020.
+
+\bibitem{civera2011towards}
+J.~Civera \emph{et~al.}, ``{Towards semantic SLAM using a monocular camera},'' \emph{IROS}, 2011.
+
+\bibitem{zhu2024sni}
+S.~Zhu \emph{et~al.}, ``Sni-slam: Semantic neural implicit slam,'' \emph{CVPR}, 2024.
+
+\bibitem{li2024sgs}
+M.~Li \emph{et~al.}, ``Sgs-slam: Semantic gaussian splatting for neural dense slam,'' \emph{{ECCV}}, 2024.
+
+\bibitem{radford2021clip}
+A.~Radford \emph{et~al.}, ``Learning transferable visual models from natural language supervision,'' \emph{ICML}, 2021.
+
+\bibitem{Peng2023OpenScene}
+S.~Peng \emph{et~al.}, ``Openscene: 3d scene understanding with open vocabularies,'' \emph{CVPR}, 2023.
+
+\bibitem{takmaz2023openmask3d}
+A.~Takmaz \emph{et~al.}, ``{OpenMask3D: Open-Vocabulary 3D Instance Segmentation},'' \emph{NeurIPS}, 2023.
+
+\bibitem{nguyen2024open3dis}
+P.~Nguyen \emph{et~al.}, ``Open3dis: Open-vocabulary 3d instance segmentation with 2d mask guidance,'' \emph{CVPR}, 2024.
+
+\bibitem{conceptfusion}
+K.~Jatavallabhula \emph{et~al.}, ``Conceptfusion: Open-set multimodal 3d mapping,'' \emph{RSS}, 2023.
+
+\bibitem{gu2024conceptgraphs}
+Q.~Gu \emph{et~al.}, ``Conceptgraphs: Open-vocabulary 3d scene graphs for perception and planning,'' \emph{ICRA}, 2024.
+
+\bibitem{yamazaki2024open}
+K.~Yamazaki \emph{et~al.}, ``Open-fusion: Real-time open-vocabulary 3d mapping and queryable scene representation,'' \emph{ICRA}, 2024.
+
+\bibitem{ravi2024sam2}
+N.~R. et~al., ``Sam 2: Segment anything in images and videos,'' \emph{arXiv:2408.00714}, 2024.
+
+\bibitem{zhai2023siglip}
+X.~Zhai \emph{et~al.}, ``Sigmoid loss for language image pre-training,'' \emph{ICCV}, 2023.
+
+\bibitem{cherti2023openclip}
+M.~Cherti \emph{et~al.}, ``Reproducible scaling laws for contrastive language-image learning,'' \emph{CVPR}, 2023.
+
+\bibitem{zhou2022extract}
+C.~Zhou \emph{et~al.}, ``Extract free dense labels from clip,'' \emph{{ECCV}}, 2022.
+
+\bibitem{sun2024alpha}
+Z.~Sun \emph{et~al.}, ``Alpha-clip: A clip model focusing on wherever you want,'' \emph{CVPR}, 2024.
+
+\bibitem{ghiasi2022scaling}
+G.~Ghiasi \emph{et~al.}, ``Scaling open-vocabulary image segmentation with image-level labels,'' \emph{{ECCV}}, 2022.
+
+\bibitem{detone2018superpoint}
+D.~DeTone \emph{et~al.}, ``{SuperPoint: Self-Supervised Interest Point Detection and Description},'' \emph{CVPRW}, 2018.
+
+\bibitem{boudjoghra2024openyolo}
+M.~E.~A. Boudjoghra \emph{et~al.}, ``{Open-YOLO 3D: Towards Fast and Accurate Open-Vocabulary 3D Instance Segmentation},'' \emph{ICLR}, 2025.
+
+\bibitem{engelmann2024opennerf}
+F.~Engelmann \emph{et~al.}, ``{OpenNeRF: Open Set 3D Neural Scene Segmentation with Pixel-Wise Features and Rendered Novel Views},'' \emph{ICLR}, 2024.
+
+\bibitem{hovsg}
+A.~Werby \emph{et~al.}, ``Hierarchical open-vocabulary 3d scene graphs for language-grounded robot navigation,'' \emph{RSS}, 2024.
+
+\bibitem{mccormac2018fusion++}
+J.~McCormac \emph{et~al.}, ``Fusion++: Volumetric object-level slam,'' \emph{3DV}, 2018.
+
+\bibitem{he2017mask}
+K.~He \emph{et~al.}, ``{Mask R-CNN},'' \emph{ICCV}, 2017.
+
+\bibitem{narita2019panopticfusion}
+G.~Narita \emph{et~al.}, ``Panopticfusion: Online volumetric semantic mapping at the level of stuff and things,'' \emph{IROS}, 2019.
+
+\bibitem{menini2021real}
+D.~Menini \emph{et~al.}, ``A real-time online learning framework for joint 3d reconstruction and semantic segmentation of indoor scenes,'' \emph{RAL}, 2021.
+
+\bibitem{weder2023alster}
+S.~Weder \emph{et~al.}, ``Alster: A local spatio-temporal expert for online 3d semantic reconstruction,'' \emph{WACV}, 2025.
+
+\bibitem{zhai2024nis}
+H.~Zhai \emph{et~al.}, ``Nis-slam: Neural implicit semantic rgb-d slam for 3d consistent scene understanding,'' \emph{TVCG}, 2024.
+
+\bibitem{ji2024neds}
+Y.~Ji \emph{et~al.}, ``Neds-slam: A neural explicit dense semantic slam framework using 3d gaussian splatting,'' \emph{RAL}, 2024.
+
+\bibitem{li2024hi}
+B.~Li \emph{et~al.}, ``Hier-slam: Scaling-up semantics in slam with a hierarchically categorical gaussian splatting,'' \emph{ICRA}, 2025.
+
+\bibitem{zou2023segment}
+X.~Zou \emph{et~al.}, ``Segment everything everywhere all at once,'' \emph{NeurIPS}, 2023.
+
+\bibitem{klein2007parallel}
+G.~Klein \emph{et~al.}, ``Parallel tracking and mapping for small ar workspaces,'' \emph{ISMAR}, 2007.
+
+\bibitem{campos2021orb}
+C.~Campos \emph{et~al.}, ``{ORB-SLAM3: An accurate open-source library for visual, visual--inertial, and multimap slam},'' \emph{TRO}, 2021.
+
+\bibitem{yugay2023gaussian}
+V.~Yugay \emph{et~al.}, ``Gaussian-slam: Photo-realistic dense slam with gaussian splatting,'' \emph{arXiv:2312.10070}, 2023.
+
+\bibitem{mur2017orb}
+R.~Mur-Artal \emph{et~al.}, ``Orb-slam2: An open-source slam system for monocular, stereo, and rgb-d cameras,'' \emph{TRO}, 2017.
+
+\bibitem{yeshwanthliu2023scannetpp}
+C.~Yeshwanth \emph{et~al.}, ``Scannet++: A high-fidelity dataset of 3d indoor scenes,'' \emph{ICCV}, 2023.
+
+\bibitem{gao2022luss}
+S.~Gao \emph{et~al.}, ``Large-scale unsupervised semantic segmentation,'' \emph{TPAMI}, 2022.
+
+\bibitem{dai2017scannet}
+A.~Dai \emph{et~al.}, ``{ScanNet: Richly-annotated 3D Reconstructions of Indoor Scenes},'' \emph{CVPR}, 2017.
+
+\bibitem{rozenberszki2022language}
+D.~Rozenberszki \emph{et~al.}, ``Language-grounded indoor 3d semantic segmentation in the wild,'' \emph{{ECCV}}, 2022.
+
+\bibitem{replica19arxiv}
+J.~S. et~al., ``The {R}eplica dataset: A digital replica of indoor spaces,'' \emph{arXiv:1906.05797}, 2019.
+
+\bibitem{zhu2022nice}
+Z.~Zhu \emph{et~al.}, ``Nice-slam: Neural implicit scalable encoding for slam,'' \emph{CVPR}, 2022.
+
+\bibitem{kirillov2023sam}
+A.~Kirillov \emph{et~al.}, ``Segment anything,'' \emph{arXiv:2304.02643}, 2023.
+
+\bibitem{qin2024langsplat}
+M.~Qin \emph{et~al.}, ``Langsplat: 3d language gaussian splatting,'' \emph{CVPR}, 2024.
+
+\bibitem{zhao2023fast}
+X.~Zhao \emph{et~al.}, ``Fast segment anything,'' \emph{arXiv:2306.12156}, 2023.
+
+\bibitem{zhang2024efficientvit}
+Z.~Zhang \emph{et~al.}, ``Efficientvit-sam: Accelerated segment anything model without performance loss,'' \emph{CVPR}, 2024.
+
+\bibitem{openclip_repo}
+G.~Ilharco \emph{et~al.}, ``Openclip,'' 2021.
+
+\bibitem{schuhmann2022laion}
+C.~Schuhmann \emph{et~al.}, ``Laion-5b: An open large-scale dataset for training next generation image-text models,'' \emph{NeurIPS}, 2022.
+
+\bibitem{data-filtering-networks}
+A.~Fang \emph{et~al.}, ``Data filtering networks,'' \emph{ICLR}, 2024.
+
+\bibitem{lerf2023}
+J.~Kerr \emph{et~al.}, ``Lerf: Language embedded radiance fields,'' \emph{ICCV}, 2023.
+
+\end{thebibliography}

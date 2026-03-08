@@ -1,0 +1,33 @@
+\setlength{\tabcolsep}{0.1pt}{
+\begin{table}[tb]
+   \caption{Quantitative comparison on the \textbf{challenging test set} with all images containing mirrors. Best results are \textbf{bolded} and second best are \underline{underlined}. Methods marked with `*' are evaluated only on mirror regions.}
+  \label{table:challending_test_comparison}
+  \centering
+  \scriptsize
+  \begin{tabular}{lccccccccc}
+    \toprule
+    \multirow{2.5}{*}{Method} & \multicolumn{4}{c}{Synthetic} && \multicolumn{4}{c}{Real} \\
+    \cmidrule{2-5} \cmidrule{7-10}
+    & PSNR↑ & SSIM↑ & LPIPS↓ & FPS↑ && PSNR↑ & SSIM↑ & LPIPS↓  & FPS↑\\
+    \cmidrule{2-5} \cmidrule{7-10}
+    InstantNGP~\cite{muller2022instant} & 14.26 & 0.44 & 0.65 & 9.22 && 10.54 & 0.20 & 0.72 & 13.00 \\
+    \cmidrule{2-5} \cmidrule{7-10}
+    DVGO~\cite{sun2022direct} & 17.65 & 0.63 & 0.49 & 4.34 && 22.28 & 0.68 & 0.32& 4.41 \\
+    \cmidrule{2-5} \cmidrule{7-10}
+    Mirror-NeRF~\cite{zeng2023mirror} & \textbf{27.33} & \textbf{0.94} & \textbf{0.05} & 0.55 && \textbf{25.25} & \textbf{0.86} & \textbf{0.06} & 0.55\\
+    \midrule
+    \midrule
+    3DGS~\cite{3dgs} & 22.15 & 0.84 & 0.17 & \textbf{275.73}  && 22.13 & 0.72 & 0.24 & \textbf{208.23} \\
+    \cmidrule{2-5} \cmidrule{7-10}
+    Evoluted-3DGS & 21.82 & 0.82 & 0.09 & \underline{195.36} && 21.59 & 0.75 & 0.11 & \underline{98.49}\\
+    \cmidrule{2-5} \cmidrule{7-10}
+    \textbf{Mirror-3DGS (Ours)} & \underline{24.73} & \underline{0.85} & \underline{0.06} & 120.61 && \underline{23.01} & \underline{0.77} & \underline{0.09} & 95.22 \\
+    \midrule
+    \midrule
+    3DGS*~\cite{3dgs} & 16.42 & - & - & - && 21.27 & - & - & -\\
+    Mirror-NeRF*~\cite{zeng2023mirror} & \textcolor{blue}{\textbf{22.14}} & - & - & - && 22.18 & - & - & -\\
+    \textbf{Mirror-3DGS* (Ours)} & 21.60 & - & - & - && \textcolor{blue}{\textbf{22.94}} & - & - & - \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+}
