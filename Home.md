@@ -22,6 +22,9 @@ This workspace root is the Obsidian vault.
 Open this folder directly in Obsidian:
 `/home/clawe/.openclaw/workspace`
 
+## Company Planning
+- [[Company-Agenda|Company Agenda & Priority Board]]
+
 ## Conversation Archives
 - [[conversations/telegram/Index|Telegram Archive Index]]
 
