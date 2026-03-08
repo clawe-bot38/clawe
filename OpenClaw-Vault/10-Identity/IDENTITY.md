@@ -1,1 +1,0 @@
-/home/clawe/.openclaw/workspace/IDENTITY.md
