@@ -88,3 +88,39 @@ Example:
 For each active day, create at least:
 - one daily log note,
 - one backlink from `conversations/telegram/Index.md`.
+
+## 11) Color system (inside notes)
+Use Obsidian callouts to create consistent visual color coding.
+
+### Standard color mapping
+- Decisions → `[!tip]` (green)
+- Actions → `[!todo]` (blue)
+- Follow-ups → `[!warning]` (yellow)
+- Risks → `[!danger]` (red)
+- Context/summary → `[!info]` (neutral/blue)
+
+### Example block
+```md
+> [!info] Session Summary
+> Topic: GitHub + Obsidian archive setup
+
+> [!tip] Decisions
+> - Markdown-only repo scope. #decision
+
+> [!todo] Actions
+> - [x] Replaced symlinks with regular files. #action
+
+> [!warning] Follow-ups
+> - [ ] Rewrite history to purge earlier sensitive traces. #followup
+
+> [!danger] Risks
+> - Key was briefly committed in early history. #risk #security
+```
+
+## 12) Graph color groups (Obsidian Graph View)
+In Graph View → **Groups**, add these queries/colors:
+- `tag:#decision` → green
+- `tag:#action` → blue
+- `tag:#followup` → yellow
+- `tag:#risk` → red
+- `path:"conversations/telegram/"` → purple (archive scope)
