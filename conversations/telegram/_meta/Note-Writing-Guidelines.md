@@ -124,3 +124,15 @@ In Graph View → **Groups**, add these queries/colors:
 - `tag:#followup` → yellow
 - `tag:#risk` → red
 - `path:"conversations/telegram/"` → purple (archive scope)
+
+## 13) Rule-change synchronization policy (important)
+When guidelines change, perform a **retrofit pass** across existing archive notes.
+
+Required steps:
+1. Update all affected notes to the new standard.
+2. Add missing tags/sections/callouts.
+3. Re-check links and index references.
+4. Commit with a message prefixed by `Archive sync:`.
+
+Example commit message:
+- `Archive sync: apply callout color standard to existing Telegram notes`

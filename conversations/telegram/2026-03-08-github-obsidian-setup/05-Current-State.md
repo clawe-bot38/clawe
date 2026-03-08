@@ -1,5 +1,8 @@
 # 05 — Current State
 
+Tags: #archive #telegram #sessionbundle
+
+
 ## Repository
 - Remote: `git@github.com:clawe-bot38/clawe.git`
 - Branch: `main`

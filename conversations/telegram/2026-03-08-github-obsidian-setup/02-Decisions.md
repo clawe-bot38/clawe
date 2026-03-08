@@ -1,18 +1,21 @@
 # 02 — Decisions
 
-## Security / Access
-- Do **not** use full-account credentials.
-- Use SSH key authentication for repo operations.
+Tags: #archive #telegram #sessionbundle
 
-## Repository Scope
-- Track only Markdown control/knowledge files.
-- Exclude code projects, binaries, datasets, runtime artifacts.
 
-## Vault Architecture
-- Final architecture: workspace root is the Obsidian vault.
-- No secondary vault folder.
-- No symlinked tracked files in repo.
+> [!tip] Security / Access
+> - Do **not** use full-account credentials. #decision #security
+> - Use SSH key authentication for repo operations. #decision
 
-## UX / Organization
-- Keep notes minimal, structured, and linkable.
-- Provide dashboard entry points (`Home.md`, `File-Map.md`).
+> [!tip] Repository Scope
+> - Track only Markdown control/knowledge files. #decision #git
+> - Exclude code projects, binaries, datasets, runtime artifacts. #decision
+
+> [!tip] Vault Architecture
+> - Final architecture: workspace root is the Obsidian vault. #decision #obsidian #vault
+> - No secondary vault folder. #decision
+> - No symlinked tracked files in repo. #decision
+
+> [!tip] UX / Organization
+> - Keep notes minimal, structured, and linkable. #decision
+> - Provide dashboard entry points (`Home.md`, `File-Map.md`). #decision

@@ -1,5 +1,8 @@
 # Origin → Pre-Archive (Reconstructed)
 
+Tags: #archive #telegram #history
+
+
 Tags: #archive #telegram #history #reconstructed #memory
 
 > This note is a **reconstruction** from persistent memory files (not a verbatim raw chat transcript).

@@ -1,5 +1,8 @@
 # Conversation Log — Telegram (2026-03-08)
 
+Tags: #archive #telegram #sessionbundle
+
+
 ## Scope
 This note set logs the Telegram conversation where we:
 - set up GitHub SSH access,

@@ -1,5 +1,8 @@
 # 03 — Actions and Commands (Summary)
 
+Tags: #archive #telegram #sessionbundle
+
+
 ## Performed Actions
 - Generated SSH key for GitHub operations.
 - Initialized git repository at workspace root.

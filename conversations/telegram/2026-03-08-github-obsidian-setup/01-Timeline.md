@@ -1,5 +1,8 @@
 # 01 — Timeline
 
+Tags: #archive #telegram #sessionbundle
+
+
 ## Sequence
 1. User asked to install/use Obsidian and organize MD control files into a vault.
 2. Confirmed Obsidian already installed.
