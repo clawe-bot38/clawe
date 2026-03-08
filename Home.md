@@ -23,7 +23,7 @@ Open this folder directly in Obsidian:
 `/home/clawe/.openclaw/workspace`
 
 ## Conversation Archives
-- [[conversations/telegram/2026-03-08-github-obsidian-setup/00-Index|Telegram 2026-03-08 — GitHub + Obsidian setup]]
+- [[conversations/telegram/2026/03/08-github-obsidian-setup/00-Index|Telegram 2026-03-08 — GitHub + Obsidian setup]]
 
 ## Telegram Conversation Archive
 - [[conversations/telegram/Index|Archive Index]]

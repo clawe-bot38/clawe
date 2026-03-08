@@ -12,7 +12,7 @@ Tags: #archive #telegram
 
 ## Logs
 - [[conversations/telegram/2026/03/2026-03-08-log|2026-03-08 Log]]
-- [[conversations/telegram/2026-03-08-github-obsidian-setup/00-Index|2026-03-08 Setup Bundle]]
+- [[conversations/telegram/2026/03/08-github-obsidian-setup/00-Index|2026-03-08 Setup Bundle]]
 
 ## Full-History Backfill
 - [[conversations/telegram/history/000-Origin-Reconstructed|Origin → Pre-Archive (Reconstructed)]]

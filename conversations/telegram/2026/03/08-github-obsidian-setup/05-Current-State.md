@@ -18,4 +18,4 @@ Tags: #archive #telegram #sessionbundle
 
 ## Conversation Archive
 - This conversation archived at:
-  [[conversations/telegram/2026-03-08-github-obsidian-setup/00-Index]]
+  [[conversations/telegram/2026/03/08-github-obsidian-setup/00-Index]]
