@@ -1,0 +1,90 @@
+# Telegram Archive — Note Writing Guidelines
+
+Tags: #archive #telegram #obsidian #guidelines
+
+## 1) Folder convention
+- Daily logs: `conversations/telegram/YYYY/MM/YYYY-MM-DD-log.md`
+- Session bundles (optional): `conversations/telegram/YYYY-MM-DD-topic/`
+- Meta docs/templates: `conversations/telegram/_meta/`
+
+## 2) Required note header
+Use this at the top of each log note:
+
+```md
+# Telegram Log — YYYY-MM-DD <topic>
+
+Tags: #archive #telegram #chatlog #date/YYYY-MM-DD
+```
+
+## 3) Standard sections (in order)
+1. `## Session Summary`
+2. `## Message Log`
+3. `## Extracted Items`
+   - `### Decisions`
+   - `### Actions`
+   - `### Follow-ups`
+   - `### Risks`
+4. `## Links`
+
+## 4) Message log format
+Keep near-verbatim and timestamped:
+
+```md
+- **[HH:MM] User:** ...
+- **[HH:MM] Assistant:** ...
+```
+
+Rules:
+- Preserve original meaning and intent.
+- Do not rewrite sensitive values (mask if needed).
+- Keep chronological order.
+
+## 5) Tag system
+### Global tags
+- `#archive` `#telegram` `#chatlog`
+
+### Date tags
+- `#date/YYYY-MM-DD` (required for daily logs)
+
+### Semantic tags
+- `#decision` `#action` `#followup` `#risk`
+- Optional context tags: `#security` `#git` `#obsidian` `#vault` `#infra`
+
+### Inline tagging pattern
+```md
+- [ ] Rotate exposed key. #followup #security
+```
+
+## 6) Linking rules (Obsidian)
+- Link to root control notes when referenced: `[[MEMORY]] [[USER]] [[Home]]`
+- Link to related sessions from each log note.
+- Link bundles from archive index.
+
+Example:
+```md
+## Links
+- [[conversations/telegram/Index|Archive Index]]
+- [[conversations/telegram/2026-03-08-github-obsidian-setup/00-Index|Setup Bundle]]
+```
+
+## 7) Naming standards
+- Use ISO dates in filenames: `YYYY-MM-DD`.
+- Use kebab-case for topics: `github-obsidian-setup`.
+- Keep titles human-readable; filenames machine-sortable.
+
+## 8) Quality checklist (before save)
+- [ ] Correct date tag present
+- [ ] Message log in time order
+- [ ] Decisions/actions/followups/risks extracted
+- [ ] Relevant links added
+- [ ] Sensitive info masked if needed
+
+## 9) Sensitive data policy
+- Never store passwords/tokens/private keys in notes.
+- If mentioned in conversation, log as: `[REDACTED_SECRET]`.
+- Add a follow-up action for rotation if exposure happened.
+
+## 10) Minimum daily output
+For each active day, create at least:
+- one daily log note,
+- one backlink from `conversations/telegram/Index.md`.

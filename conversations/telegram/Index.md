@@ -14,3 +14,4 @@ Tags: #archive #telegram
 ## Full-History Backfill
 - [[conversations/telegram/history/000-Origin-Reconstructed|Origin → Pre-Archive (Reconstructed)]]
 - [[conversations/telegram/history/001-Git-Tracked-Timeline|Git-Tracked Timeline (Precise)]]
+- [[conversations/telegram/_meta/Note-Writing-Guidelines|Note Writing Guidelines]]
