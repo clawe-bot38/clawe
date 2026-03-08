@@ -24,3 +24,7 @@ Open this folder directly in Obsidian:
 
 ## Conversation Archives
 - [[conversations/telegram/2026-03-08-github-obsidian-setup/00-Index|Telegram 2026-03-08 — GitHub + Obsidian setup]]
+
+## Telegram Conversation Archive
+- [[conversations/telegram/Index|Archive Index]]
+- [[conversations/telegram/2026/03/2026-03-08-log|2026-03-08 Log]]
