@@ -22,3 +22,7 @@ Thumbs.db
 # Obsidian workspace-local cache/state
 .obsidian/workspace.json
 .obsidian/workspaces.json
+
+# Local SSH keys
+runpod_ed25519
+runpod_ed25519.pub
