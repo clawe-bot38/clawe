@@ -24,6 +24,7 @@ Open this folder directly in Obsidian:
 
 ## Company Planning
 - [[Company-Agenda|Company Agenda & Priority Board]]
+- [[Company-Calendar|Company Calendar]]
 
 ## Conversation Archives
 - [[conversations/telegram/Index|Telegram Archive Index]]

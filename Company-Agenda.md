@@ -53,6 +53,7 @@ Tags: #company #agenda #planning #priority #execution
 
 ## 4) Suggested Company Pages (linked structure)
 - [[Company-Agenda|Agenda & Priorities]]
+- [[Company-Calendar|Calendar]]
 - [[Company-Roadmap|Roadmap]]
 - [[Company-KPIs|KPI Dashboard]]
 - [[Company-SOP|SOP Index]]
